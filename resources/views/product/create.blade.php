@@ -44,15 +44,29 @@
                         </div>
                             @enderror
                         <br>
+{{--                        <div class="form-group form-group-default">--}}
+{{--                            <label class="font-weight-bold">Kategori</label>--}}
+{{--                            <input id="category_id" name="category_id" @error('category_id') is-invalid @enderror" type="text" class="form-control" >--}}
+{{--                        </div>--}}
+{{--                        @error('category_id')--}}
+{{--                        <div class="alert alert-danger mt-2">--}}
+{{--                            {{ $message }}--}}
+{{--                        </div>--}}
+{{--                        @enderror--}}
+{{--                        {{ $categories }}--}}
+
                         <div class="form-group form-group-default">
-                            <label class="font-weight-bold">Kategori</label>
-                            <input id="category_id" name="category_id" @error('category_id') is-invalid @enderror" type="text" class="form-control" >
+                            <label>Kategori db</label>
+                            <select class="form-control" id="category_id" name="category_id">
+                                @foreach($categories as $id => $category)
+                                <option value="{{ $id }}">
+                                    {{ in_array($id, old('category_id', [])) ? 'selected' : '' }}
+                                    {{ $category }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
-                        @error('category_id')
-                        <div class="alert alert-danger mt-2">
-                            {{ $message }}
-                        </div>
-                        @enderror
+
                         <br>
                         <div class="form-group form-group-default">
                             <label class="font-weight-bold">Deskripsi</label>

@@ -103,7 +103,8 @@ class CategoriesController extends Controller
         $category = DB::table('categories')
             ->where('id',$id)
             ->update([
-                'category_name'=>$request->category_name
+                'category_name'=>$request->category_name,
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
         return redirect('categories');
     }
@@ -116,7 +117,8 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $data = Category::findOrFail($id);
+//        $data = Category::findOrFail($id);
+        $data = Category::find($id);
         $data->delete();
         return redirect()->route('categories.index');
 //        dd($id);

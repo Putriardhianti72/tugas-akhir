@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{{URL::asset('admin')}}/assets/css/demo.css">
 </head>
 <body>
-<div class="wrapper sidebar_minimize">
+<div class="wrapper">
     @include('Layouts.admin.header')
 
     @include('Layouts.admin.sidebar')

@@ -1,32 +1,162 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $products = Product::all();
+//        dd(session("cart"));
+        $cart = session("cart");
+//        session_destroy($cart);
+//        unset();
+        return view('Layouts.user.cart')->with("cart",$cart);
     }
 
-    public function AddCart($id)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create($id)
     {
-        $cart= session("cart");
-        $product=Product::detail_product($id);
-        $cart["id"]=[
-          "pict" => $product->pict,
-          "product_name" => $product->product_name,
-          "price" => $product->price,
-        ];
-        session(["cart"=>$cart]);
-        return redirect("/cart");
+        //
+        dd($id);
+//        return view("Layouts.user.cart");
     }
 
-    public function cart(){
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'bank_name' => 'required',
+            'acc_owner' => 'required',
+            'acc_number' => 'required'
+        ]);
+        Databank::create([
+            'bank_name' => $request->bank_name,
+            'acc_owner' => $request->acc_owner,
+            'acc_number' => $request->acc_number
+        ]);
+
+        //redirect to index
+        return redirect()->route('banks.index')->with(['success' => 'Data Berhasil Disimpan!']);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+//        dd($id);
         $cart= session("cart");
-        return view("Layouts.user.cart")->with("cart", $cart);
+        $product = DB::table('products')
+            ->select ('*')
+            ->where ('id', $id)
+            ->first();
+        $cart[]=[
+            "id" => $product->id,
+            "pict" => $product->pict,
+            "product_name" => $product->product_name,
+            "price" => $product->price,
+        ];
+        session(["cart" => $cart]);
+        return redirect("/carts");
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'bank_name' => 'required',
+            'acc_owner' => 'required',
+            'acc_number' => 'required'
+        ]);
+        $category = DB::table('databanks')
+            ->where('id', $id)
+            ->update([
+                'bank_name' => $request->bank_name,
+                'acc_owner' => $request->acc_owner,
+                'acc_number' => $request->acc_number,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        return redirect('banks');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }
+
+//namespace App\Http\Controllers;
+//
+//use App\Models\Product;
+//use Illuminate\Http\Request;
+//
+//class CartController extends Controller
+//{
+//    public function index()
+//    {
+//        $products = Product::all();
+//    }
+//
+//    public function AddCart()
+//    {
+//        return view("Layouts.user.cart");
+////        dd($id);
+//        $cart= session("cart");
+//        $product=Product::detail_product($id);
+//        $cart["id"]=[
+//          "pict" => $product->pict,
+//          "product_name" => $product->product_name,
+//          "price" => $product->price,
+//        ];
+//        session(["cart" => $cart]);
+//        return redirect("/cart");
+//    }
+//
+//    public function cart(){
+//        $cart= session("cart");
+//        return view("Layouts.user.cart")->with("cart", $cart);
+//    }
+//}

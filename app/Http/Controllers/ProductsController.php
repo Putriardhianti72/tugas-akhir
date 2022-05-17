@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,10 +18,13 @@ class ProductsController extends Controller
     {
         $products = Product::all();
 //        $products = Product::latest()->paginate(5);
-        return view('Layouts.index', compact('products'));
-//        return view('product.indexx', compact('products'));
+//        return view('Layouts.index', compact('products'));
+        return view('product.indexx', compact('products'));
     }
 
+    public function categori(){
+
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -28,7 +32,10 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        $categories = Category::pluck('category_name','id');
+        return view('product.create',['categories'=>$categories]);
+//        return view('product.create');
+//        @dd($categories);
     }
 
     public function list(){
@@ -116,7 +123,7 @@ class ProductsController extends Controller
     {
         //delete image
 //        Storage::delete('public/pict/'. $product->pict);
-Storage::delete('public/pict'. $product->pict);
+        Storage::delete('public/pict'. $product->pict);
         //delete post
         $product->delete();
 

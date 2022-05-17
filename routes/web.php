@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,8 @@ Route::resource('products', \App\Http\Controllers\ProductsController::class);
 Route::get('/', [\App\Http\Controllers\ProductsController::class, 'index']);
 
 //cart
-Route::get('/cart/add/{{id}}', [\App\Http\Controllers\CartController::class,'AddCart']);
+Route::post('/cart/add/{{id}}', [CartController::class,'AddCart']);
 Route::get('/cart', [\App\Http\Controllers\CartController::class,'Cart']);
 Route::resource('banks', \App\Http\Controllers\DatabanksController::class);
+Route::resource('carts', \App\Http\Controllers\CartController::class);
 //Route::get('categories', [CategoriesController::class,'index']);

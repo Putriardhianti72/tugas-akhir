@@ -17,6 +17,14 @@ return new class extends Migration
             $table->increments('id');
             $table->string('category_name');
             $table->timestamps();
+            $table->softDeletes();
+        });
+
+    }
+    public function down()
+    {
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropSoftDeletes();
         });
     }
 
@@ -25,8 +33,8 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::dropIfExists('categories');
-    }
+//    public function down()
+//    {
+//        Schema::dropIfExists('categories');
+//    }
 };
