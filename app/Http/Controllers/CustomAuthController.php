@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
-class CartController extends Controller
+class CustomAuthController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +15,10 @@ class CartController extends Controller
      */
     public function index()
     {
-//        dd(session("cart"));
-        $cart = session("cart");
-//        session_destroy($cart);
-//        unset();
-//        dd($cart);
-        return view('Layouts.user.cart')->with("cart",$cart);
+        $uid='duta73490';
+        $pass='jundi2009';
+        $response = Http::post('dobel.co.id/portH2H/restapi.php?function=get_login&uid='.$uid.'&pass='.$pass);
+        return $response->json();
     }
 
     /**

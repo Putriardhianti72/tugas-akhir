@@ -32,31 +32,24 @@
                                 <div class="cart-container">
                                     <div class="cart-overview js-cart">
                                         <ul class="cart-items">
-                                            @foreach($cart as $cart_item)
+                                            @for($i = 0; $i < count($cart); $i++ )
+{{--                                            @foreach($cart as $cart_item)--}}
                                             <li class="cart-item">
                                                 <div class="product-line-grid row justify-content-between">
                                                     <!--  product left content: image-->
                                                     <div class="product-line-grid-left col-md-2">
                                                             <span class="product-image media-middle">
                                                                 <a href="product-detail.html">
-                                                                    <img class="img-fluid" src="public\pict\{{$cart_item["pict"]}}" alt="Organic Strawberry Fruits">
+                                                                    <img class="img-fluid" src="public\pict\{{$cart[$i]["pict"]}}" alt="Organic Strawberry Fruits">
                                                                 </a>
                                                             </span>
                                                     </div>
                                                     <div class="product-line-grid-body col-md-6">
                                                         <div class="product-line-info">
-                                                            <a class="label" href="product-detail.html" data-id_customization="0">{{$cart_item["product_name"]}}</a>
+                                                            <a class="label" href="product-detail.html" data-id_customization="0">{{$cart[$i]["product_name"]}}</a>
                                                         </div>
                                                         <div class="product-line-info product-price">
-                                                            <span class="value">{{$cart_item["price"]}}</span>
-                                                        </div>
-                                                        <div class="product-line-info">
-                                                            <span class="label-atrr">Size:</span>
-                                                            <span class="value">S</span>
-                                                        </div>
-                                                        <div class="product-line-info">
-                                                            <span class="label-atrr">Color:</span>
-                                                            <span class="value">Blue</span>
+                                                            <span class="value">{{$cart[$i]["price"]}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="product-line-grid-right text-center product-line-actions col-md-4">
@@ -84,7 +77,7 @@
                                                             </div>
                                                             <div class="col-md-2 col text-xs-right align-self-end">
                                                                 <div class="cart-line-product-actions ">
-                                                                    <a class="remove-from-cart" rel="nofollow" href="#" data-link-action="delete-from-cart" data-id-product="1">
+                                                                    <a class="remove-from-cart" rel="nofollow" href="cart/hapus/{{$i}}" data-link-action="delete-from-cart" data-id-product="1">
                                                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                                     </a>
                                                                 </div>
@@ -93,7 +86,8 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            @endforeach
+{{--                                            @endforeach--}}
+                                            @endfor
                                         </ul>
                                     </div>
                                 </div>

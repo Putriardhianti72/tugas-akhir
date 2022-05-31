@@ -106,10 +106,9 @@
                                             </div>
                                             <div class="tab-content">
                                                 <div id="new" class="tab-pane fade in active show">
-                                                    <div class="category-product-index owl-carousel owl-theme owl-loaded owl-drag">
+                                                    <div class="category-product-index owl-carousel owl-theme owl-loaded owl-drag" style="width: 135%">
                                                         @foreach ($products as $product)
-                                                        <div class="item text-center">
-
+                                                        <div class="item text-center" >
                                                             <div class="product-miniature first-item js-product-miniature item-one">
                                                                 <div class="thumbnail-container">
                                                                     <a href="product-detail.html">

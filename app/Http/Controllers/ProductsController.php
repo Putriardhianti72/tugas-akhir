@@ -18,8 +18,8 @@ class ProductsController extends Controller
     {
         $products = Product::all();
 //        $products = Product::latest()->paginate(5);
-//        return view('Layouts.index', compact('products'));
-        return view('product.indexx', compact('products'));
+        return view('Layouts.index', compact('products'));
+//        return view('product.indexx', compact('products'));
     }
 
     public function categori(){

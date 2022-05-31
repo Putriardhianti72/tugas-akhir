@@ -58,7 +58,7 @@
                         <div class="form-group form-group-default">
                             <label>Kategori db</label>
                             <select class="form-control" id="category_id" name="category_id">
-                                @foreach($categories as $id => $category)
+            0                   @foreach($categories as $id => $category)
                                 <option value="{{ $id }}">
                                     {{ in_array($id, old('category_id', [])) ? 'selected' : '' }}
                                     {{ $category }}
