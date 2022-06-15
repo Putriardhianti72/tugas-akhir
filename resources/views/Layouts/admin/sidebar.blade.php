@@ -66,19 +66,19 @@
                     <h4 class="text-section">Components</h4>
                 </li>
                 <li class="nav-item">
-                    <a href="/categories">
+                    <a href="{{ route('admin.categories.index')  }}">
                         <i class="fas fa-desktop"></i>
                         <p>Kategori</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/products">
+                    <a href="{{ route('admin.products.index')  }}">
                         <i class="fas fa-desktop"></i>
                         <p>Produk</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/banks">
+                    <a href="{{route('admin.banks.index')}}">
                         <i class="fas fa-desktop"></i>
                         <p>Data Bank</p>
                     </a>

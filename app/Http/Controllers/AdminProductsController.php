@@ -7,7 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ProductsController extends Controller
+class AdminProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('product.indexx', compact('products'));
+        return view('Admin.product.index', compact('products'));
     }
 
     public function categori(){
@@ -31,9 +31,8 @@ class ProductsController extends Controller
     public function create()
     {
         $categories = Category::pluck('category_name','id');
-        return view('product.create',['categories'=>$categories]);
-//        return view('product.create');
-//        @dd($categories);
+        $product = new Product();
+        return view('Admin.product.form', compact('product', 'categories'));
     }
 
     public function list(){
@@ -60,7 +59,8 @@ class ProductsController extends Controller
 
         //upload image
         $pict = $request->file('pict');
-        $pict->storeAs('public/pict', $pict->hashName());
+        $pictHashName = $pict->hashName();
+        $pict->storeAs('public/pict', $pictHashName);
 //        $pictName = time().'.'.$request->pict->extension();
 //        $request->pict->move(public_path('pict'), $pictName);
 
@@ -70,11 +70,11 @@ class ProductsController extends Controller
             'category_id' => $request->category_id,
             'desc' => $request->desc,
             'price' => $request->price,
-            'pict'     => $pict->hashName()
+            'pict'     => $pictHashName,
         ]);
 
         //redirect to index
-        return redirect()->route('products.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('admin.products.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
@@ -96,7 +96,9 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-//        return view('product.edit', compact('product'));
+        $categories = Category::pluck('category_name','id');
+        $product = Product::findOrFail($id);
+        return view('Admin.product.form', compact('product', 'categories'));
     }
 
     /**
@@ -108,7 +110,36 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        //validate form
+        $this->validate($request, [
+            'product_name' => 'required',
+            'category_id' => 'required',
+            'desc' => 'required',
+            'price' => 'required',
+        ]);
+
+        if ($request->pict) {
+            $this->validate($request, [
+                'pict'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+
+            Storage::delete('public/pict/'. $product->pict);
+
+            //upload image
+            $pict = $request->file('pict');
+            $pictHashName = $pict->hashName();
+            $pict->storeAs('public/pict', $pictHashName);
+
+            $product->pict = $pictHashName;
+        }
+
+        $product->fill($request->except(['pict']));
+        $product->save();
+
+        //redirect to index
+        return redirect()->route('admin.products.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
@@ -121,12 +152,12 @@ class ProductsController extends Controller
     {
         //delete image
 //        Storage::delete('public/pict/'. $product->pict);
-        Storage::delete('public/pict'. $product->pict);
+        Storage::delete('public/pict/'. $product->pict);
         //delete post
         $product->delete();
 
         //redirect to index
-        return redirect()->route('products.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('admin.products.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 
     public function detail_product($id){

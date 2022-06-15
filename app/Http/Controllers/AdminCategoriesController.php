@@ -6,7 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CategoriesController extends Controller
+class AdminCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class CategoriesController extends Controller
 //            "title" => "Kategori"
 //            ];
         $categories = Category::all();
-        return view('category.indexx',compact('categories'));
+        return view('Admin.category.index',compact('categories'));
     }
 
     /**
@@ -45,7 +45,7 @@ class CategoriesController extends Controller
             'category_name'=> 'required'
         ]);
         if (Category::create($data)) {
-            return redirect()->route('categories.index');
+            return redirect()->route('admin.categories.index');
 //            dd($data);
         }else{
             abort(500);
@@ -73,12 +73,12 @@ class CategoriesController extends Controller
     public function edit($id)
     {
 //        $data = Category::findOrFail($id);
-//        $category = Category::findOrFail($id);
-        $category = DB::table('categories')
-            ->select ('*')
-            ->where ('id', $id)
-            ->first();
-        return view('category.edit',compact('category'));
+        $category = Category::findOrFail($id);
+//        $category = DB::table('categories')
+//            ->select ('*')
+//            ->where ('id', $id)
+//            ->first();
+        return view('Admin.category.edit',compact('category'));
     }
 
     /**
@@ -88,25 +88,27 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
-        $data = $request->validate([
+
+        $category = Category::findOrFail($id);
+
+        $request->validate([
             'category_name'=> 'required'
         ]);
-//        $db = Category::findOrFail($id);
-//        $db->category_name = $data['category_name'];
-//        $db->save();
+        $category->category_name = $request->category_name;
+        $category->save();
 //        return redirect()->route('categories.index');
 //        $data->update([
 //            'category_name'     => $request->category_name
 //        ]);
-        $category = DB::table('categories')
-            ->where('id',$id)
-            ->update([
-                'category_name'=>$request->category_name,
-                'updated_at' => date('Y-m-d H:i:s')
-            ]);
-        return redirect('categories');
+//        $category = DB::table('categories')
+//            ->where('id',$id)
+//            ->update([
+//                'category_name'=>$request->category_name,
+//                'updated_at' => date('Y-m-d H:i:s')
+//            ]);
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -120,7 +122,7 @@ class CategoriesController extends Controller
 //        $data = Category::findOrFail($id);
         $data = Category::find($id);
         $data->delete();
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
 //        dd($id);
     }
 }

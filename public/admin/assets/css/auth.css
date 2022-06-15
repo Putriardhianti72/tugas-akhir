@@ -1,0 +1,27 @@
+.template-auth .wrapper .main-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    float: none;
+}
+
+.template-auth .wrapper .main-panel > form {
+    width: 95%;
+}
+
+@media (min-width: 600px) {
+    .template-auth .wrapper .main-panel > form{
+        width: 80%;
+    }
+}
+@media (min-width: 992px) {
+    .template-auth .wrapper .main-panel > form{
+        width: 50%;
+    }
+}
+@media (min-width: 1200px) {
+    .template-auth .wrapper .main-panel > form{
+        width: 25%;
+    }
+}

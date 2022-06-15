@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Atlantis Lite - Bootstrap 4 Admin Dashboard</title>
+    <title>Admin Area - Atlantis Lite - Bootstrap 4 Admin Dashboard</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{URL::asset('admin')}}/assets/img/icon.ico" type="image/x-icon"/>
 
@@ -24,6 +24,9 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{URL::asset('admin')}}/assets/css/demo.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    @stack('css')
 </head>
 <body>
 <div class="wrapper">
@@ -107,6 +110,62 @@
     </div>
     <!-- End Custom template -->
 </div>
+
+<!--   Core JS Files   -->
+<script src="{{URL::asset('admin')}}/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="{{URL::asset('admin')}}/assets/js/core/popper.min.js"></script>
+<script src="{{URL::asset('admin')}}/assets/js/core/bootstrap.min.js"></script>
+
+<!-- jQuery UI -->
+<script src="{{URL::asset('admin')}}/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="{{URL::asset('admin')}}/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="{{URL::asset('admin')}}/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+
+<!-- Chart JS -->
+{{--<script src="{{URL::asset('admin')}}/assets/js/plugin/chart.js/chart.min.js"></script>--}}
+
+<!-- jQuery Sparkline -->
+{{--<script src="{{URL::asset('admin')}}/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>--}}
+
+<!-- Chart Circle -->
+{{--<script src="{{URL::asset('admin')}}/assets/js/plugin/chart-circle/circles.min.js"></script>--}}
+
+<!-- Datatables -->
+{{--<script src="{{URL::asset('admin')}}/assets/js/plugin/datatables/datatables.min.js"></script>--}}
+
+<!-- Bootstrap Notify -->
+<script src="{{URL::asset('admin')}}/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+<!-- jQuery Vector Maps -->
+{{--<script src="{{URL::asset('admin')}}/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>--}}
+{{--<script src="{{URL::asset('admin')}}/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>--}}
+
+<!-- Sweet Alert -->
+<script src="{{URL::asset('admin')}}/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+<!-- Atlantis JS -->
+<script src="{{URL::asset('admin')}}/assets/js/atlantis.min.js"></script>
+
+<!-- Atlantis DEMO methods, don't include it in your project! -->
+<script src="{{URL::asset('admin')}}/assets/js/setting-demo.js"></script>
+{{--<script src="{{URL::asset('admin')}}/assets/js/demo.js"></script>--}}
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script type="text/javascript">
+$(function () {
+    $(document).on('click.logout', '.dropdown-user [data-action="logout"]', function (e) {
+        e.preventDefault();
+
+        window.location.replace('{{ route('admin.logout')  }}');
+    })
+})
+</script>
+
+@stack('js')
 
 </body>
 </html>

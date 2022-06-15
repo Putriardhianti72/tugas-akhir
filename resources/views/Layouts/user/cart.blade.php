@@ -32,8 +32,10 @@
                                 <div class="cart-container">
                                     <div class="cart-overview js-cart">
                                         <ul class="cart-items">
+                                            @php($totalCartPrice = 0)
                                             @for($i = 0; $i < count($cart); $i++ )
 {{--                                            @foreach($cart as $cart_item)--}}
+                                            @php($totalCartPrice += $cart[$i]['price'])
                                             <li class="cart-item">
                                                 <div class="product-line-grid row justify-content-between">
                                                     <!--  product left content: image-->
@@ -52,32 +54,22 @@
                                                             <span class="value">{{$cart[$i]["price"]}}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="product-line-grid-right text-center product-line-actions col-md-4">
+                                                    <div class="product-line-grid-right product-line-actions col-md-4">
                                                         <div class="row">
-                                                            <div class="col-md-5 col qty">
-                                                                <div class="label">Qty:</div>
-                                                                <div class="quantity">
-                                                                    <input type="text" name="qty" value="1" class="input-group form-control">
-
-                                                                    <span class="input-group-btn-vertical">
-                                                                            <button class="btn btn-touchspin js-touchspin bootstrap-touchspin-up" type="button">
-                                                                                +
-                                                                            </button>
-                                                                            <button class="btn btn-touchspin js-touchspin bootstrap-touchspin-down" type="button">
-                                                                                -
-                                                                            </button>
-                                                                        </span>
-                                                                </div>
+                                                            <div class="col-md-10 col qty">
+                                                                <input type="text" class="form-control form-control-sm" placeholder="Domain" data-cart-input="domain" data-cart-id="{{ $cart[$i]['id'] }}" aria-label="Domain" aria-describedby="basic-addon2">
+                                                                <div class="valid-feedback"></div>
+                                                                <div class="invalid-feedback"></div>
                                                             </div>
-                                                            <div class="col-md-5 col price">
-                                                                <div class="label">Total:</div>
-                                                                <div class="product-price total">
-                                                                    £20.00
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-2 col text-xs-right align-self-end">
+{{--                                                            <div class="col-md-3 col price">--}}
+{{--                                                                <div class="label">Total:</div>--}}
+{{--                                                                <div class="product-price total">--}}
+{{--                                                                    {{$cart[$i]['price']}}--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+                                                            <div class="col-md-1 col text-xs-right">
                                                                 <div class="cart-line-product-actions ">
-                                                                    <a class="remove-from-cart" rel="nofollow" href="cart/hapus/{{$i}}" data-link-action="delete-from-cart" data-id-product="1">
+                                                                    <a class="remove-from-cart" rel="nofollow" href="/cart/hapus/{{ $cart[$i]['id'] }}" data-link-action="delete-from-cart" data-id-product="1">
                                                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                                     </a>
                                                                 </div>
@@ -99,13 +91,13 @@
                                 <div class="cart-summary">
                                     <div class="cart-detailed-totals">
                                         <div class="cart-summary-products">
-                                            <div class="summary-label">There are 3 item in your cart</div>
+                                            <div class="summary-label">There are {{ count($cart) }} item in your cart</div>
                                         </div>
                                         <div class="cart-summary-line" id="cart-subtotal-products">
                                                 <span class="label js-subtotal">
                                                     Total products:
                                                 </span>
-                                            <span class="value">£200.00</span>
+                                            <span class="value">{{ $totalCartPrice }}</span>
                                         </div>
                                         <div class="cart-summary-line" id="cart-subtotal-shipping">
                                                 <span class="label">
@@ -118,7 +110,7 @@
                                         </div>
                                         <div class="cart-summary-line cart-total">
                                             <span class="label">Total:</span>
-                                            <span class="value">£200.00 (tax incl.)</span>
+                                            <span class="value">{{ $totalCartPrice }} (tax incl.)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -126,19 +118,19 @@
                                     <ul>
                                         <li>
                                             <div class="block-reassurance-item">
-                                                <img src="img/product/check1.png" alt="Security policy (edit with Customer reassurance module)">
+                                                <img src="{{ asset('/user/img/product/check1.png') }}" alt="Security policy (edit with Customer reassurance module)">
                                                 <span>Security policy (edit with Customer reassurance module)</span>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="block-reassurance-item">
-                                                <img src="img/product/check2.png" alt="Delivery policy (edit with Customer reassurance module)">
+                                                <img src="{{ asset('/user/img/product/check2.png') }}" alt="Delivery policy (edit with Customer reassurance module)">
                                                 <span>Delivery policy (edit with Customer reassurance module)</span>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="block-reassurance-item">
-                                                <img src="img/product/check3.png" alt="Return policy (edit with Customer reassurance module)">
+                                                <img src="{{ asset('/user/img/product/check3.png' ) }}" alt="Return policy (edit with Customer reassurance module)">
                                                 <span>Return policy (edit with Customer reassurance module)</span>
                                             </div>
                                         </li>
@@ -153,3 +145,29 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+    <script type="text/javascript">
+        $(function () {
+            $(document).on('input', '[data-cart-input="domain"]', function () {
+                var value = $(this).val();
+
+                if (value) {
+                    if (/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(value)) {
+                        $(this).parent().find('.valid-feedback').text('Domain valid');
+                        $(this).parent().find('.invalid-feedback').text('');
+                        $(this).addClass('is-valid').removeClass('is-invalid');
+                    } else {
+                        $(this).parent().find('.valid-feedback').text('');
+                        $(this).parent().find('.invalid-feedback').text('Domain tidak valid');
+                        $(this).addClass('is-invalid').removeClass('is-valid');
+                    }
+                } else {
+                    $(this).parent().find('.valid-feedback').text('');
+                    $(this).parent().find('.invalid-feedback').text('');
+                    $(this).removeClass('is-invalid').removeClass('is-valid');
+                }
+            });
+        })
+    </script>
+@endpush

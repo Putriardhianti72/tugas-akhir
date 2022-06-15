@@ -2,8 +2,8 @@
     <!-- Logo Header -->
     <div class="logo-header" data-background-color="blue">
 
-        <a href="index.html" class="logo">
-            <img src="{{asset('admin')}}/assets/img/logo.svg" alt="navbar brand" class="navbar-brand">
+        <a href="../index.html" class="logo">
+            <img src="../../assets/img/logo.svg" alt="navbar brand" class="navbar-brand">
         </a>
         <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
@@ -25,13 +25,13 @@
         <div class="container-fluid">
             <div class="collapse" id="search-nav">
                 <form class="navbar-left navbar-form nav-search mr-md-3">
-                    <div class="input-group my-auto">
+                    <div class="input-group">
                         <div class="input-group-prepend">
                             <button type="submit" class="btn btn-search pr-1">
                                 <i class="fa fa-search search-icon"></i>
                             </button>
                         </div>
-                        <input type="text" placeholder="Search ...." class="form-control">
+                        <input type="text" placeholder="Search ..." class="form-control">
                     </div>
                 </form>
             </div>
@@ -57,7 +57,7 @@
                                 <div class="notif-center">
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="{{asset('admin')}}/assets/img/jm_denis.jpg" alt="Img Profile">
+                                            <img src="../../assets/img/jm_denis.jpg" alt="Img Profile">
                                         </div>
                                         <div class="notif-content">
                                             <span class="subject">Jimmy Denis</span>
@@ -69,7 +69,7 @@
                                     </a>
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="{{asset('admin')}}/assets/img/chadengle.jpg" alt="Img Profile">
+                                            <img src="../../assets/img/chadengle.jpg" alt="Img Profile">
                                         </div>
                                         <div class="notif-content">
                                             <span class="subject">Chad</span>
@@ -81,7 +81,7 @@
                                     </a>
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="{{asset('admin')}}/assets/img/mlane.jpg" alt="Img Profile">
+                                            <img src="../../assets/img/mlane.jpg" alt="Img Profile">
                                         </div>
                                         <div class="notif-content">
                                             <span class="subject">Jhon Doe</span>
@@ -93,7 +93,7 @@
                                     </a>
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="{{asset('admin')}}/assets/img/talha.jpg" alt="Img Profile">
+                                            <img src="../../assets/img/talha.jpg" alt="Img Profile">
                                         </div>
                                         <div class="notif-content">
                                             <span class="subject">Talha</span>
@@ -121,47 +121,45 @@
                             <div class="dropdown-title">You have 4 new notification</div>
                         </li>
                         <li>
-                            <div class="notif-scroll scrollbar-outer">
-                                <div class="notif-center">
-                                    <a href="#">
-                                        <div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
-                                        <div class="notif-content">
-													<span class="block">
-														New user registered
-													</span>
-                                            <span class="time">5 minutes ago</span>
-                                        </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
-                                        <div class="notif-content">
-													<span class="block">
-														Rahmad commented on Admin
-													</span>
-                                            <span class="time">12 minutes ago</span>
-                                        </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="notif-img">
-                                            <img src="{{asset('admin')}}/assets/img/profile2.jpg" alt="Img Profile">
-                                        </div>
-                                        <div class="notif-content">
-													<span class="block">
-														Reza send messages to you
-													</span>
-                                            <span class="time">12 minutes ago</span>
-                                        </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
-                                        <div class="notif-content">
-													<span class="block">
-														Farrah liked Admin
-													</span>
-                                            <span class="time">17 minutes ago</span>
-                                        </div>
-                                    </a>
-                                </div>
+                            <div class="notif-center">
+                                <a href="#">
+                                    <div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
+                                    <div class="notif-content">
+												<span class="block">
+													New user registered
+												</span>
+                                        <span class="time">5 minutes ago</span>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
+                                    <div class="notif-content">
+												<span class="block">
+													Rahmad commented on Admin
+												</span>
+                                        <span class="time">12 minutes ago</span>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="notif-img">
+                                        <img src="../../assets/img/profile2.jpg" alt="Img Profile">
+                                    </div>
+                                    <div class="notif-content">
+												<span class="block">
+													Reza send messages to you
+												</span>
+                                        <span class="time">12 minutes ago</span>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
+                                    <div class="notif-content">
+												<span class="block">
+													Farrah liked Admin
+												</span>
+                                        <span class="time">17 minutes ago</span>
+                                    </div>
+                                </a>
                             </div>
                         </li>
                         <li>
@@ -225,14 +223,14 @@
                 <li class="nav-item dropdown hidden-caret">
                     <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                         <div class="avatar-sm">
-                            <img src="{{asset('admin')}}/assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                            <img src="../../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-user animated fadeIn">
                         <div class="dropdown-user-scroll scrollbar-outer">
                             <li>
                                 <div class="user-box">
-                                    <div class="avatar-lg"><img src="{{asset('admin')}}/assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
+                                    <div class="avatar-lg"><img src="../../assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
                                     <div class="u-text">
                                         <h4>Hizrian</h4>
                                         <p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
@@ -247,7 +245,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Account Setting</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" data-action="logout" href="#">Logout</a>
+                                <a class="dropdown-item" href="#">Logout</a>
                             </li>
                         </div>
                     </ul>

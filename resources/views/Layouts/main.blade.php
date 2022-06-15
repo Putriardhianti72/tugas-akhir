@@ -35,6 +35,12 @@
     <!-- Template CSS -->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('user/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('user/css/reponsive.css') }}">
+
+    <script type="text/javascript">
+        window.APP_DATA = {!! json_encode([
+            'base_url' => url('/'),
+        ]) !!}
+    </script>
 </head>
 
 <body id="home">
@@ -716,7 +722,7 @@
         </div>
     </div>
 
-    
+
     <!-- Vendor JS -->
     <script src="{{URL::asset('user/libs/jquery/jquery.min.js')}}"></script>
     <script src="{{URL::asset('user/libs/popper/popper.min.js')}} "></script>
@@ -726,10 +732,8 @@
 
     <!-- Template JS -->
     <script src="{{URL::asset('user/js/theme.js')  }}"></script>
+    <script src="{{URL::asset('user/js/script.js')  }}"></script>
 
-
-    
-
-
+    @stack('js')
 </body>
 </html>

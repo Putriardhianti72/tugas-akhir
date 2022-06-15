@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Databank;
+use App\Models\Bank;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DatabanksController extends Controller
+class AdminBanksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class DatabanksController extends Controller
      */
     public function index()
     {
-        $databanks = Databank::all();
-        return view('bank.index', compact('databanks'));
+        $databanks = Bank::all();
+        return view('Admin.bank.index', compact('databanks'));
     }
 
     /**
@@ -42,14 +42,14 @@ class DatabanksController extends Controller
             'acc_owner' => 'required',
             'acc_number' => 'required'
         ]);
-        Databank::create([
+        Bank::create([
             'bank_name' => $request->bank_name,
             'acc_owner' => $request->acc_owner,
             'acc_number' => $request->acc_number
         ]);
 
         //redirect to index
-        return redirect()->route('banks.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('admin.banks.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
@@ -71,11 +71,12 @@ class DatabanksController extends Controller
      */
     public function edit($id)
     {
-        $bank = DB::table('databanks')
-            ->select ('*')
-            ->where ('id', $id)
-            ->first();
-        return view('bank.edit',compact('bank'));
+//        $bank = DB::table('databanks')
+//            ->select ('*')
+//            ->where ('id', $id)
+//            ->first();
+        $bank = Bank::findOrFail($id);
+        return view('admin.bank.edit',compact('bank'));
     }
 
     /**
@@ -87,19 +88,24 @@ class DatabanksController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $bank = Bank::findOrFail($id);
         $data = $request->validate([
             'bank_name' => 'required',
             'acc_owner' => 'required',
             'acc_number' => 'required'
         ]);
-        $category = DB::table('databanks')
-            ->where('id',$id)
-            ->update([
-                'bank_name' => $request->bank_name,
-                'acc_owner' => $request->acc_owner,
-                'acc_number' => $request->acc_number
-            ]);
-        return redirect('banks');
+//        $category = DB::table('databanks')
+//            ->where('id',$id)
+//            ->update([
+//                'bank_name' => $request->bank_name,
+//                'acc_owner' => $request->acc_owner,
+//                'acc_number' => $request->acc_number
+//            ]);
+        $bank->$request->all();
+        $bank->save();
+        return redirect()->route('admin.banks.index');
+
+
     }
 
     /**
@@ -110,6 +116,8 @@ class DatabanksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Bank::find($id);
+        $data->delete();
+        return redirect()->route('admin.banks.index');
     }
 }

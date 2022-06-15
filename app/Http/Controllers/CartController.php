@@ -77,19 +77,30 @@ class CartController extends Controller
     public function edit($id)
     {
 //        dd($id);
-        $cart= session("cart");
-        $product = DB::table('products')
-            ->select ('*')
-            ->where ('id', $id)
-            ->first();
-        $cart[]=[
-            "id" => $product->id,
-            "pict" => $product->pict,
-            "product_name" => $product->product_name,
-            "price" => $product->price,
-        ];
-        session(["cart" => $cart]);
-        return redirect("/carts");
+        $cart= session("cart") ?: [];
+        $product = Product::findOrFail($id);
+
+        $exists = false;
+        foreach ($cart as $value) {
+            if ($value['id'] == $product->id) {
+                $exists = true;
+                break;
+            }
+        }
+
+        if (! $exists) {
+            $cart[] = [
+                "id" => $product->id,
+                "pict" => $product->pict,
+                "product_name" => $product->product_name,
+                "price" => $product->price,
+            ];
+            session(["cart" => $cart]);
+        }
+
+        session()->flash('force_redirect', '/carts');
+
+        return redirect()->back();
     }
 
     /**
@@ -125,11 +136,77 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        $cart= session("cart");
-        unset($cart[$id]);
+        $cart= session("cart") ?: [];
+
+        $product = Product::findOrFail($id);
+
+        foreach ($cart as $i => $value) {
+            if ($value['id'] == $product->id) {
+                unset($cart[$i]);
+            }
+        }
+
+        $cart = array_values($cart);
         session(["cart" => $cart]);
+
         return redirect("/carts");
 
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function ajaxAddToCart($id)
+    {
+        $cart= session("cart") ?: [];
+        $product = Product::findOrFail($id);
+
+        $exists = false;
+        foreach ($cart as $value) {
+            if ($value['id'] == $product->id) {
+                $exists = true;
+                break;
+            }
+        }
+
+        if (! $exists) {
+            $cart[] = [
+                "id" => $product->id,
+                "pict" => $product->pict,
+                "product_name" => $product->product_name,
+                "price" => $product->price,
+            ];
+            session(["cart" => $cart]);
+        }
+
+        return response()->json([
+           'status' => 'success',
+            'data' => [
+                'total' => count($cart),
+                'cart' => $cart,
+            ]
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ajaxIndex()
+    {
+        $cart = session('cart') ?: [];
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'total' => count($cart),
+                'cart' => $cart,
+            ]
+        ]);
     }
 }
 

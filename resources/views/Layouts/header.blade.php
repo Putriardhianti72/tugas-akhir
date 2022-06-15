@@ -49,7 +49,7 @@
                                         </td>
                                         <td>
                                             <div class="product-name">
-                                                <a href="product-detail.html">Organic Strawberry Fruits</a>
+                                                <a href="product-detail.html">Organiccc Strawberry Fruits</a>
                                             </div>
                                             <div>
                                                 2 x
@@ -224,42 +224,59 @@
                         <div class="myaccount-title">
                             <a href="#acount" data-toggle="collapse" class="acount">
                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                <span>Account</span>
+                                @if (member_auth()->check())
+                                    <span>{{ member_auth()->user()->get('nama') }}</span>
+                                @else
+                                    <span>Account</span>
+                                @endif
                                 <i class="fa fa-angle-down" aria-hidden="true"></i>
                             </a>
                         </div>
                         <div id="acount" class="collapse">
                             <div class="account-list-content">
+                                @if(member_auth()->check())
                                 <div>
-                                    <a class="login" href="user-acount.html" rel="nofollow" title="Log in to your customer account">
+                                    <a class="login" href="{{ url('/') }}" rel="nofollow" title="Log in to your customer account">
                                         <i class="fa fa-cog"></i>
                                         <span>My Account</span>
                                     </a>
                                 </div>
+                                @endif
+                                @if(!member_auth()->check())
                                 <div>
-                                    <a class="login" href="user-login.html" rel="nofollow" title="Log in to your customer account">
+                                    <a class="login" href="{{ url('/login') }}" rel="nofollow" title="Log in to your customer account">
                                         <i class="fa fa-sign-in"></i>
                                         <span>Sign in</span>
                                     </a>
                                 </div>
+                                @endif
+{{--                                <div>--}}
+{{--                                    <a class="register" href="user-register.html" rel="nofollow" title="Register Account">--}}
+{{--                                        <i class="fa fa-user"></i>--}}
+{{--                                        <span>Register Account</span>--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
                                 <div>
-                                    <a class="register" href="user-register.html" rel="nofollow" title="Register Account">
-                                        <i class="fa fa-user"></i>
-                                        <span>Register Account</span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a class="check-out" href="product-checkout.html" rel="nofollow" title="Checkout">
+                                    <a class="check-out" href="{{ member_auth()->check() ? url('/carts') : url('/login') }}" rel="nofollow" title="Checkout">
                                         <i class="fa fa-check" aria-hidden="true"></i>
                                         <span>Checkout</span>
                                     </a>
                                 </div>
+{{--                                <div>--}}
+{{--                                    <a href="user-wishlist.html" title="My Wishlists">--}}
+{{--                                        <i class="fa fa-heart"></i>--}}
+{{--                                        <span>My Wishlists</span>--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
+                                @if(member_auth()->check())
                                 <div>
-                                    <a href="user-wishlist.html" title="My Wishlists">
-                                        <i class="fa fa-heart"></i>
-                                        <span>My Wishlists</span>
+                                    <a href="{{ url('/logout') }}" title="Logout">
+                                        <i class="fa fa-sign-out"></i>
+                                        <span>Logout</span>
                                     </a>
                                 </div>
+                                @endif
+
                                 <div id="desktop_currency_selector" class="currency-selector groups-selector hidden-sm-down">
                                     <ul class="list-inline">
                                         <li>
@@ -300,13 +317,20 @@
                     <div class="desktop_cart">
                         <div class="blockcart block-cart cart-preview tiva-toggle">
                             <div class="header-cart tiva-toggle-btn">
-                                <span class="cart-products-count">1</span>
+                                <span class="cart-products-count">{{ count(session('cart') ?: [])  }}</span>
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </div>
                             <div class="dropdown-content">
                                 <div class="cart-content">
                                     <table>
-                                        <tbody>
+                                        <tbody data-template-content="cart-list">
+                                        @php
+                                            $cartTotalPrice = 0;
+                                        @endphp
+                                        @foreach((session('cart') ?: []) as $cart)
+                                            @php
+                                                $cartTotalPrice += $cart['price'];
+                                            @endphp
                                             <tr>
                                                 <td class="product-image">
                                                     <a href="product-detail.html">
@@ -315,11 +339,10 @@
                                                 </td>
                                                 <td>
                                                     <div class="product-name">
-                                                        <a href="product-detail.html">Organic Strawberry Fruits</a>
+                                                        <a href="/product/{{ $cart['id'] }}">{{ $cart['product_name'] }}</a>
                                                     </div>
                                                     <div>
-                                                        2 x
-                                                        <span class="product-price">£28.98</span>
+                                                        <span class="product-price">{{ $cart['price'] }}</span>
                                                     </div>
                                                 </td>
                                                 <td class="action">
@@ -328,16 +351,19 @@
                                                     </a>
                                                 </td>
                                             </tr>
+                                        @endforeach
+                                        </tbody>
+                                        <tbody>
                                             <tr class="total">
                                                 <td colspan="2">Total:</td>
-                                                <td>£92.96</td>
+                                                <td>{{ $cartTotalPrice }}</td>
                                             </tr>
 
                                             <tr>
                                                 <td colspan="3" class="d-flex justify-content-center">
                                                     <div class="cart-button">
-                                                        <a href="product-cart.html" title="View Cart">View Cart</a>
-                                                        <a href="product-checkout.html" title="Checkout">Checkout</a>
+                                                        <a href="{{ member_auth()->check() ? url('/carts') : url('login') }}" title="View Cart">View Cart</a>
+                                                        <a href="{{ member_auth()->check() ? url('/carts') : url('login') }}" title="Checkout">Checkout</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -353,3 +379,26 @@
         </div>
     </div>
 </header>
+
+<script type="text/template" data-template="cart-list">
+    <tr>
+        <td class="product-image">
+            <a href="#">
+                <img alt="Product">
+            </a>
+        </td>
+        <td>
+            <div class="product-name">
+                <a href="#"></a>
+            </div>
+            <div>
+                <span class="product-price"></span>
+            </div>
+        </td>
+        <td class="action">
+            <a class="remove" href="#">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </a>
+        </td>
+    </tr>
+</script>

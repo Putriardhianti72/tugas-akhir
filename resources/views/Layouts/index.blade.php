@@ -131,7 +131,7 @@
                                                                     <div class="product-buttons d-flex justify-content-center">
                                                                         <form action="#" method="post" class="formAddToCart">
                                                                             @csrf
-                                                                            <a class="add-to-cart" href="{{route('carts.edit', $product->id)}}" data-button-action="add-to-cart">
+                                                                            <a class="add-to-cart" href="{{route('carts.edit', $product->id)}}" data-button-action="add-to-cart" data-add-to-cart="{{ $product->id }}">
                                                                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                                             </a>
                                                                         </form>
