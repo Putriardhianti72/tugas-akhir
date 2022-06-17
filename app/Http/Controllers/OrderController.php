@@ -3,9 +3,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderProduct;
 use Illuminate\Support\Facades\DB;
 
-class CartController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,11 +29,9 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        //
-        dd($id);
-//        return view("Layouts.user.cart");
+
     }
 
     /**
@@ -43,18 +43,45 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'bank_name' => 'required',
-            'acc_owner' => 'required',
-            'acc_number' => 'required'
-        ]);
-        Databank::create([
-            'bank_name' => $request->bank_name,
-            'acc_owner' => $request->acc_owner,
-            'acc_number' => $request->acc_number
+            'products' => ['required', 'array'],
+            'products.*.id' => ['required'],
+            'products.*.domain' => ['required'],
         ]);
 
+        $order = Order::create([]);
+        $orderProducts = [];
+        $carts = session('cart') ?: [];
+
+        foreach ($carts as $cart) {
+            $cart['product_id'] = $cart['id'];
+
+            $product = Product::findOrFail($cart['id']);
+            $cart['category_id'] = $product->category_id;
+            $cart['desc'] = $product->desc;
+            $cart['price'] = $product->price;
+            $cart['pict'] = $product->pict;
+            $cart['product_name'] = $product->product_name;
+
+            foreach ($request->products as $value) {
+                if ($value['id'] == $cart['id']) {
+                    $cart['domain'] = $value['domain'];
+                    break;
+                }
+            }
+
+            $orderProduct = $order->products()->create($cart);
+        }
+
+        $member = member_auth()->user()->toArray();
+        $member['token'] = member_auth()->token();
+        $order->member()->create($member);
+
+        session()->forget('cart');
+        $order->load('member', 'products');
+        dd($order);
+
         //redirect to index
-        return redirect()->route('banks.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('orders.index')->with(['success' => 'Order!']);
     }
 
     /**
@@ -154,91 +181,24 @@ class CartController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function ajaxAddToCart($id)
-    {
-        $cart= session("cart") ?: [];
-        $product = Product::findOrFail($id);
-
-        $exists = false;
-        foreach ($cart as $value) {
-            if ($value['id'] == $product->id) {
-                $exists = true;
-                break;
-            }
-        }
-
-        if (! $exists) {
-            $cart[] = [
-                "id" => $product->id,
-                "pict" => $product->pict,
-                "product_name" => $product->product_name,
-                "price" => $product->price,
-            ];
-            session(["cart" => $cart]);
-        }
-
-        return response()->json([
-           'status' => 'success',
-            'data' => [
-                'total' => count($cart),
-                'cart' => $cart,
-            ]
-        ]);
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function ajaxIndex()
+    public function ajaxCheckDomain(Request $request)
     {
-        $cart = session('cart') ?: [];
+        $orderProduct = OrderProduct::where('domain', $request->domain)->count();
+
+        if ($orderProduct) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Domain tidak tersedia',
+            ], 422);
+        }
 
         return response()->json([
             'status' => 'success',
-            'data' => [
-                'total' => count($cart),
-                'cart' => $cart,
-            ]
+            'message' => 'Domain tersedia',
         ]);
     }
 }
-
-//namespace App\Http\Controllers;
-//
-//use App\Models\Product;
-//use Illuminate\Http\Request;
-//
-//class CartController extends Controller
-//{
-//    public function index()
-//    {
-//        $products = Product::all();
-//    }
-//
-//    public function AddCart()
-//    {
-//        return view("Layouts.user.cart");
-////        dd($id);
-//        $cart= session("cart");
-//        $product=Product::detail_product($id);
-//        $cart["id"]=[
-//          "pict" => $product->pict,
-//          "product_name" => $product->product_name,
-//          "price" => $product->price,
-//        ];
-//        session(["cart" => $cart]);
-//        return redirect("/cart");
-//    }
-//
-//    public function cart(){
-//        $cart= session("cart");
-//        return view("Layouts.user.cart")->with("cart", $cart);
-//    }
-//}

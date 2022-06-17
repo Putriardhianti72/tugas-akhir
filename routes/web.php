@@ -29,7 +29,7 @@ Route::group(['prefix' => 'admin-area', 'as' => 'admin.'], function () {
     Route::post('login', [App\Http\Controllers\AdminAuthController::class,'login_submit']);
     Route::get('logout',[\App\Http\Controllers\AdminAuthController::class,'logout'])->name('logout');
 
-    Route::group(['middleware' => 'admin_auth'], function () {
+    Route::group(['middleware' => 'partner_auth:admin'], function () {
         Route::get('/', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('dashboard');
         Route::resource('categories', \App\Http\Controllers\AdminCategoriesController::class);
         Route::resource('products', \App\Http\Controllers\AdminProductsController::class);
@@ -50,14 +50,16 @@ Route::post('login', [App\Http\Controllers\CustomAuthController::class,'login_su
 Route::get('logout',[\App\Http\Controllers\CustomAuthController::class,'logout'])->name('logout');
 //Route::get('categories', [AdminCategoriesController::class,'index']);
 
-Route::group(['middleware' => 'member_auth'], function () {
+Route::group(['middleware' => 'partner_auth:member'], function () {
     //cart
     Route::post('/cart/add/{id}', [CartController::class,'AddCart']);
     Route::get('/cart/hapus/{id}', [\App\Http\Controllers\CartController::class,'destroy']);
     Route::resource('carts', \App\Http\Controllers\CartController::class);
+    Route::resource('orders', \App\Http\Controllers\OrderController::class);
 
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('/cart', [\App\Http\Controllers\CartController::class, 'ajaxIndex']);
         Route::post('/cart/add/{id}', [\App\Http\Controllers\CartController::class, 'ajaxAddToCart']);
+        Route::post('/order/check-domain', [\App\Http\Controllers\OrderController::class, 'ajaxCheckDomain']);
     });
 });
