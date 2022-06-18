@@ -19,10 +19,11 @@ use App\Http\Controllers\CartController;
 ////    return view('Layouts.index','$products');
 //    return view('Account.login');
 //});
-//Route::get('login', function () {
-//    return view('Account.login');
-//});
+// Route::get('/', function () {
+//    return view('User.listproduct');
+// });
 Route::get('/',[\App\Http\Controllers\LandingController::class,'index']);
+Route::get('/products',[\App\Http\Controllers\ProductsController::class,'index']);
 
 Route::group(['prefix' => 'admin-area', 'as' => 'admin.'], function () {
     Route::get('login',[\App\Http\Controllers\AdminAuthController::class, 'index'])->name('login');

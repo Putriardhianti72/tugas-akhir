@@ -24,10 +24,10 @@ class CustomAuthController extends Controller
             return redirect()->to('/');
         }
 
-        return view('Account.login');
+        return view('User.auth.login');
 
         if(!Session::get('email')) {
-            return view('Account.login');
+            return view('User.auth.login');
         }
         else{
             return redirect('/');

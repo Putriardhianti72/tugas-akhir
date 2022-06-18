@@ -19,7 +19,7 @@ class CartController extends Controller
 //        session_destroy($cart);
 //        unset();
 //        dd($cart);
-        return view('Layouts.user.cart')->with("cart",$cart);
+        return view('User.cart')->with("cart",$cart);
     }
 
     /**

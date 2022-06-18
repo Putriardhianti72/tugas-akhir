@@ -1,4 +1,5 @@
-@extends('Layouts.main')
+@extends('Layouts.user.main2')
+@section('class-body','user-login blog')
 @section('isi')
 <div class="main-content">
     <div id="wrapper-site">
@@ -7,9 +8,7 @@
                 <div class="container">
                     <h1 class="text-center title-page">Log In</h1>
                     <div class="login-form">
-{{--                        <form method="POST" action="{{ route('login.custom') }}">--}}
                         <form id="customer-form" action="{{ route('login.submit') }}" method="post">
-{{--                        <form id="customer-form" action="#" method="post">--}}
                             @csrf
                             <div>
                                 <input type="hidden" name="back" value="my-account">

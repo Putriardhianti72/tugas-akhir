@@ -113,7 +113,7 @@
                                                                 <div class="thumbnail-container">
                                                                     <a href="product-detail.html">
                                                                         <img class="img-fluid image-cover" src="public\pict\{{ $product->pict  }}" alt="img">
-                                                                        <img class="img-fluid image-secondary" src="img/product/5.jpg" alt="img">
+                                                                        <img class="img-fluid image-secondary" src="public\pict\{{ $product->pict  }}" alt="img">
                                                                     </a>
                                                                 </div>
                                                                 <div class="product-description">

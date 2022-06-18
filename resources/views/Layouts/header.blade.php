@@ -101,52 +101,13 @@
                 <div class="main-menu col-sm-4 col-md-5 align-items-center justify-content-center navbar-expand-md">
                     <div class="menu navbar collapse navbar-collapse">
                         <ul class="menu-top navbar-nav">
-                            <li class="nav-link">
-                                <a href="#" class="parent">Homee</a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li class="item">
-                                            <a href="index-2.html" title="Home Page 1">Home Page 1</a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="home2.html" title="Home Page 2">Home Page 2</a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="home3.html" title="Home Page 3">Home Page 3</a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="home4.html" title="Home Page 4">Home Page 4</a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="home5.html" title="Home Page 5">Home Page 5</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                            {{-- <li class="nav-link"> --}}
+                            <li>
+                                <a href="{{ url('/') }}" class="parent">Home</a>
+                                
                             </li>
                             <li>
-                                <a href="#" class="parent">Blog</a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li class="item">
-                                            <a href="blog-list-sidebar-left.html" title="Blog List (Sidebar Left)">Blog List (Sidebar Left)</a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="blog-list-sidebar-left2.html" title="Blog List (Sidebar Left) 2">Blog List (Sidebar Left) 2</a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="blog-list-sidebar-right.html" title="Category Blog (Right column)">Blog List (Sidebar Right)</a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="blog-list-no-sidebar.html" title="Blog List (No Sidebar)">Blog List (No Sidebar)</a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="blog-grid-no-sidebar.html" title="Blog Grid (No Sidebar)">Blog Grid (No Sidebar)</a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="blog-detail.html" title="Blog Detail">Blog Detail</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <a href="{{ url('/products') }}" class="parent">Product</a>
                             </li>
                             <li>
                                 <a href="#" class="parent">Page</a>
@@ -239,6 +200,12 @@
                                     <a class="login" href="{{ url('/') }}" rel="nofollow" title="Log in to your customer account">
                                         <i class="fa fa-cog"></i>
                                         <span>My Account</span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a class="login" href="{{ url('/member-area') }}" rel="nofollow" title="Log in to your customer account">
+                                        <i class="fa fa-cog"></i>
+                                        <span>My Dashboard</span>
                                     </a>
                                 </div>
                                 @endif
@@ -334,7 +301,7 @@
                                             <tr>
                                                 <td class="product-image">
                                                     <a href="product-detail.html">
-                                                        <img src="{{asset('user')}}/img/product/5.jpg" alt="Product">
+                                                        <img src="public\pict\{{$cart['pict']}}" alt="Product">
                                                     </a>
                                                 </td>
                                                 <td>
