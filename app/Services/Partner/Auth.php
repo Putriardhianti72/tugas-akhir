@@ -44,6 +44,11 @@ class Auth
         return Session::get('partner_api.token');
     }
 
+    public function hash()
+    {
+        return Session::get('partner_api.hash');
+    }
+
     public function login(array $credentials)
     {
         if ($this->role === self::ROLE_ADMIN) {
@@ -73,8 +78,10 @@ class Auth
             Session::put('partner_api.role', $this->role);
             Session::put('partner_api.user', $user);
 
-            $token = encrypt($credentials['uid'] . '||' . $credentials['passwd']);
-            Session::put('partner_api.token', $token);
+            $string = $credentials['uid'] . '||' . $credentials['passwd'];
+            Session::put('partner_api.token', encrypt($string));
+
+            Session::put('partner_api.hash', md5($string));
 
             return collect($user);
         }
@@ -87,5 +94,6 @@ class Auth
         Session::forget('partner_api.key');
         Session::forget('partner_api.user');
         Session::forget('partner_api.token');
+        Session::forget('partner_api.hash');
     }
 }

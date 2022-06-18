@@ -13,14 +13,14 @@ $(function () {
                 var totalPrice = 0;
 
                 $.each(res.data.cart, function (i, cart) {
-                    totalPrice += parseFloat(cart.price, 10) || 0;
+                    totalPrice += parseFloat(cart.product.price, 10) || 0;
                     var el = template.clone();
-                    var productUrl = BASE_URL + '/products/' + cart.id;
-                    var productImage = BASE_URL + '/img/' + cart.pict;
+                    var productUrl = BASE_URL + '/products/' + cart.product_id;
+                    var productImage = cart.product.pict_url;
                     el.find('.product-image img').attr('src', productImage);
                     el.find('.product-image a').attr('href', productUrl);
-                    el.find('.product-name a').attr('href', productUrl).text(cart.product_name);
-                    el.find('.product-price').text(cart.price);
+                    el.find('.product-name a').attr('href', productUrl).text(cart.product.product_name);
+                    el.find('.product-price').text(cart.product.price);
                     el.find('.action .remove').attr('href', BASE_URL + '/cart/hapus/' + cart.id);
                     list.push(el);
                 });

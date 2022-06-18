@@ -2,9 +2,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -43,45 +45,42 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'products' => ['required', 'array'],
-            'products.*.id' => ['required'],
-            'products.*.domain' => ['required'],
+            'bank_id' => ['required', 'exists:banks,id'],
         ]);
 
-        $order = Order::create([]);
+        $order = Order::create([
+            'invoice_no' => Order::generateInvoiceNo(),
+            'bank_id' => $request->bank_id,
+            'user_hash' => member_auth()->hash(),
+            'expired_at' => Carbon::now()->addMinutes(1),
+        ]);
+
         $orderProducts = [];
-        $carts = session('cart') ?: [];
+        $carts = Cart::where('user_hash', member_auth()->hash())->get();
 
         foreach ($carts as $cart) {
-            $cart['product_id'] = $cart['id'];
-
-            $product = Product::findOrFail($cart['id']);
-            $cart['category_id'] = $product->category_id;
-            $cart['desc'] = $product->desc;
-            $cart['price'] = $product->price;
-            $cart['pict'] = $product->pict;
-            $cart['product_name'] = $product->product_name;
-
-            foreach ($request->products as $value) {
-                if ($value['id'] == $cart['id']) {
-                    $cart['domain'] = $value['domain'];
-                    break;
-                }
-            }
-
-            $orderProduct = $order->products()->create($cart);
+            $orderProduct = $order->products()->create([
+                'product_id' => $cart->product_id,
+                'product_name' => $cart->product->product_name,
+                'domain' => $cart->domain,
+                'category_id' => $cart->product->category_id,
+                'desc' => $cart->product->desc,
+                'price' => $cart->product->price,
+                'pict' => $cart->product->pict,
+            ]);
         }
 
         $member = member_auth()->user()->toArray();
-        $member['token'] = member_auth()->token();
+        $member['user_hash'] = member_auth()->hash();
         $order->member()->create($member);
+        $order->payment()->create([]);
 
-        session()->forget('cart');
+        Cart::where('user_hash', member_auth()->hash())->delete();
+
         $order->load('member', 'products');
-        dd($order);
 
         //redirect to index
-        return redirect()->route('orders.index')->with(['success' => 'Order!']);
+        return redirect()->route('orders.show', $order->id)->with(['success' => 'Order!']);
     }
 
     /**
@@ -92,7 +91,13 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::where('user_hash', member_auth()->hash())->findOrFail($id);
+
+        if ($order->status == Order::STATUS_PENDING) {
+            return view('User.payment', ['order' => $order]);
+        }
+
+        return view('User.order', ['order' => $order]);
     }
 
     /**

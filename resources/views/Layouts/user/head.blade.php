@@ -43,4 +43,10 @@
     <!-- Template CSS -->
    <!--  <link rel="stylesheet" type="text/css" href="{{URL::asset('user/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('user/css/reponsive.css') }}"> -->
+
+    <script type="text/javascript">
+        window.APP_DATA = {!! json_encode([
+            'base_url' => url('/'),
+        ]) !!}
+    </script>
 </head>

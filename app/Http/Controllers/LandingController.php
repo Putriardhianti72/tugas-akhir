@@ -20,6 +20,12 @@ class LandingController extends Controller
         return view('Layouts.index', compact('products'));
     }
 
+    public function products()
+    {
+        $products = Product::all();
+        return view('User.listproduct', compact('products'));
+    }
+
     public function categori(){
 
     }

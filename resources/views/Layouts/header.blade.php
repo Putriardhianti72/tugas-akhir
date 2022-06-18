@@ -104,7 +104,7 @@
                             {{-- <li class="nav-link"> --}}
                             <li>
                                 <a href="{{ url('/') }}" class="parent">Home</a>
-                                
+
                             </li>
                             <li>
                                 <a href="{{ url('/products') }}" class="parent">Product</a>
@@ -284,32 +284,25 @@
                     <div class="desktop_cart">
                         <div class="blockcart block-cart cart-preview tiva-toggle">
                             <div class="header-cart tiva-toggle-btn">
-                                <span class="cart-products-count">{{ count(session('cart') ?: [])  }}</span>
+                                <span class="cart-products-count">0</span>
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </div>
                             <div class="dropdown-content">
                                 <div class="cart-content">
                                     <table>
                                         <tbody data-template-content="cart-list">
-                                        @php
-                                            $cartTotalPrice = 0;
-                                        @endphp
-                                        @foreach((session('cart') ?: []) as $cart)
-                                            @php
-                                                $cartTotalPrice += $cart['price'];
-                                            @endphp
                                             <tr>
                                                 <td class="product-image">
                                                     <a href="product-detail.html">
-                                                        <img src="public\pict\{{$cart['pict']}}" alt="Product">
+                                                        <img src="" alt="Product">
                                                     </a>
                                                 </td>
                                                 <td>
                                                     <div class="product-name">
-                                                        <a href="/product/{{ $cart['id'] }}">{{ $cart['product_name'] }}</a>
+                                                        <a href="#"></a>
                                                     </div>
                                                     <div>
-                                                        <span class="product-price">{{ $cart['price'] }}</span>
+                                                        <span class="product-price"></span>
                                                     </div>
                                                 </td>
                                                 <td class="action">
@@ -318,12 +311,11 @@
                                                     </a>
                                                 </td>
                                             </tr>
-                                        @endforeach
                                         </tbody>
                                         <tbody>
                                             <tr class="total">
                                                 <td colspan="2">Total:</td>
-                                                <td>{{ $cartTotalPrice }}</td>
+                                                <td>0</td>
                                             </tr>
 
                                             <tr>

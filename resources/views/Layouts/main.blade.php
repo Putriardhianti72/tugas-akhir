@@ -43,7 +43,7 @@
     </script>
 </head>
 
-<body id="home">
+<body id="home" >
     @include('Layouts.header')
 
      <!-- main content -->

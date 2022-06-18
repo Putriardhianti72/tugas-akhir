@@ -101,8 +101,8 @@
                                         <input type="file" class="form-control @error('pict') is-invalid @enderror" name="pict">
                                     </div>
                                     <div class="col-md-6">
-                                        <a href="{{ asset('public/pict/' . $product->pict) }}" target="_blank">
-                                            <img src="{{ asset('public/pict/' . $product->pict) }}" class="img-fluid rounded" style="max-width: 246px">
+                                        <a href="{{ $product->pict_url }}" target="_blank">
+                                            <img src="{{ $product->pict_url }}" class="img-fluid rounded" style="max-width: 246px">
                                         </a>
                                     </div>
                                 </div>

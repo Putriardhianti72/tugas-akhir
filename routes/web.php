@@ -55,7 +55,11 @@ Route::group(['middleware' => 'partner_auth:member'], function () {
     //cart
     Route::post('/cart/add/{id}', [CartController::class,'AddCart']);
     Route::get('/cart/hapus/{id}', [\App\Http\Controllers\CartController::class,'destroy']);
-    Route::resource('carts', \App\Http\Controllers\CartController::class);
+    Route::resource('carts', \App\Http\Controllers\CartController::class)->except([
+        'update'
+    ]);
+    Route::patch('/carts', [CartController::class,'update'])->name('carts.update');
+    Route::get('/checkout', [CartController::class,'checkout'])->name('carts.checkout');
     Route::resource('orders', \App\Http\Controllers\OrderController::class);
 
     Route::group(['prefix' => 'ajax'], function () {

@@ -12,7 +12,10 @@ class Order extends Model
     protected $table ='orders';
     protected $primaryKey ='id';
     protected $fillable=[
-        'status'
+        'user_hash', 'status', 'invoice_no', 'expired_at',
+    ];
+    protected $dates = [
+        'expired_at',
     ];
 
     public const STATUS_PENDING = 0;
@@ -28,5 +31,36 @@ class Order extends Model
     public function products()
     {
         return $this->hasMany(OrderProduct::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(OrderPayment::class);
+    }
+
+    public function getStatusTextAttribute()
+    {
+        if ($this->status == self::STATUS_PENDING) {
+            return 'Pending';
+        }
+
+        if ($this->status == self::STATUS_COMPLETED) {
+            return 'Completed';
+        }
+
+        if ($this->status == self::STATUS_PAID) {
+            return 'Paid';
+        }
+
+        if ($this->status == self::STATUS_CANCEL) {
+            return 'Cancelled';
+        }
+    }
+
+    public static function generateInvoiceNo()
+    {
+        $count = static::count('id');
+
+        return 'INV' . str_pad($count + 1, 9, '0', STR_PAD_LEFT);
     }
 }

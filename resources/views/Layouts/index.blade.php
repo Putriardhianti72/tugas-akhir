@@ -112,8 +112,8 @@
                                                             <div class="product-miniature first-item js-product-miniature item-one">
                                                                 <div class="thumbnail-container">
                                                                     <a href="product-detail.html">
-                                                                        <img class="img-fluid image-cover" src="public\pict\{{ $product->pict  }}" alt="img">
-                                                                        <img class="img-fluid image-secondary" src="public\pict\{{ $product->pict  }}" alt="img">
+                                                                        <img class="img-fluid image-cover" src="{{ $product->pict_url }}" alt="img">
+                                                                        <img class="img-fluid image-secondary" src="{{ $product->pict_url }}" alt="img">
                                                                     </a>
                                                                 </div>
                                                                 <div class="product-description">

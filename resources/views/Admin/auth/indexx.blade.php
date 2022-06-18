@@ -56,7 +56,7 @@
                             @foreach($products as $product)
                                 <tr>
                                     <td>{{$i++}}</td>
-                                    <td><img src="public\pict\{{ $product->pict  }}" class="rounded" style="width: 150px"></td>
+                                    <td><img src="{{ $product->pict_url  }}" class="rounded" style="width: 150px"></td>
                                     <td>{{ $product->product_name }}</td>
 {{--                                    <td>{{ $product->product_name }}</td>--}}
                                     <td>{{ $product->price}}</td>

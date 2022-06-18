@@ -28,9 +28,14 @@
     <link rel="stylesheet" href="{{URL::asset('user/libs/slider-range/css/jslider.css') }}">
     <link rel="stylesheet" href="{{URL::asset('user/libs/owl-carousel/assets/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{URL::asset('user/libs/slick-slider/css/slick.css') }}">
-    <link rel="stylesheet" href="{{URL::asset('user/libs/slick-slider/css/slick-theme.css') }}"> 
+    <link rel="stylesheet" href="{{URL::asset('user/libs/slick-slider/css/slick-theme.css') }}">
 
     <!-- Template CSS -->
    <!--  <link rel="stylesheet" type="text/css" href="{{URL::asset('user/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('user/css/reponsive.css') }}"> -->
+    <script type="text/javascript">
+        window.APP_DATA = {!! json_encode([
+            'base_url' => url('/'),
+        ]) !!}
+    </script>
 </head>

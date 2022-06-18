@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     @include('Layouts.user.head')
-
     <body class="product-cart checkout-cart blog">
     @include('Layouts.header')
         <div class="main-content" id="cart">
@@ -28,64 +27,71 @@
                 </nav>
                 <div class="container">
                     <div class="row">
-                        <div id="content-wrapper" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 onecol">
+                        <div id="content-wrapper" class="col-12 col-sm-12 col-md-12 col-lg-12 onecol">
                             <section id="main">
                                 <div class="cart-grid row">
-                                    <div class="col-md-9 col-xs-12 check-info">
-                                        <form action="{{ route('carts.update') }}" method="post">
+                                    <div class="col-md-9 col-12 check-info">
+                                        <form action="{{ route('orders.store') }}" method="post">
                                             @csrf
-                                            @method('patch')
+                                            <div class="row mb-4 pb-4">
+                                                <div class="col-12">
+                                                    <h1 class="title-page">Checkout</h1>
+                                                    <h6 class="subtitle-page">Product List</h6>
 
-                                            <h1 class="title-page">Shopping Cart</h1>
-                                            <div class="cart-container">
-                                                <div class="cart-overview js-cart">
-                                                    <ul class="cart-items">
-                                                        @foreach($carts as $i => $cart)
-                                                        <input type="hidden" name="carts[{{ $i }}][id]" value="{{ $cart->id }}">
-                                                        <li class="cart-item">
-                                                            <div class="product-line-grid row justify-content-between">
-                                                                <!--  product left content: image-->
-                                                                <div class="product-line-grid-left col-md-2">
-                                                                        <span class="product-image media-middle">
-                                                                            <a href="product-detail.html">
-                                                                                <img class="img-fluid" src="{{ $cart->product->pict_url }}" alt="{{ $cart->product->product_name }}">
-                                                                            </a>
-                                                                        </span>
-                                                                </div>
-                                                                <div class="product-line-grid-body col-md-6">
-                                                                    <div class="product-line-info">
-                                                                        <a class="label" href="product-detail.html" data-id_customization="0">{{ $cart->product->name }}</a>
-                                                                    </div>
-                                                                    <div class="product-line-info product-price">
-                                                                        <span class="value">{{ $cart->product->price }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-line-grid-right product-line-actions col-md-4">
-                                                                    <div class="row">
-                                                                        <div class="col-md-10 col qty">
-                                                                            <input type="text" name="carts[{{ $i }}][domain]" value="{{ $cart->domain }}" class="form-control form-control-sm" placeholder="Domain" data-cart-input="domain" data-cart-id="{{ $cart->id }}" aria-label="Domain" aria-describedby="basic-addon2" autocomplete="off" required>
-                                                                            <div class="valid-feedback"></div>
-                                                                            <div class="invalid-feedback"></div>
-                                                                        </div>
+                                                    <table class="std table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="first_item" width="10%">Image</th>
+                                                                <th class="item mywishlist_first">Product Name</th>
+                                                                <th class="item mywishlist_first">Price</th>
+                                                                <th class="item mywishlist_second">Domain</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($cart as $cart)
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="#">
+                                                                        <img class="img-fluid" src="{{ $cart->product->pict_url }}" alt="Organic Strawberry Fruits">
+                                                                    </a>
+                                                                </td>
+                                                                <td class="bold align_center">
+                                                                    {{ $cart->product->product_name }}
+                                                                </td>
+                                                                <td>{{ $cart->product->price }}</td>
+                                                                <td>{{ $cart->domain }}</td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
 
-                                                                        <div class="col-md-1 col text-xs-right">
-                                                                            <div class="cart-line-product-actions">
-                                                                                <a class="remove-from-cart" rel="nofollow" href="/cart/hapus/{{ $cart->id }}" data-link-action="delete-from-cart" data-id-product="1">
-                                                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        @endforeach
-                                                    </ul>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="continue btn btn-primary pull-xs-right">
-                                                Continue
-                                            </button>
+                                            <hr class="my-4">
+                                            <div class="row mt-3 mb-4">
+                                                <div class="col-12">
+                                                      <div class="form-group row">
+                                                        <div class="col-12 col-md-4">
+                                                            <h6 class="subtitle-page">Payment Method</h6>
+                                                            <label for="exampleFormControlSelect1">Pilih metode pembayaran</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-8">
+                                                            <select class="form-control" name="bank_id">
+                                                                @foreach($banks as $bank)
+                                                                <option value="{{ $bank->id }}">{{ $bank->bank_name }} - {{ $bank->acc_number }} ({{ $bank->acc_owner }})</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-4">
+                                                <div class="col-12">
+                                                    <button type="submit" class="continue btn btn-primary pull-xs-right">
+                                                        Continue
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </form>
                                     </div>
                                     <div class="cart-grid-right col-xs-12 col-lg-3">

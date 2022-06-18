@@ -11,8 +11,7 @@
 
 
 
-<body id= @yield('class-body')>
-{{-- <body id="product-sidebar-left"> --}}
+<body class="@yield('class-body')">
 <!-- <body class="user-login blog"> -->
 
    @include('Layouts.header')
@@ -704,6 +703,8 @@
 
     <!-- Template JS -->
     <script src="{{URL::asset('user/js/theme.js')}}"></script>
+    <script src="{{URL::asset('user/js/script.js')}}"></script>
+    @stack('js')
 </body>
 
 

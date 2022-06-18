@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('alamat2')->nullable();
             $table->string('kota')->nullable();
             $table->string('propinsi')->nullable();
-            $table->text('token')->nullable();
+            $table->text('user_hash')->nullable();
             $table->timestamps();
         });
     }

@@ -173,9 +173,9 @@
                                             </div>
                                         </div>
 
-                                       
 
-                                       
+
+
                                     </div>
                                     <div class="col-sm-8 col-lg-9 col-md-8 product-container">
                                         <h1>Our Templates</h1>
@@ -209,7 +209,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="tab-content product-items">
                                             <div id="grid" class="related tab-pane fade">
                                                 <div class="row">
@@ -254,7 +254,7 @@
                                                         </div>
                                                     </div>
                                                     @endforeach
-                                                
+
                                                 </div>
                                             </div>
                                             <div id="list" class="related tab-pane fade in active show">
@@ -266,8 +266,8 @@
                                                                 <div class="col-md-4">
                                                                     <div class="thumbnail-container border">
                                                                         <a href="product-detail.html">
-                                                                            <img class="img-fluid image-cover" src="public\pict\{{ $product->pict  }}" alt="img">
-                                                                            <img class="img-fluid image-secondary" src="public\pict\{{ $product->pict  }}" alt="img">
+                                                                            <img class="img-fluid image-cover" src="{{ $product->pict_url  }}" alt="img">
+                                                                            <img class="img-fluid image-secondary" src="{{ $product->pict_url  }}" alt="img">
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -313,11 +313,11 @@
                                                         </div>
                                                     </div>
                                                     @endforeach
-                                                
+
                                                 </div>
                                             </div>
                                         </div>
-                                       
+
 
                                         <!-- pagination -->
                                         <div class="pagination">

@@ -2,23 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OrderMember extends Model
+class OrderPayment extends Model
 {
-    protected $table ='order_members';
+    protected $table = 'order_payments';
     protected $primaryKey ='id';
     protected $fillable=[
         'order_id',
-        'uid',
-        'nama',
-        'email',
-        'hp',
-        'alamat1',
-        'alamat2',
-        'kota',
-        'propinsi',
-        'user_hash',
+        'bank_name',
+        'acc_owner',
+        'acc_number'
     ];
 
     public function order()

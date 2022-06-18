@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Bank;
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
@@ -14,12 +16,14 @@ class CartController extends Controller
      */
     public function index()
     {
-//        dd(session("cart"));
-        $cart = session("cart") ?: [];
-//        session_destroy($cart);
-//        unset();
-//        dd($cart);
-        return view('User.cart')->with("cart",$cart);
+        $carts = Cart::where('user_hash', member_auth()->hash())->get();
+        $totalCartPrice = 0;
+
+        foreach ($carts as $cart) {
+            $totalCartPrice += $cart->product->price;
+        }
+
+        return view('User.cart')->with("carts", $carts)->with('totalCartPrice', $totalCartPrice)->with('totalCart', count($carts));
     }
 
     /**
@@ -47,11 +51,8 @@ class CartController extends Controller
             'acc_owner' => 'required',
             'acc_number' => 'required'
         ]);
-        Databank::create([
-            'bank_name' => $request->bank_name,
-            'acc_owner' => $request->acc_owner,
-            'acc_number' => $request->acc_number
-        ]);
+
+        dd('hancur');
 
         //redirect to index
         return redirect()->route('banks.index')->with(['success' => 'Data Berhasil Disimpan!']);
@@ -69,6 +70,35 @@ class CartController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function checkout()
+    {
+        $carts = Cart::where('user_hash', member_auth()->hash())->get();
+        $totalCartPrice = 0;
+
+        if (! count($carts)) {
+            return redirect()->route('carts.index');
+        }
+
+        foreach ($carts as $cart) {
+            if (! isset($cart['domain'])) {
+                return redirect()->route('carts.index');
+            }
+            $totalCartPrice += $cart->product->price;
+        }
+
+        $totalCart = count($carts);
+
+        $banks = Bank::all();
+
+        return view('User.checkout', ['cart' => $carts, 'banks' => $banks, 'totalCartPrice' => $totalCartPrice, 'totalCart' => $totalCart]);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
@@ -76,26 +106,14 @@ class CartController extends Controller
      */
     public function edit($id)
     {
-//        dd($id);
-        $cart= session("cart") ?: [];
         $product = Product::findOrFail($id);
+        $cart = Cart::where('user_hash', member_auth()->hash())->where('product_id', $product->id)->first();
 
-        $exists = false;
-        foreach ($cart as $value) {
-            if ($value['id'] == $product->id) {
-                $exists = true;
-                break;
-            }
-        }
-
-        if (! $exists) {
-            $cart[] = [
-                "id" => $product->id,
-                "pict" => $product->pict,
-                "product_name" => $product->product_name,
-                "price" => $product->price,
-            ];
-            session(["cart" => $cart]);
+        if (! $cart) {
+            $cart = Cart::create([
+                'product_id' => $product->id,
+                'token' => member_auth()->hash(),
+            ]);
         }
 
         session()->flash('force_redirect', '/carts');
@@ -110,22 +128,29 @@ class CartController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $data = $request->validate([
-            'bank_name' => 'required',
-            'acc_owner' => 'required',
-            'acc_number' => 'required'
+        $this->validate($request, [
+            'carts' => ['required', 'array'],
+            'carts.*.id' => ['required'],
+            'carts.*.domain' => ['required'],
         ]);
-        $category = DB::table('databanks')
-            ->where('id', $id)
-            ->update([
-                'bank_name' => $request->bank_name,
-                'acc_owner' => $request->acc_owner,
-                'acc_number' => $request->acc_number,
-                'updated_at' => date('Y-m-d H:i:s')
-            ]);
-        return redirect('banks');
+
+        $orderProducts = [];
+        $carts = Cart::where('user_hash', member_auth()->hash())->get();
+
+        foreach ($request->carts as $value) {
+            foreach ($carts as $cart) {
+                if ($value['id'] == $cart->id) {
+                    $cart->domain = $value['domain'];
+                    $cart->save();
+                    break;
+                }
+            }
+        }
+
+        //redirect to index
+        return redirect()->route('carts.checkout');
     }
 
     /**
@@ -136,19 +161,8 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        $cart= session("cart") ?: [];
-
-        $product = Product::findOrFail($id);
-
-        foreach ($cart as $i => $value) {
-            if ($value['id'] == $product->id) {
-                unset($cart[$i]);
-            }
-        }
-
-        $cart = array_values($cart);
-        session(["cart" => $cart]);
-
+        $cart = Cart::where('user_hash', member_auth()->hash())->findOrFail($id);
+        $cart->delete();
         return redirect("/carts");
 
     }
@@ -161,32 +175,23 @@ class CartController extends Controller
      */
     public function ajaxAddToCart($id)
     {
-        $cart= session("cart") ?: [];
         $product = Product::findOrFail($id);
+        $cart = Cart::where('user_hash', member_auth()->hash())->where('product_id', $product->id)->first();
 
-        $exists = false;
-        foreach ($cart as $value) {
-            if ($value['id'] == $product->id) {
-                $exists = true;
-                break;
-            }
+        if (! $cart) {
+            $cart = Cart::create([
+                'product_id' => $product->id,
+                'user_hash' => member_auth()->hash(),
+            ]);
         }
 
-        if (! $exists) {
-            $cart[] = [
-                "id" => $product->id,
-                "pict" => $product->pict,
-                "product_name" => $product->product_name,
-                "price" => $product->price,
-            ];
-            session(["cart" => $cart]);
-        }
+        $carts = Cart::where('user_hash', member_auth()->hash())->get();
 
         return response()->json([
            'status' => 'success',
             'data' => [
-                'total' => count($cart),
-                'cart' => $cart,
+                'total' => count($carts),
+                'cart' => $carts,
             ]
         ]);
     }
@@ -198,47 +203,14 @@ class CartController extends Controller
      */
     public function ajaxIndex()
     {
-        $cart = session('cart') ?: [];
+        $carts = Cart::where('user_hash', member_auth()->hash())->get();
 
         return response()->json([
             'status' => 'success',
             'data' => [
-                'total' => count($cart),
-                'cart' => $cart,
+                'total' => count($carts),
+                'cart' => $carts,
             ]
         ]);
     }
 }
-
-//namespace App\Http\Controllers;
-//
-//use App\Models\Product;
-//use Illuminate\Http\Request;
-//
-//class CartController extends Controller
-//{
-//    public function index()
-//    {
-//        $products = Product::all();
-//    }
-//
-//    public function AddCart()
-//    {
-//        return view("Layouts.user.cart");
-////        dd($id);
-//        $cart= session("cart");
-//        $product=Product::detail_product($id);
-//        $cart["id"]=[
-//          "pict" => $product->pict,
-//          "product_name" => $product->product_name,
-//          "price" => $product->price,
-//        ];
-//        session(["cart" => $cart]);
-//        return redirect("/cart");
-//    }
-//
-//    public function cart(){
-//        $cart= session("cart");
-//        return view("Layouts.user.cart")->with("cart", $cart);
-//    }
-//}

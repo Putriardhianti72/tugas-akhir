@@ -29,9 +29,7 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td class="text-center">
-                                    <img src="public\pict\{{ $product->pict  }}" class="rounded" style="width: 150px">
-{{--                                        {{ public_path("pict".$product->pict)  }}--}}
-                                    {{--                                    {{ $product->pict  }}--}}
+                                    <img src="{{ $product->pict_url  }}" class="rounded" style="width: 150px">
                                 </td>
                                 <td>{{ $product->product_name }}</td>
                                 <td>{{ $product->price}}</td>
