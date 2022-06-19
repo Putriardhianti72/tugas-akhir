@@ -132,9 +132,15 @@
                                                                         <form action="#" method="post" class="formAddToCart">
                                                                             @csrf
                                                                             @if(member_auth()->check())
-                                                                            <a class="add-to-cart" href="{{route('carts.edit', $product->id)}}" data-button-action="add-to-cart" data-add-to-cart="{{ $product->id }}">
-                                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                                            </a>
+                                                                                @if($product->in_stock)
+                                                                                <a class="add-to-cart" href="{{route('carts.edit', $product->id)}}" data-button-action="add-to-cart" data-add-to-cart="{{ $product->id }}">
+                                                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                                                </a>
+                                                                                @else
+                                                                                <span class="add-to-cart"data-button-action="add-to-cart">
+                                                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                                                </span>
+                                                                                @endif
                                                                             @else
                                                                             <a class="add-to-cart" href="{{route('login')}}" data-button-action="add-to-cart">
                                                                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>

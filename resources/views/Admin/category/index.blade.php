@@ -156,6 +156,3 @@
         });
     </script>
     @endpush
-    </body>
-    </html>
-

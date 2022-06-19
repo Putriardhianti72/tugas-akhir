@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -18,12 +19,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-//        dd(session("cart"));
-        $cart = session("cart") ?: [];
-//        session_destroy($cart);
-//        unset();
-//        dd($cart);
-        return view('Layouts.user.cart')->with("cart",$cart);
+        $orders = Order::where('user_hash', member_auth()->hash())->latest()->get();
+
+        return view('User.listorder')->with(compact('orders'));
     }
 
     /**
@@ -50,7 +48,6 @@ class OrderController extends Controller
 
         $order = Order::create([
             'invoice_no' => Order::generateInvoiceNo(),
-            'bank_id' => $request->bank_id,
             'user_hash' => member_auth()->hash(),
             'expired_at' => Carbon::now()->addMinutes(1),
         ]);
@@ -73,7 +70,9 @@ class OrderController extends Controller
         $member = member_auth()->user()->toArray();
         $member['user_hash'] = member_auth()->hash();
         $order->member()->create($member);
-        $order->payment()->create([]);
+        $order->payment()->create([
+            'destination_bank_id' => $request->bank_id,
+        ]);
 
         Cart::where('user_hash', member_auth()->hash())->delete();
 
@@ -93,11 +92,23 @@ class OrderController extends Controller
     {
         $order = Order::where('user_hash', member_auth()->hash())->findOrFail($id);
 
-        if ($order->status == Order::STATUS_PENDING) {
-            return view('User.payment', ['order' => $order]);
+        $totalPrice = 0;
+
+        foreach ($order->products as $product) {
+            $totalPrice += $product->price;
         }
 
-        return view('User.order', ['order' => $order]);
+        $data = [
+            'order' => $order,
+            'totalPrice' => $totalPrice,
+            'bank' => $order->payment->destinationBank,
+        ];
+
+        if ($order->status == Order::STATUS_PENDING) {
+            return view('User.payment', $data);
+        }
+
+        return view('User.order', $data);
     }
 
     /**
@@ -158,6 +169,58 @@ class OrderController extends Controller
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
         return redirect('banks');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function pay(Request $request, $id)
+    {
+        $data = $request->validate([
+            'bank_name' => 'required',
+            'acc_owner' => 'required',
+            'acc_number' => 'required',
+        ]);
+        $order = Order::findOrFail($id);
+
+        $payment = $order->payment;
+        $payment->bank_name = $request->bank_name;
+        $payment->acc_owner = $request->acc_owner;
+        $payment->acc_number = $request->acc_number;
+
+        $totalPrice = 0;
+
+        foreach ($order->products as $product) {
+            $totalPrice += $product->price;
+        }
+
+        $payment->total_price = $totalPrice;
+
+        if ($request->payment_proof) {
+            $this->validate($request, [
+                'payment_proof'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+
+            Storage::delete('public/payment-proof/'. $payment->payment_proof);
+
+            //upload image
+            $paymentProof = $request->file('payment_proof');
+            $paymentProofHashName = $paymentProof->hashName();
+            $paymentProof->storeAs('public/payment-proof', $paymentProofHashName);
+
+            $payment->payment_proof = $paymentProofHashName;
+        }
+
+        $payment->save();
+
+        $order->status = Order::STATUS_PENDING_REVIEW;
+        $order->save();
+
+        return redirect()->route('orders.show', $order->id);
     }
 
     /**

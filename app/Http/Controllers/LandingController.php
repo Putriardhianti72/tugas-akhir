@@ -16,13 +16,13 @@ class LandingController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::where('in_stock', 1)->get();
         return view('Layouts.index', compact('products'));
     }
 
     public function products()
     {
-        $products = Product::all();
+        $products = Product::where('in_stock', 1)->get();
         return view('User.listproduct', compact('products'));
     }
 

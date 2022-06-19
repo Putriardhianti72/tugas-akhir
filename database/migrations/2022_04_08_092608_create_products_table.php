@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('desc')->nullable();
             $table->integer('price')->default(0);
             $table->string('pict')->nullable();
+            $table->tinyInteger('in_stock')->default(1);
             $table->timestamps();
             $table->softDeletes();
 

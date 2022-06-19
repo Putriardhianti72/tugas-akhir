@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class OrderProduct extends Model
 {
@@ -32,5 +33,12 @@ class OrderProduct extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getPictUrlAttribute()
+    {
+        if ($this->pict) {
+            return Storage::disk('local')->url('public/pict/'. $this->pict);
+        }
     }
 }

@@ -47,19 +47,102 @@
                                                         </div>
 
                                                         <div class="card-body">
+                                                          <h6 class="subtitle-page">Product List</h6>
 
+                                                          <table class="std table">
+                                                              <thead>
+                                                                  <tr>
+                                                                      <th class="first_item" width="15%">Image</th>
+                                                                      <th class="item mywishlist_first">Product Name</th>
+                                                                      <th class="item mywishlist_second">Domain</th>
+                                                                      <th class="item mywishlist_first">Price</th>
+                                                                  </tr>
+                                                              </thead>
+                                                              <tbody>
+                                                                  @foreach($order->products as $product)
+                                                                  <tr>
+                                                                      <td>
+                                                                          <a href="#">
+                                                                              <img class="img-fluid" src="{{ $product->pict_url }}" alt="{{ $product->product_name }}">
+                                                                          </a>
+                                                                      </td>
+                                                                      <td class="bold align_center">
+                                                                          {{ $product->product_name }}
+                                                                      </td>
+                                                                      <td>{{ $product->domain }}</td>
+                                                                      <td>{{ $product->price }}</td>
+                                                                  </tr>
+                                                                  @endforeach
+                                                              </tbody>
+                                                          </table>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="row mb-4">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="subtitle-page">Payment Detail</h5>
+
+                                                        <div class="row my-4">
+                                                            <div class="col-12">
+                                                                <div class="row">
+                                                                    <div class="col-12 col-md-4">
+                                                                        Bank
+                                                                    </div>
+                                                                    <div class="col-12 col-md-8">
+                                                                        {{ $order->payment->bank_name }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-12 col-md-4">
+                                                                        Nama Pengirim
+                                                                    </div>
+                                                                    <div class="col-12 col-md-8">
+                                                                        {{ $order->payment->acc_owner }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-12 col-md-4">
+                                                                        No. Rekening
+                                                                    </div>
+                                                                    <div class="col-12 col-md-8">
+                                                                        {{ $order->payment->acc_number }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-12 col-md-4">
+                                                                        No. Rekening Tujuan
+                                                                    </div>
+                                                                    <div class="col-12 col-md-8">
+                                                                        {{ $order->payment->destinationBank->bank_name }} - {{ $order->payment->destinationBank->acc_number }} ({{ $order->payment->destinationBank->acc_owner }})
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-12 col-md-4">
+                                                                        Jumlah Pembayaran
+                                                                    </div>
+                                                                    <div class="col-12 col-md-8">
+                                                                        {{ $order->payment->total_price }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <hr class="my-4">
-                                            <div class="row mt-4">
+                                            <!-- <div class="row mt-4">
                                                 <div class="col-12">
                                                     <button type="submit" class="continue btn btn-primary pull-xs-right">
                                                         Continue
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </form>
                                     </div>
                                     <div class="cart-grid-right col-xs-12 col-lg-3">

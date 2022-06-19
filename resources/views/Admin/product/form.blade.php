@@ -3,10 +3,10 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Forms</h4>
+                <h4 class="page-title">Buat Produk</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
-                        <a href="#">
+                        <a href="{{ route('admin.dashboard') }}">
                             <i class="flaticon-home"></i>
                         </a>
                     </li>
@@ -14,16 +14,17 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Forms</a>
+                        <a href="#">Tables</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Basic Form</a>
+                        <a href="#">Datatables</a>
                     </li>
                 </ul>
             </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">

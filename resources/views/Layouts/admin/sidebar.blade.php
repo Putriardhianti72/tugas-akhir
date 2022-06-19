@@ -84,6 +84,24 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{route('admin.orders.index')}}">
+                        <i class="fas fa-desktop"></i>
+                        <p>Order</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.retail-products.index')}}">
+                        <i class="fas fa-desktop"></i>
+                        <p>Produk Retail</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.retail-orders.index')}}">
+                        <i class="fas fa-desktop"></i>
+                        <p>Order Retail</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a data-toggle="collapse" href="#base">
                         <i class="fas fa-layer-group"></i>
                         <p>Base</p>

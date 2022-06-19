@@ -106,7 +106,7 @@ class CartController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::where('in_stock', 1)->findOrFail($id);
         $cart = Cart::where('user_hash', member_auth()->hash())->where('product_id', $product->id)->first();
 
         if (! $cart) {

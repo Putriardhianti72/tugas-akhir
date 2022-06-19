@@ -16,7 +16,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::where('in_stock', 1)->get();
         return view('User.listproduct', compact('products'));
     }
 

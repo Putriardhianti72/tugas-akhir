@@ -20,8 +20,9 @@ class Order extends Model
 
     public const STATUS_PENDING = 0;
     public const STATUS_COMPLETED = 1;
-    public const STATUS_PAID = 2;
-    public const STATUS_CANCEL = 3;
+    public const STATUS_PENDING_REVIEW = 2;
+    public const STATUS_PAID = 3;
+    public const STATUS_CANCELLED = 4;
 
     public function member()
     {
@@ -52,7 +53,11 @@ class Order extends Model
             return 'Paid';
         }
 
-        if ($this->status == self::STATUS_CANCEL) {
+        if ($this->status == self::STATUS_PENDING_REVIEW) {
+            return 'Pending Review';
+        }
+
+        if ($this->status == self::STATUS_CANCELLED) {
             return 'Cancelled';
         }
     }

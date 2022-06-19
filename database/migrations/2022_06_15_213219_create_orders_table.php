@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->text('user_hash')->nullable();
-            $table->unsignedBigInteger('bank_id')->nullable();
             $table->string('invoice_no')->nullable();
             $table->unsignedTinyInteger('status')->default(0);
             $table->dateTime('expired_at')->nullable();

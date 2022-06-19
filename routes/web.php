@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminCategoriesController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RetailOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +36,10 @@ Route::group(['prefix' => 'admin-area', 'as' => 'admin.'], function () {
         Route::get('/', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('dashboard');
         Route::resource('categories', \App\Http\Controllers\AdminCategoriesController::class);
         Route::resource('products', \App\Http\Controllers\AdminProductsController::class);
+        Route::resource('retail-products', \App\Http\Controllers\AdminRetailProductsController::class);
+        Route::resource('retail-orders', \App\Http\Controllers\AdminRetailOrdersController::class);
         Route::resource('banks', \App\Http\Controllers\AdminBanksController::class);
+        Route::resource('orders', \App\Http\Controllers\AdminOrdersController::class);
     });
 });
 
@@ -61,10 +66,16 @@ Route::group(['middleware' => 'partner_auth:member'], function () {
     Route::patch('/carts', [CartController::class,'update'])->name('carts.update');
     Route::get('/checkout', [CartController::class,'checkout'])->name('carts.checkout');
     Route::resource('orders', \App\Http\Controllers\OrderController::class);
+    Route::post('/orders/pay/{id}', [OrderController::class,'pay'])->name('orders.pay');
 
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('/cart', [\App\Http\Controllers\CartController::class, 'ajaxIndex']);
         Route::post('/cart/add/{id}', [\App\Http\Controllers\CartController::class, 'ajaxAddToCart']);
         Route::post('/order/check-domain', [\App\Http\Controllers\OrderController::class, 'ajaxCheckDomain']);
     });
+});
+
+Route::group(['prefix' => 'retail'], function () {
+    Route::post('/orders', [RetailOrderController::class,'store'])->name('orders.store');
+    Route::post('/orders/pay/{id}', [RetailOrderController::class,'pay'])->name('orders.pay');
 });
