@@ -28,7 +28,12 @@ class RetailOrder extends Model
 
     public function customer()
     {
-        return $this->hasOne(RetailOrderCustomer::class, 'retail_order_id');
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+    public function shipping()
+    {
+        return $this->belongsTo(RetailOrderShipping::class, 'retail_order_id', 'id');
     }
 
     public function product()

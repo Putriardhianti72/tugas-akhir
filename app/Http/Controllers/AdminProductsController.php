@@ -85,7 +85,8 @@ class AdminProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('admin.product.detail', compact('product'));
     }
 
     /**

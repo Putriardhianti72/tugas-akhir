@@ -65,6 +65,9 @@ class OrderController extends Controller
                 'price' => $cart->product->price,
                 'pict' => $cart->product->pict,
             ]);
+            $product = $cart->product;
+            $product->in_stock = 0;
+            $product->save();
         }
 
         $member = member_auth()->user()->toArray();
@@ -79,7 +82,7 @@ class OrderController extends Controller
         $order->load('member', 'products');
 
         //redirect to index
-        return redirect()->route('orders.show', $order->id)->with(['success' => 'Order!']);
+        return redirect()->route('orders.index', $order->id)->with(['success' => 'Order!']);
     }
 
     /**

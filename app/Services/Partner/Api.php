@@ -92,4 +92,38 @@ class Api
 
         return null;
     }
+
+// dobel.co.id/restfullapi/data/infoproduk.php parameter Key :  uid  = duta2370  passwd  = jundi2009 code = PFLAVO
+// ^ array:5 [▼
+//   "codeProduct" => "PFLAVO"
+//   "nama" => "PROFLAVO"
+//   "deskripsi" => "Propolis Supelemen Kesehatan"
+//   "harga" => "130000"
+//   "berat" => 15
+// ]
+    public function getProduct($token, $code)
+    {
+        $token = decrypt($token);
+        $user = explode('||', $token);
+        $uid = $user[0];
+        $passwd = $user[1];
+
+        $response = $this->execute('POST', 'http://dobel.co.id/restfullapi/data/infoproduk.php', [
+            'query' => [
+                'uid' => $uid,
+                'passwd' => $passwd,
+                'code' => $code,
+            ],
+        ]);
+
+        if ($response['status'] === 'success') {
+            return $response['result'];
+        }
+
+        if (isset($response['message'])) {
+            throw new Exception($response['message']);
+        }
+
+        return null;
+    }
 }

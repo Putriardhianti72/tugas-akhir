@@ -126,8 +126,9 @@
                                             <td>{{$databank->acc_owner}}</td>
                                             <td>
                                                 <div class="form-button-action">
-
-
+                                                    <a href="{{ route('admin.banks.show', $databank->id) }}" button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"  data-original-title="View detail">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
                                                     <a href="{{ route('admin.banks.edit', $databank->id) }}" button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"  data-original-title="Edit Task">
                                                         <i class="fa fa-edit"></i>
                                                     </a>

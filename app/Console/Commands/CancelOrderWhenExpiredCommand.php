@@ -32,7 +32,12 @@ class CancelOrderWhenExpiredCommand extends Command
         $orders = Order::where('expired_at', '<=', Carbon::now())->get();
 
         foreach ($orders as $order) {
-            if ($order->status == Order::STATUS_UNPAID) {
+            if ($order->status == Order::STATUS_PENDING) {
+                foreach ($order->products as $orderProduct) {
+                    $product = $orderProduct->product;
+                    $product->in_stock = 1;
+                    $product->save();
+                }
                 $order->status = Order::STATUS_CANCELLED;
             } else {
                 $order->expired_at = null;

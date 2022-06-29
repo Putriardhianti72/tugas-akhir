@@ -31,7 +31,7 @@
                             <div class="card-title">Edit data bank</div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('banks.update', $bank->id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.banks.update', $bank->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group form-group-default">

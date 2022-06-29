@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('retail_products', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('retail_brand_id')->unsigned();
             $table->string('product_name');
             $table->text('desc')->nullable();
             $table->integer('price')->default(0);

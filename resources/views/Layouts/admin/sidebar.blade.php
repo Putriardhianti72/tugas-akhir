@@ -8,11 +8,11 @@
                 </div>
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-								<span>
-									Hizrian
-									<span class="user-level">Administrator</span>
+                                    @if (admin_auth()->check())
+                                        <span>{{ admin_auth()->user()->get('nama') }}</span>
+                                        <span class="user-level">Administrator</span>
 									<span class="caret"></span>
-								</span>
+                                    @endif
                     </a>
                     <div class="clearfix"></div>
 

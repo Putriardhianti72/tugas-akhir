@@ -106,20 +106,22 @@ class AdminOrdersController extends Controller
         $order->fill($request->all());
 
         if ($request->status == Order::STATUS_COMPLETED) {
-            foreach ($order->products as $product) {
-                $product->in_stock = 0;
-                $product->save();
+            foreach ($order->products as $orderProduct) {
+                    $product = $orderProduct->product;
+                    $product->in_stock = 0;
+                    $product->save();
             }
         } else if ($request->status == Order::STATUS_CANCELLED) {
-            foreach ($order->products as $product) {
-                $product->in_stock = 1;
-                $product->save();
-            }
+                            foreach ($order->products as $orderProduct) {
+                    $product = $orderProduct->product;
+                    $product->in_stock = 1;
+                    $product->save();
+                }
         }
 
         $order->save();
 
-        return redirect()->back();
+        return redirect()->route('admin.orders.index');
 
 
     }

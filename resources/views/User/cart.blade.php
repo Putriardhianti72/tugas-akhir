@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     @include('Layouts.user.head')
-
     <body class="product-cart checkout-cart blog">
     @include('Layouts.header')
         <div class="main-content" id="cart">
@@ -164,36 +163,30 @@
                 var value = $this.val();
 
                 if (value) {
-                    if (/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(value)) {
-                        $(this).parent().find('.valid-feedback').text('Domain valid');
-                        $(this).parent().find('.invalid-feedback').text('');
-                        $(this).addClass('is-valid').removeClass('is-invalid');
+                    $(this).parent().find('.valid-feedback').text('Domain valid');
+                    $(this).parent().find('.invalid-feedback').text('');
+                    $(this).addClass('is-valid').removeClass('is-invalid');
 
-                        $.ajax({
-                          url: '{{ url('/ajax/order/check-domain') }}',
-                          method: 'POST',
-                          data: {
-                            _token: '{{ csrf_token() }}',
-                            domain: value
-                          },
-                          success: function (res) {
-                            if (res.status === 'success') {
-                              $this.parent().find('.valid-feedback').text('Domain tersedia');
-                            }
-                          },
-                          error: function (err) {
-                            if (err.responseJSON.status === 'error') {
-                                $this.parent().find('.valid-feedback').text('');
-                                $this.parent().find('.invalid-feedback').text('Domain tidak tersedia');
-                                $this.addClass('is-invalid').removeClass('is-valid');
-                            }
-                          }
-                        })
-                    } else {
-                        $(this).parent().find('.valid-feedback').text('');
-                        $(this).parent().find('.invalid-feedback').text('Domain tidak valid');
-                        $(this).addClass('is-invalid').removeClass('is-valid');
-                    }
+                    $.ajax({
+                      url: '{{ url('/ajax/order/check-domain') }}',
+                      method: 'POST',
+                      data: {
+                        _token: '{{ csrf_token() }}',
+                        domain: value
+                      },
+                      success: function (res) {
+                        if (res.status === 'success') {
+                          $this.parent().find('.valid-feedback').text('Domain tersedia');
+                        }
+                      },
+                      error: function (err) {
+                        if (err.responseJSON.status === 'error') {
+                            $this.parent().find('.valid-feedback').text('');
+                            $this.parent().find('.invalid-feedback').text('Domain tidak tersedia');
+                            $this.addClass('is-invalid').removeClass('is-valid');
+                        }
+                      }
+                    });
                 } else {
                     $(this).parent().find('.valid-feedback').text('');
                     $(this).parent().find('.invalid-feedback').text('');

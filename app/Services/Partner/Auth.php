@@ -11,7 +11,6 @@ class Auth
 
     protected $api;
     protected $role;
-    protected static $user;
 
     public function __construct(string $role)
     {
@@ -26,17 +25,9 @@ class Auth
 
     public function user()
     {
-        if (static::$user) {
-            return static::$user;
-        }
+        $user = Session::get('partner_api.user') ?: [];
 
-        $user = Session::get('partner_api.user');
-
-        if ($user) {
-            return (static::$user = collect($user));
-        }
-
-        return collect();
+        return collect($user);
     }
 
     public function token()

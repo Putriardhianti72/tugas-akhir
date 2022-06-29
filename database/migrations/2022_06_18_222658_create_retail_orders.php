@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('retail_orders', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->string('template')->nullable();
             $table->text('user_hash')->nullable();
             $table->string('invoice_no')->nullable();
             $table->integer('qty')->unsigned()->default(0);

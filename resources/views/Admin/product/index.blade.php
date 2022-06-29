@@ -63,6 +63,9 @@
                                             <td>{{ $product->price}}</td>
                                             <td>
                                                 <div class="form-button-action">
+                                                    <a href="{{ route('admin.products.show', $product->id) }}" button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"  data-original-title="View detail">
+                                                      <i class="fa fa-eye"></i>
+                                                    </a>
                                                     <a href="{{ route('admin.products.edit', $product->id) }}" button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"  data-original-title="Edit Task">
                                                         <i class="fa fa-edit"></i>
                                                     </a>

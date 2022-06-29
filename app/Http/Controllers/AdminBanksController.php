@@ -60,7 +60,9 @@ class AdminBanksController extends Controller
      */
     public function show($id)
     {
-        //
+        $bank = Bank::findOrFail($id);
+        return view('admin.bank.detail', compact('bank'));
+
     }
 
     /**
@@ -101,7 +103,7 @@ class AdminBanksController extends Controller
 //                'acc_owner' => $request->acc_owner,
 //                'acc_number' => $request->acc_number
 //            ]);
-        $bank->$request->all();
+        $bank->fill($request->all());
         $bank->save();
         return redirect()->route('admin.banks.index');
 

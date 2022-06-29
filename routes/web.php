@@ -58,6 +58,7 @@ Route::get('logout',[\App\Http\Controllers\CustomAuthController::class,'logout']
 
 Route::group(['middleware' => 'partner_auth:member'], function () {
     //cart
+    Route::get('/profile', function () {return view('User.auth.profile'); });
     Route::post('/cart/add/{id}', [CartController::class,'AddCart']);
     Route::get('/cart/hapus/{id}', [\App\Http\Controllers\CartController::class,'destroy']);
     Route::resource('carts', \App\Http\Controllers\CartController::class)->except([
@@ -75,7 +76,16 @@ Route::group(['middleware' => 'partner_auth:member'], function () {
     });
 });
 
-Route::group(['prefix' => 'retail'], function () {
+Route::group(['prefix' => 'retail', 'as' => 'retail.'], function () {
     Route::post('/orders', [RetailOrderController::class,'store'])->name('orders.store');
     Route::post('/orders/pay/{id}', [RetailOrderController::class,'pay'])->name('orders.pay');
+});
+
+
+Route::group([
+    'prefix' => '{template}',
+    'where' => ['template' => 'sailent|testtemplate'],
+    'as' => 'template.',
+], function () {
+    include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
 });

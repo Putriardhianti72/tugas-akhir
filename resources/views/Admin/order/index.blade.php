@@ -66,7 +66,7 @@
                                         <th>No</th>
                                         <th>Invoice</th>
                                         <th>Member</th>
-                                        <th>Produk</th>
+                                        <th>Status</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
                                     </thead>
@@ -83,13 +83,14 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                @php($productNames = [])
+{{--                                                @php($productNames = [])--}}
 
-                                                @foreach ($order->products as $value)
-                                                    @php($productNames[] = $value->product_name)
-                                                @endforeach
+{{--                                                @foreach ($order->products as $value)--}}
+{{--                                                    @php($productNames[] = $value->product_name)--}}
+{{--                                                @endforeach--}}
 
-                                                {{ implode(',', $productNames) }}
+{{--                                                {{ implode(',', $productNames) }}--}}
+                                              {{$order->status_text}}
                                             </td>
                                             <td>
                                                 <div class="form-button-action">

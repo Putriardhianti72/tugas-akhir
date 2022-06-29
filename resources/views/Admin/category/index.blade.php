@@ -77,9 +77,9 @@
                                             <td>
                                                 <div class="form-button-action">
                                                     <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                                                       detail
-                                                    </button>
+{{--                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">--}}
+{{--                                                       detail--}}
+{{--                                                    </button>--}}
 
 
                                                     <a href="{{ route('admin.categories.edit', $category->id) }}" button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"  data-original-title="Edit Task">

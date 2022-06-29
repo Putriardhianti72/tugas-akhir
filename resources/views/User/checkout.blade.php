@@ -30,7 +30,7 @@
                         <div id="content-wrapper" class="col-12 col-sm-12 col-md-12 col-lg-12 onecol">
                             <section id="main">
                                 <div class="cart-grid row">
-                                    <div class="col-md-9 col-12 check-info">
+                                    <div class="col-md-9 col-12 check-info">a
                                         <form action="{{ route('orders.store') }}" method="post">
                                             @csrf
                                             <div class="row mb-4 pb-4">

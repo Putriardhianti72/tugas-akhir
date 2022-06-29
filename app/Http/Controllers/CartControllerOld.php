@@ -6,7 +6,7 @@ use App\Models\Bank;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
-class CartController extends Controller
+class CartControllerOld extends Controller
 {
     /**
      * Display a listing of the resource.

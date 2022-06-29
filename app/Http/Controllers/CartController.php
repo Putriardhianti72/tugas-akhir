@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Bank;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\OrderProduct;
 use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
@@ -135,6 +136,12 @@ class CartController extends Controller
             'carts.*.id' => ['required'],
             'carts.*.domain' => ['required'],
         ]);
+
+        foreach ($request->carts as $value) {
+            if (OrderProduct::where('domain', $value['domain'])->first()) {
+                return redirect()->back()->withErrors(['carts.*.domain' => 'Domain ' . $value['domain'] . ' tidak tersedia']);
+            }
+        }
 
         $orderProducts = [];
         $carts = Cart::where('user_hash', member_auth()->hash())->get();

@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Rdj\Rajaongkir\RajaongkirServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -191,6 +192,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'Rajaongkir' => Rdj\Rajaongkir\Facades\Rajaongkir::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

@@ -197,7 +197,7 @@
                             <div class="account-list-content">
                                 @if(member_auth()->check())
                                 <div>
-                                    <a class="login" href="{{ url('/') }}" rel="nofollow" title="Log in to your customer account">
+                                    <a class="login" href="{{ url('/profile') }}" rel="nofollow" title="Log in to your customer account">
                                         <i class="fa fa-cog"></i>
                                         <span>My Account</span>
                                     </a>
