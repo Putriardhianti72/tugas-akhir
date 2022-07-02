@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('retail_order_customers', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('retail_order_id')->unsigned();
             $table->string('uid')->nullable();
             $table->string('name');
             $table->string('email');
@@ -22,8 +23,11 @@ return new class extends Migration
             $table->string('no_hp')->nullable();
             $table->string('alamat')->nullable();
             $table->bigInteger('province_id')->unsigned()->nullable();
+            $table->string('province_name')->nullable();
             $table->bigInteger('city_id')->unsigned()->nullable();
+            $table->string('city_name')->nullable();
             $table->bigInteger('subdistrict_id')->unsigned()->nullable();
+            $table->string('subdistrict_name')->nullable();
             $table->string('postal_code')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
@@ -39,6 +43,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('retail_order_customers');
     }
 };

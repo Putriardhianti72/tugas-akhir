@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminCategoriesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RetailOrderController;
+use App\Http\Controllers\PaymentCallbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,10 +82,15 @@ Route::group(['prefix' => 'retail', 'as' => 'retail.'], function () {
     Route::post('/orders/pay/{id}', [RetailOrderController::class,'pay'])->name('orders.pay');
 });
 
+Route::group(['prefix' => 'payment-callback', 'as' => 'payment-callback.'], function () {
+    Route::get('/success', [PaymentCallbackController::class, 'success'])->name('success');
+    Route::get('/pending', [PaymentCallbackController::class, 'pending'])->name('pending');
+    Route::get('/error', [PaymentCallbackController::class, 'error'])->name('error');
+});
 
 Route::group([
     'prefix' => '{template}',
-    'where' => ['template' => 'sailent|testtemplate'],
+    'where' => ['template' => 'sailent|templatlain|templatelain2'],
     'as' => 'template.',
 ], function () {
     include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';

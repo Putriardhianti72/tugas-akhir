@@ -7,16 +7,18 @@ use Illuminate\Support\Facades\Storage;
 
 class RetailOrderProduct extends Model
 {
-    protected $table ='order_products';
+    protected $table ='retail_order_products';
     protected $primaryKey ='id';
     protected $fillable=[
         'retail_order_id',
         'retail_product_id',
         'qty',
+        'code',
         'product_name',
         'desc',
         'price',
         'pict',
+        'weight',
     ];
 
     public function order()
@@ -39,5 +41,10 @@ class RetailOrderProduct extends Model
     public function getTotalPriceAttribute()
     {
         return $this->qty * $this->price;
+    }
+
+    public function getTotalWeightAttribute()
+    {
+        return $this->qty * $this->weight;
     }
 }

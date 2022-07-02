@@ -12,7 +12,7 @@ class RetailOrder extends Model
     protected $table ='retail_orders';
     protected $primaryKey ='id';
     protected $fillable=[
-        'user_hash', 'status', 'invoice_no', 'qty',
+        'user_hash', 'status', 'invoice_no', 'qty', 'template',
     ];
 
     public const STATUS_PENDING = 0;
@@ -28,12 +28,12 @@ class RetailOrder extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+        return $this->hasOne(RetailOrderCustomer::class, 'retail_order_id', 'id');
     }
 
     public function shipping()
     {
-        return $this->belongsTo(RetailOrderShipping::class, 'retail_order_id', 'id');
+        return $this->hasOne(RetailOrderShipping::class, 'retail_order_id', 'id');
     }
 
     public function product()

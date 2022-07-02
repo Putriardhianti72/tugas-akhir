@@ -44,7 +44,7 @@ class ShippingController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'destination_bank_id' => ['sometimes', 'nullabel', 'exists:banks,id'],
+            'destination_bank_id' => ['sometimes', 'nullable', 'exists:banks,id'],
             'user_hash' => ['required', 'exists:orders,user_hash'],
             'retail_product_id' => ['required', 'exists:retail_products,id'],
             'qty' => ['required', 'min:1'],
@@ -311,12 +311,12 @@ class ShippingController extends Controller
             'pos' => 'POS',
             'tiki' => 'TIKI',
             // 'rpx' => 'RPX',
-            'pandu' => 'Pandu',
-            'wahana' => 'Wahana',
+            // 'pandu' => 'Pandu',
+            // 'wahana' => 'Wahana',
             'sicepat' => 'SiCepat',
             'jnt' => 'JNT',
-            'pahala' => 'Pahala',
-            'sap' => 'SAP',
+            // 'pahala' => 'Pahala',
+            // 'sap' => 'SAP',
             // 'jet' => 'JET', this one causes error on 3rd party end
             // 'indah' => 'Indah Logistik',
             // 'dse' => 'DSE',

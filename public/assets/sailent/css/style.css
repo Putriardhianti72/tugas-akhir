@@ -3254,3 +3254,39 @@ body.page-checkout > header.header {
   background: #fafafa;
   z-index: -1;
 }
+
+/***********************************************************************************************/
+/* =Order Section */
+/***********************************************************************************************/
+body.page-order {
+  padding-top: 0;
+}
+
+body.page-order > header.header {
+  display: none;
+}
+
+#order-section {
+  padding: 5rem 0;
+  min-height: 72vh;
+}
+
+#order-section hr {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+#order-section .panel-heading,
+#order-section .panel-body,
+#order-section .panel-footer {
+  padding: 1rem 0;
+}
+
+#order-section > .container {
+  max-width: 800px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 3rem;
+  background-color: #fafafa;
+  -webkit-box-shadow: 1px 0 0 #cfcdc6 inset;
+  box-shadow: 1px 0 0 #cfcdc6 inset;
+}

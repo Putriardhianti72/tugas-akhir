@@ -9,13 +9,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Authenticatable
+class RetailOrderCustomer extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = 'customers';
+    protected $table = 'retail_order_customers';
     protected $primaryKey ='id';
     protected $fillable = [
+        'retail_order_id',
         'uid',
         'name',
         'email',
@@ -23,8 +24,11 @@ class Customer extends Authenticatable
         'no_hp',
         'alamat',
         'province_id',
+        'province_name',
         'city_id',
+        'city_name',
         'subdistrict_id',
+        'subdistrict_name',
         'postal_code',
     ];
 
@@ -32,4 +36,9 @@ class Customer extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(RetailOrder::class, 'retail_order_id', 'id');
+    }
 }

@@ -1,111 +1,81 @@
 @extends('Template.sailent.Layouts.main')
 
-@section('body-class', 'page-checkout')
+@section('body-class', 'page-order')
 
 @section('content')
 <section>
-  <div id="checkout-section">
+  <div id="order-section">
     <div class="container">
-      <form id="form-order" action="{{ route('template.orders.store', $template) }}" method="post" class="animated out" data-animation="fadeInUp" data-delay="0">
-        @csrf
-        <input type="hidden" name="user_hash" value="{{ env('SAILENT_USER_HASH') }}">
-        <input type="hidden" name="customer[province_name]" value="{{ old('customer[name]') }}">
-        <input type="hidden" name="customer[city_name]" value="{{ old('customer[city_name]') }}">
-        <input type="hidden" name="customer[subdistrict_name]" value="{{ old('customer[subdistrict_name]') }}">
-        <input type="hidden" name="shipping[name]" value="{{ old('shipping[name]') }}">
-        <input type="hidden" name="shipping[code]" value="{{ old('shipping[code]') }}">
-        <input type="hidden" name="shipping[price]" value="{{ old('shipping[price]') }}">
-        <input type="hidden" name="shipping[weight]" value="{{ old('shipping[code]') }}">
-        <input type="hidden" name="shipping[etd]" value="{{ old('shipping[etd]') }}">
+      <div class="row">
+        <div class="col-xs-5"></div>
+        <div class="col-xs-5">
+          <h4>Invoice No: {{ $order->invoice_no }}</h4>
+        </div>
+        <div class="col-xs-2 text-right">
+          <h4>{{ $order->status_text }}</h4>
+        </div>
+      </div>
 
-        <div class="row">
-          <div class="col-xs-12 col-md-7">
-              <fieldset>
-                <div class="form-group">
-                  <input class="form-control br-b" type="text" name="customer[name]" id="name" placeholder="Name" value="{{ old('customer[name]') }}" required>
-                </div>
+      <hr>
 
-                <div class="form-group">
-                  <input class="form-control br-b" type="email" name="customer[email]" id="email" placeholder="Email" value="{{ old('customer[email]') }}" required>
-                </div>
-                <div class="form-group">
-                  <input class="form-control br-b" type="text" name="customer[no_hp]" id="no_hp" placeholder="No WhatsApp" value="{{ old('customer[no_hp]') }}" required>
-                </div>
-                <div class="form-group">
-                  <textarea class="form-control br-b" name="customer[alamat]" id="alamat" placeholder="Alamat..." required>{{ old('customer[alamat]') }}</textarea>
-                </div>
-                <div class="form-group">
-                  <select class="form-control br-b" name="customer[province_id]" data-shipping="province" required>
-                    @foreach ($provinces as $province)
-                    <option value="{{ $province['province_id'] }}" data-province="{{ $province['province'] }}" {{ old('customer[province_id]', config('rajaongkir_api.default_selected.province_id')) == $province['province_id'] ? 'selected' : '' }}>{{ $province['province'] }}</option>
-                    @endforeach
-                  </select>
-                </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-primary">Buy Again</button>
+        </div>
+      </div>
 
-                <div class="form-group">
-                  <select class="form-control br-b" name="customer[city_id]" data-shipping="city"  value="{{ old('customer[city_id]') }}" required>
-                  </select>
-                </div>
+      <hr>
 
-                <div class="form-group">
-                  <select class="form-control br-b" name="customer[subdistrict_id]" data-shipping="subdistrict" value="{{ old('customer[customer_id]') }}" required>
-                  </select>
-                </div>
+      <div class="row">
+        <div class="col-xs-7">
+          <h4>Delivery Address</h4>
 
-                {{-- <div class="form-group">
-                  <select class="form-control br-b" name="customer[courier]" data-shipping="courier">
-                    <option value="">Pilih Kurir</option>
-                    @foreach ($couriers as $key => $value)
-                    <option value="{{ $key }}">{{ $value }}</option>
-                    @endforeach
-                  </select>
-                </div> --}}
-
-                <div class="form-group">
-                  <select class="form-control br-b" name="shipping[service]" data-shipping="courier_service" required>
-                  </select>
-                </div>
-              </fieldset>
-
-              <div id="alert"></div>
+          <h5>{{ $order->customer->name }}</h5>
+          <div>
+            {{ $order->customer->alamat }}
           </div>
-          <div class="col-xs-12 col-md-5">
+          <div>
+            {{ $order->customer->subdistrict_name }},
+            {{ $order->customer->city_name }},
+            {{ $order->customer->province_name }}
+          </div>
+        </div>
+        <div class="col-xs-5 text-right">
+          {{ $order->shipping->name }}
+          <br>
+          ({{ $order->shipping->weight }} gram)
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-xs-12">
             <div class="panel panel-info">
               <div class="panel-heading">
                 <div class="panel-title">
                   <div class="row">
                     <div class="col-xs-6">
-                      <h5><span class="fa fa-shopping-cart"></span> Shopping Cart</h5>
+                      <h4>Products</h4>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="panel-body">
-                @foreach($carts as $cart)
-                <div class="row cart-row" data-product="{{ json_encode($cart['product']) }}" data-qty="{{ $cart['qty'] }}">
+                <div class="row cart-row">
                   <div class="col-xs-2">
-                    @if(isset($cart['product']['pict_url']))
-                    <img class="img-responsive" src="{{ $cart['product']['pict_url'] }}">
-                    @else
                     <img class="img-responsive" src="https://via.placeholder.com/200x200">
-                    @endif
                   </div>
                   <div class="col-xs-6">
-                    <h4 class="product-name"><strong>{{ $cart['product']['nama'] }}</strong></h4><h4 class="truncate-text"><small>{{ $cart['product']['deskripsi'] }}</small></h4>
+                    <h4 class="product-name"><strong>{{ $order->product->product_name }}</strong></h4><h4 class="truncate-text"><small>{{ $order->product->desc }}</small></h4>
                   </div>
                   <div class="col-xs-4">
                     <div class="col-xs-12 text-right">
-                      <h6><strong>{{ $cart['product']['harga'] }} <span class="text-muted">x</span></strong> <strong>{{ $cart['qty'] }}</strong></h6>
+                      <h6><strong>{{ $order->product->price }} <span class="text-muted">x</span></strong> <strong>{{ $order->product->qty }}</strong></h6>
                     </div>
-                    {{-- <div class="col-xs-2">
-                      <button type="button" class="btn btn-link btn-danger btn-xs" data-cart-action="delete" data-code-product="{{ $cart['codeProduct'] }}">
-                        <span class="fa fa-trash"> </span>
-                      </button>
-                    </div> --}}
                   </div>
                 </div>
                 <hr>
-                @endforeach
 
                 <div class="row">
                   <div class="text-center">
@@ -113,7 +83,7 @@
                       <h5 class="text-right">Shipping</h5>
                     </div>
                     <div class="col-xs-3">
-                      <h5 class="text-right" data-cart="total_shipping">-</h5>
+                      <h5 class="text-right" data-cart="total_shipping">{{ $order->shipping->price }}</h5>
                     </div>
                   </div>
                 </div>
@@ -123,28 +93,16 @@
                       <h5 class="text-right">Total</h5>
                     </div>
                     <div class="col-xs-3">
-                      <h5 class="text-right" data-cart="total_harga" data-total="{{ $totalCartPrice }}">{{ $totalCartPrice }}</h5>
+                      <h5 class="text-right">{{ $order->shipping->price + $order->product->price }}</h5>
                     </div>
                   </div>
                 </div>
 
               </div>
-              <div class="panel-footer">
-                <div class="row text-center">
-                  <div class="col-xs-8">
-                    {{--<h4 class="text-right">Total <strong data-cart="total_harga">{{ $totalCartPrice }}</strong></h4>--}}
-                  </div>
-                  <div class="col-xs-4">
-                    <button type="submit" class="btn btn-success btn-block">
-                      Checkout
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
+
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </section>

@@ -19,7 +19,7 @@ class Api
     {
         try {
             $client = new Client();
-            $config = array_merge_recursive($this->config, $config);
+            $config = array_merge($this->config, $config);
 
             $response = $client->request($method, $url, $config);
 
@@ -93,14 +93,6 @@ class Api
         return null;
     }
 
-// dobel.co.id/restfullapi/data/infoproduk.php parameter Key :  uid  = duta2370  passwd  = jundi2009 code = PFLAVO
-// ^ array:5 [▼
-//   "codeProduct" => "PFLAVO"
-//   "nama" => "PROFLAVO"
-//   "deskripsi" => "Propolis Supelemen Kesehatan"
-//   "harga" => "130000"
-//   "berat" => 15
-// ]
     public function getProduct($token, $code)
     {
         $token = decrypt($token);

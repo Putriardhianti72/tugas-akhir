@@ -10,20 +10,11 @@ class RetailOrderShipping extends Model
     protected $primaryKey ='id';
     protected $fillable=[
         'retail_order_id',
-        'customer_id',
         'name',
-        'email',
-        'no_hp',
-        'alamat',
-        'province_id',
-        'city_id',
-        'subdistrict_id',
-        'postal_code',
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
+        'code',
+        'price',
+        'weight',
+        'etd',
     ];
 
     public function order()

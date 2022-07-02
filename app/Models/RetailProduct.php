@@ -20,17 +20,4 @@ class RetailProduct extends Model
         'pict',
         'stock'
     ];
-    protected $appends = ['pict_url'];
-
-    public function brand()
-    {
-        return $this->belongsTo(RetailBrand::class, 'retail_brand_id', 'id');
-    }
-
-    public function getPictUrlAttribute()
-    {
-        if ($this->pict) {
-            return Storage::disk('local')->url('public/retail-pict/'. $this->pict);
-        }
-    }
 }

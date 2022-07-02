@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('acc_owner')->nullable();
             $table->string('acc_number')->nullable();
             $table->string('payment_proof')->nullable();
+            $table->string('payment_url')->nullable();
+            $table->string('transaction_status')->nullable();
             $table->timestamps();
         });
     }

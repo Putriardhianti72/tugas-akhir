@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\OrderMember;
 use App\Models\RetailOrder;
 use App\Models\RetailOrderProduct;
+use App\Services\Midtrans\MidtransService;
 use Carbon\Carbon;
+use App\Services\Partner\Api;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,11 +20,55 @@ class RetailOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = RetailOrder::where('user_hash', member_auth()->hash())->latest()->get();
+        $template = $request->template;
+        $order = RetailOrder::where('user_hash', member_auth()->hash())->latest()->get();
 
-        return view('User.listorder')->with(compact('orders'));
+        return view('Template.' . $template . '.Pages.home', [
+            'template' => $template,
+            'order' => $order,
+        ]);
+    }
+
+
+    protected function getApiProduct(Request $request, $code)
+    {
+        $api = new Api();
+
+        return $api->getProduct($this->getTemplateToken($request), $code) ?: [];
+    }
+
+    protected function getTemplateToken(Request $request)
+    {
+        $hash = null;
+
+        if ($request->template === 'sailent') {
+            $hash = env('SAILENT_USER_HASH');
+        }
+
+        if ($hash) {
+            $member = OrderMember::where('user_hash', $hash)->first();
+            return $member->token;
+        }
+    }
+
+    protected function getCarts(Request $request)
+    {
+        $carts = session('retail_cart.' . $request->template);
+
+        if (is_array($carts)) {
+            foreach ($carts as $i => $cart) {
+                if (! $cart['codeProduct']) {
+                    unset($carts[$i]);
+                }
+
+                $cart['product'] = $this->getApiProduct($request, $cart['codeProduct']);
+                $cart['qty'] = $cart['qty'] ?? 1;
+                $carts[$i] = $cart;
+            }
+            return $carts;
+        }
     }
 
     /**
@@ -43,51 +90,106 @@ class RetailOrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'destination_bank_id' => ['sometimes', 'nullabel', 'exists:banks,id'],
             'user_hash' => ['required', 'exists:orders,user_hash'],
-            'retail_product_id' => ['required', 'exists:retail_products,id'],
-            'qty' => ['required', 'min:1'],
             'customer' => ['required', 'array'],
             'customer.name' => ['required'],
             'customer.email' => ['required', 'email'],
             'customer.no_hp' => ['required'],
             'customer.alamat' => ['required'],
+            'customer.province_id' => ['required'],
+            'customer.province_name' => ['required'],
+            'customer.city_id' => ['required'],
+            'customer.city_name' => ['required'],
+            'customer.subdistrict_id' => ['required'],
+            'customer.subdistrict_name' => ['required'],
+            'shipping.name' => ['required'],
+            'shipping.code' => ['required'],
+            'shipping.price' => ['required'],
+            'shipping.weight' => ['required'],
+            'shipping.etd' => ['sometimes', 'nullable'],
         ]);
-
-        $product = RetailProduct::findOrFail($request->retail_product_id);
 
         $order = RetailOrder::create([
             'invoice_no' => RetailOrder::generateInvoiceNo(),
             'user_hash' => $request->user_hash,
-            'qty' => $request->qty,
+            'template' => $request->template,
         ]);
 
-        $orderProduct = $order->product()->create([
-            'product_name' => $product->product_name,
-            'price' => $product->price,
-            'desc' => $product->desc,
-            'qty' => $request->qty,
-        ]);
+        $carts = $this->getCarts($request);
+        $totalOrderPrice = 0;
+        $orderProduct = null;
 
-        $order->customer()->create($request->customer);
+        foreach ($carts as $cart) {
+            $orderProduct = $order->product()->create([
+                'code' => $cart['product']['codeProduct'],
+                'product_name' => $cart['product']['nama'],
+                'desc' => $cart['product']['deskripsi'],
+                'price' => $cart['product']['harga'],
+                'qty' => $cart['qty'],
+                'weight' => $cart['product']['berat'],
+            ]);
+
+            $totalOrderPrice += $orderProduct->total_price;
+        }
+
+        $orderCustomer = $order->customer()->create($request->customer);
+
+        $order->shipping()->create($request->shipping);
+
+        session()->forget('retail_cart.' . $request->template);
+
+        $midtrans = new MidtransService();
+        $paymentUrl = $midtrans->createTransaction([
+            'transaction_details' => [
+                'order_id' => $order->invoice_no,
+                'gross_amount' => $totalOrderPrice,
+            ],
+            'customer_details' => [
+                'first_name' => $orderCustomer->name,
+                'email' => $orderCustomer->email,
+                'phone' => $orderCustomer->no_hp,
+                'shipping_address' => [
+                    'first_name' => $orderCustomer->name,
+                    'email' => $orderCustomer->email,
+                    'phone' => $orderCustomer->no_hp,
+                    'address' => $orderCustomer->alamat,
+                    'city' => $orderCustomer->city_name,
+                ],
+            ],
+            'item_details' => [
+                [
+                    'id' => $orderProduct->code,
+                    'price' => $orderProduct->price,
+                    'quantity' => $orderProduct->qty,
+                    'name' => $orderProduct->product_name,
+                ]
+            ],
+        ]);
 
         $order->payment()->create([
-            'destination_bank_id' => $request->destination_bank_id,
-            'total_price' => $orderProduct->total_price,
+            'payment_url' => $paymentUrl,
+            'total_price' => $totalOrderPrice,
         ]);
 
-        $order->load('customer', 'product', 'payment', 'owner');
+        $order->load('customer', 'shipping', 'product', 'owner');
 
         if ($request->expectsJson()) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Ok',
-                'data' => $order,
+                'data' => [
+                    'order' => $order,
+                    'payment_url' => $paymentUrl,
+                ],
             ]);
         }
 
-        //redirect to index
-        return redirect()->route('orders.show', $order->id)->with(['success' => 'RetailOrder!']);
+        return redirect($paymentUrl);
+
+        // return redirect()->route('template.orders.show', [
+        //     'template' => $request->template,
+        //     'id' => $order->id,
+        // ]);
     }
 
     /**
@@ -96,27 +198,16 @@ class RetailOrderController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        $order = RetailOrder::where('user_hash', member_auth()->hash())->findOrFail($id);
+        $template = $request->template;
 
-        $totalPrice = 0;
+        $order = RetailOrder::findOrFail($request->id);
 
-        foreach ($order->products as $product) {
-            $totalPrice += $product->price;
-        }
-
-        $data = [
+        return view('Template.' . $template . '.Pages.order', [
+            'template' => $template,
             'order' => $order,
-            'totalPrice' => $totalPrice,
-            'bank' => $order->payment->destinationBank,
-        ];
-
-        if ($order->status == RetailOrder::STATUS_PENDING) {
-            return view('User.payment', $data);
-        }
-
-        return view('User.order', $data);
+        ]);
     }
 
     /**

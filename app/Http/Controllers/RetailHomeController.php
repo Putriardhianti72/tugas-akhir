@@ -80,7 +80,7 @@ class RetailHomeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'destination_bank_id' => ['sometimes', 'nullabel', 'exists:banks,id'],
+            'destination_bank_id' => ['sometimes', 'nullable', 'exists:banks,id'],
             'user_hash' => ['required', 'exists:orders,user_hash'],
             'retail_product_id' => ['required', 'exists:retail_products,id'],
             'qty' => ['required', 'min:1'],

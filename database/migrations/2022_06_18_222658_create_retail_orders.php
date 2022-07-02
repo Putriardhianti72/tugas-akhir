@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('template')->nullable();
             $table->text('user_hash')->nullable();
             $table->string('invoice_no')->nullable();
-            $table->integer('qty')->unsigned()->default(0);
             $table->unsignedTinyInteger('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
