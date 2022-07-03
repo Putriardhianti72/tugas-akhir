@@ -18,6 +18,14 @@ use App\Http\Controllers\PaymentCallbackController;
 |
 */
 
+Route::group([
+    'domain' => '{template}.tugasakhir.loc',
+    'where' => ['template' => 'sailent|templatlain|templatelain2'],
+    'as' => 'template.',
+], function () {
+    include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
+});
+
 //Route::get('/', function () {
 ////    return view('Layouts.index','$products');
 //    return view('Account.login');
@@ -39,6 +47,8 @@ Route::group(['prefix' => 'admin-area', 'as' => 'admin.'], function () {
         Route::resource('products', \App\Http\Controllers\AdminProductsController::class);
         Route::resource('retail-products', \App\Http\Controllers\AdminRetailProductsController::class);
         Route::resource('retail-orders', \App\Http\Controllers\AdminRetailOrdersController::class);
+        Route::patch('/retail-order/{retail_order}/shipping', [\App\Http\Controllers\AdminRetailOrdersController::class, 'updateShipping'])->name('retail-orders.update.shipping');
+        Route::patch('/retail-order/{retail_order}/payment-status', [\App\Http\Controllers\AdminRetailOrdersController::class, 'updatePaymentStatus'])->name('retail-orders.update.payment-status');
         Route::resource('banks', \App\Http\Controllers\AdminBanksController::class);
         Route::resource('orders', \App\Http\Controllers\AdminOrdersController::class);
     });
@@ -86,6 +96,15 @@ Route::group(['prefix' => 'payment-callback', 'as' => 'payment-callback.'], func
     Route::get('/success', [PaymentCallbackController::class, 'success'])->name('success');
     Route::get('/pending', [PaymentCallbackController::class, 'pending'])->name('pending');
     Route::get('/error', [PaymentCallbackController::class, 'error'])->name('error');
+    Route::post('/notification', [PaymentCallbackController::class, 'notification'])->name('notification');
+    Route::post('/paid', [PaymentCallbackController::class, 'paid'])->name('paid');
+});
+
+
+Route::get('/mailable', function () {
+    $invoice = App\Models\RetailOrder::find(9);
+
+    return new App\Mail\SendRetailOrderCreated($invoice);
 });
 
 Route::group([

@@ -15,6 +15,8 @@ class RetailOrderShipping extends Model
         'price',
         'weight',
         'etd',
+        'tracking_no',
+        'status',
     ];
 
     public function order()

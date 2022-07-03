@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\RetailOrderProduct;
 use Carbon\Carbon;
 use App\Services\Partner\Api;
+use App\Services\Midtrans\MidtransService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -67,7 +68,20 @@ class PaymentCallbackController extends Controller
         ]);
 
         $orderInput = json_decode($request->order_id, true);
+        $code = $request->order_id;
         $orderId = $orderInput[1];
+
+        $midtrans = new MidtransService();
+        $response = $midtrans->getStatus($code);
+
+        unset($response['order_id']);
+        $response['code'] = $code;
+        $response['transaction_status'] = $request->transaction_status;
+
+        if (isset($response['va_numbers'], $response['va_numbers'][0])) {
+            $response['bank'] = $response['va_numbers'][0]['bank'];
+            $response['va_number'] = $response['va_numbers'][0]['va_number'];
+        }
 
         if (stripos($orderId, 'RINV') !== false) {
             $order = RetailOrder::where('invoice_no', $orderId)->first();
@@ -88,6 +102,7 @@ class PaymentCallbackController extends Controller
                 }
 
                 $order->save();
+                $order->payment->update($response);
             }
 
             return redirect()->route('template.orders.show', [
@@ -113,6 +128,7 @@ class PaymentCallbackController extends Controller
                 }
 
                 $order->save();
+                $order->payment->update($response);
             }
         }
     }
@@ -139,6 +155,30 @@ class PaymentCallbackController extends Controller
     {
 
         dd('failed', $request->all());
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function notification(Request $request)
+    {
+        \Log::info('midtrans notification', $request->all());
+        dd('notification', $request->all());
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function paid(Request $request)
+    {
+        \Log::info('midtrans paid', $request->all());
+        dd('paid', $request->all());
     }
 
     /**

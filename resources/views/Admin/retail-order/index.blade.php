@@ -48,7 +48,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Invoice</th>
-                                        <th>Member</th>
+                                        <th>Customer</th>
                                         <th>Produk</th>
                                         <th style="width: 10%">Action</th>
                                     </tr>
@@ -60,13 +60,15 @@
                                             <td>{{$i++}}</td>
                                             <td>{{$order->invoice_no}}</td>
                                             <td>
+                                                @if($order->customer)
                                                 {{$order->customer->name}}
                                                 <div>
                                                     <small>{{$order->customer->email}} - {{$order->customer->no_hp}}</small>
                                                 </div>
+                                                @endif
                                             </td>
                                             <td>
-                                                {{ $order->product->product_name }}
+                                                {{ $order->product->product_name ?? '' }}
                                             </td>
                                             <td>
                                                 <div class="form-button-action">

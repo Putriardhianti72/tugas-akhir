@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use App\Services\Partner\Api;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendRetailOrderCreated;
 
 class RetailOrderController extends Controller
 {
@@ -172,6 +174,8 @@ class RetailOrderController extends Controller
         ]);
 
         $order->load('customer', 'shipping', 'product', 'owner');
+
+        Mail::to($order->customer->email)->send(new SendRetailOrderCreated($order));
 
         if ($request->expectsJson()) {
             return response()->json([

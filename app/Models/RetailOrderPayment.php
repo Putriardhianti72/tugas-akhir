@@ -14,11 +14,22 @@ class RetailOrderPayment extends Model
     protected $fillable=[
         'retail_order_id',
         'destination_bank_id',
-        'bank_name',
         'acc_owner',
         'acc_number',
         'total_price',
+        'bank',
+        'va_number',
+        'payment_type',
+        'card_type',
+        'currency',
+        'transaction_id',
+        'transaction_time',
+        'fraud_status',
+        'transaction_status',
+        'signature_key',
     ];
+
+    protected $dates = ['transaction_time'];
 
     public function order()
     {

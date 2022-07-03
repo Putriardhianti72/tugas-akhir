@@ -20,6 +20,7 @@ class RetailOrder extends Model
     public const STATUS_PENDING_REVIEW = 2;
     public const STATUS_PAID = 3;
     public const STATUS_CANCELLED = 4;
+    public const STATUS_DELIVERY = 5;
 
     public function owner()
     {
@@ -74,5 +75,13 @@ class RetailOrder extends Model
         $count = static::count('id');
 
         return 'RINV' . str_pad($count + 1, 9, '0', STR_PAD_LEFT);
+    }
+
+    public function getTotalPriceAttribute()
+    {
+        $shipping = $this->shipping->price ?? 0;
+        $product = $this->product->total_price ?? 0;
+
+        return $shipping + $product;
     }
 }

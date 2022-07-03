@@ -83,13 +83,29 @@ class AdminRetailOrdersController extends Controller
 
         $orderStatuses = [
             RetailOrder::STATUS_PENDING => 'Pending',
-            RetailOrder::STATUS_COMPLETED => 'Completed',
             RetailOrder::STATUS_PAID => 'Paid',
-            RetailOrder::STATUS_PENDING_REVIEW => 'Pending Review',
+            RetailOrder::STATUS_DELIVERY => 'Out for Delivery',
+            // RetailOrder::STATUS_PENDING_REVIEW => 'Pending Review',
             RetailOrder::STATUS_CANCELLED => 'Cancelled',
+            RetailOrder::STATUS_COMPLETED => 'Completed',
         ];
 
-        return view('admin.retail-order.detail', compact('order', 'orderStatuses'));
+        $paymentStatuses = [
+            'pending' => 'Pending',
+            // 'capture' => 'Capture',
+            'settlement' => 'Settlement',
+            // 'deny' => 'Deny',
+            'cancel' => 'Cancel',
+            'expire' => 'Expire',
+            'failure' => 'Failure',
+            'refund' => 'Refund',
+            // 'chargeback' => 'Chargeback',
+            // 'partial_refund' => 'Partial Refund',
+            // 'partial_chargeback' => 'Partial Chargeback',
+            // 'authorize' => 'Authorize',
+        ];
+
+        return view('admin.retail-order.detail', compact('order', 'orderStatuses', 'paymentStatuses'));
     }
 
     /**
@@ -117,33 +133,87 @@ class AdminRetailOrdersController extends Controller
 
         //validate form
         $this->validate($request, [
-            'order_name' => 'required',
-            'category_id' => 'required',
-            'desc' => 'required',
-            'price' => 'required',
-            'stock' => 'required',
+            'status' => ['required'],
         ]);
 
-        if ($request->pict) {
-            $this->validate($request, [
-                'pict'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            ]);
-
-            Storage::delete('public/retail-pict/'. $order->pict);
-
-            //upload image
-            $pict = $request->file('pict');
-            $pictHashName = $pict->hashName();
-            $pict->storeAs('public/retail-pict', $pictHashName);
-
-            $order->pict = $pictHashName;
-        }
-
-        $order->fill($request->except(['pict']));
+        $order->status = $request->status;
         $order->save();
 
         //redirect to index
-        return redirect()->route('admin.retail-orders.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateShipping(Request $request, $id)
+    {
+        $order = RetailOrder::findOrFail($id);
+
+        //validate form
+        $this->validate($request, [
+            'status' => ['sometimes', 'nullable'],
+            'tracking_no' => ['sometimes', 'nullable'],
+        ]);
+
+        $shipping = $order->shipping;
+        $shipping->tracking_no = $request->tracking_no;
+        $shipping->status = $request->status;
+        $shipping->save();
+
+        if ($shipping->tracking_no && $order->status == RetailOrder::STATUS_PAID) {
+            $order->status = RetailOrder::STATUS_DELIVERY;
+            $order->save();
+        }
+
+        return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePaymentStatus(Request $request, $id)
+    {
+        $order = RetailOrder::findOrFail($id);
+
+        //validate form
+        $this->validate($request, [
+            'transaction_status' => 'required',
+        ]);
+
+        $payment = $order->payment;
+        $payment->transaction_status = $request->transaction_status;
+        $payment->save();
+
+        // if ($payment->status === 'pending') {
+        //     $order->status = RetailOrder::STATUS_PENDING;
+        //     $order->save();
+        // } else if ($payment->status === 'settlement') {
+        //     $order->status = RetailOrder::STATUS_PAID;
+        //     $order->save();
+        // } else if ($payment->status === 'cancel') {
+        //     $order->status = RetailOrder::STATUS_PENDING;
+        //     $order->save();
+        // } else if ($payment->status === 'expire') {
+        //     $order->status = RetailOrder::STATUS_PENDING;
+        //     $order->save();
+        // } else if ($payment->status === 'failure') {
+        //     $order->status = RetailOrder::STATUS_PENDING;
+        //     $order->save();
+        // } else if ($payment->status === 'refund') {
+        //     $order->status = RetailOrder::STATUS_CANCELLED;
+        //     $order->save();
+        // }
+
+        return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
