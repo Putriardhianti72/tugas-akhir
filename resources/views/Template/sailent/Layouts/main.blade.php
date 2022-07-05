@@ -154,8 +154,8 @@
   <script src="{{ asset('assets/sailent/js/jquery.ajaxchimp.min.js') }}"></script>
   <script src="{{ asset('assets/sailent/js/jquery.countdown.js') }}"></script>
   <script src="{{ asset('assets/sailent/js/jquery.navbar-scroll.js') }}"></script>
-  <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-  <script src="{{ asset('assets/sailent/js/jquery.gmaps.js') }}"></script>
+  {{-- <script src="http://maps.google.com/maps/api/js?sensor=false"></script> --}}
+  {{-- <script src="{{ asset('assets/sailent/js/jquery.gmaps.js') }}"></script> --}}
   <script src="{{ asset('assets/sailent/js/main.js') }}"></script>
   @stack('js')
 </body>
