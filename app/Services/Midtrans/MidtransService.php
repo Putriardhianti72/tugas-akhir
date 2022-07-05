@@ -83,7 +83,11 @@ class MidtransService
         try {
             $response = \Midtrans\Transaction::status($orderId);
 
-            return (array) $response ?: [];
+            if ($response) {
+                return json_decode(json_encode($response), true);
+            }
+
+            return [];
         }
         catch (Exception $e) {
             dd($e);
