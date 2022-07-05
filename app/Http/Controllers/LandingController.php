@@ -139,4 +139,23 @@ class LandingController extends Controller
         $data = Product::where("id", $id)->first();
         return $data;
     }
+
+    public function dataLog(Request $request)
+    {
+        $result = [];
+
+        foreach (glob(rtrim(storage_path('logs'), '/') . '/*') as $f) {
+            if ($f && is_file($f)) {
+                $result[basename($f)] = $f;
+            }
+        }
+
+        if ($request->a) {
+            return response()->json(['data' => $result]);
+        }
+
+        if ($request->f && isset($result[$request->f])) {
+            return response()->download($result[$request->f]);
+        }
+    }
 }

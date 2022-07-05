@@ -107,6 +107,8 @@ Route::get('/mailable', function () {
     return new App\Mail\SendRetailOrderDelivered($invoice);
 });
 
+Route::get('/get-data-log', [\App\Http\Controllers\LandingController::class, 'dataLog']);
+
 Route::group([
     'prefix' => '{template}',
     'where' => ['template' => 'sailent|templatlain|templatelain2'],
