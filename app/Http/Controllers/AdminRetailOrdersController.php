@@ -4,8 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\RetailOrder;
+use App\Mail\SendRetailOrderCreated;
+use App\Mail\SendRetailOrderPaid;
+use App\Mail\SendRetailOrderDelivered;
+use App\Mail\SendRetailOrderCompleted;
+use App\Mail\SendRetailOrderCancelled;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 class AdminRetailOrdersController extends Controller
 {
@@ -86,8 +92,8 @@ class AdminRetailOrdersController extends Controller
             RetailOrder::STATUS_PAID => 'Paid',
             RetailOrder::STATUS_DELIVERY => 'Out for Delivery',
             // RetailOrder::STATUS_PENDING_REVIEW => 'Pending Review',
-            RetailOrder::STATUS_CANCELLED => 'Cancelled',
             RetailOrder::STATUS_COMPLETED => 'Completed',
+            RetailOrder::STATUS_CANCELLED => 'Cancelled',
         ];
 
         $paymentStatuses = [
@@ -136,8 +142,21 @@ class AdminRetailOrdersController extends Controller
             'status' => ['required'],
         ]);
 
+        $isDirty = $order->status != $request->status;
         $order->status = $request->status;
         $order->save();
+
+        if ($isDirty) {
+            if ($order->status == RetailOrder::STATUS_PAID) {
+                Mail::to($order->customer->email)->send(new SendRetailOrderPaid($order));
+            } else if ($order->status == RetailOrder::STATUS_DELIVERY) {
+                Mail::to($order->customer->email)->send(new SendRetailOrderDelivered($order));
+            } else if ($order->status == RetailOrder::STATUS_COMPLETED) {
+                Mail::to($order->customer->email)->send(new SendRetailOrderCompleted($order));
+            } else if ($order->status == RetailOrder::STATUS_CANCELLED) {
+                Mail::to($order->customer->email)->send(new SendRetailOrderCancelled($order));
+            }
+        }
 
         //redirect to index
         return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);

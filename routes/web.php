@@ -104,7 +104,7 @@ Route::group(['prefix' => 'payment-callback', 'as' => 'payment-callback.'], func
 Route::get('/mailable', function () {
     $invoice = App\Models\RetailOrder::find(9);
 
-    return new App\Mail\SendRetailOrderCreated($invoice);
+    return new App\Mail\SendRetailOrderDelivered($invoice);
 });
 
 Route::group([

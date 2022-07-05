@@ -68,6 +68,10 @@ class RetailOrder extends Model
         if ($this->status == self::STATUS_CANCELLED) {
             return 'Cancelled';
         }
+
+        if ($this->status == self::STATUS_DELIVERY) {
+            return 'Out for Delivery';
+        }
     }
 
     public static function generateInvoiceNo()

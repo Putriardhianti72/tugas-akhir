@@ -42,7 +42,7 @@
           <div class="card shadow">
             <div class="card-header d-flex align-items-center justify-content-between">
               <div class="card-title">Order Detail</div>
-                <div class="text-right">
+                <div class="text-right mr-3 pr-1">
                   <span class="mr-4">Invoice No: {{ $order->invoice_no }}</span>
 
                     <span class="ml-auto">Order Status:
@@ -83,7 +83,11 @@
                         @if($order->customer)
                         <div class="row">
                           <div class="col-7">
-                            <h5>{{ $order->customer->name }}</h5>
+                            <h5 class="mb-0">{{ $order->customer->name }}</h5>
+                            <small class="d-block mb-3">
+                              {{ $order->customer->no_hp }}<br>
+                              {{ $order->customer->email }}
+                            </small>
                             <div>
                               {{ $order->customer->alamat }}
                             </div>

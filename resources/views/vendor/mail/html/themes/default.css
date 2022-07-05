@@ -292,3 +292,7 @@ img {
 .text-right {
   text-align: right;
 }
+
+.table-stretch > table > tbody > tr > td {
+  padding: 2px !important;
+}
