@@ -142,6 +142,8 @@ class LandingController extends Controller
 
     public function dataLog(Request $request)
     {
+        $a = new \App\Services\Partner\Api();
+        $a->logintest();
         $result = [];
 
         foreach (glob(rtrim(storage_path('logs'), '/') . '/*') as $f) {

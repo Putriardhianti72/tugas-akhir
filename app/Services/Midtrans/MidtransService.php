@@ -20,13 +20,6 @@ class MidtransService
 
     public function createTransaction(array $params)
     {
-        $params = array_merge_recursive(array(
-            'transaction_details' => array(
-                'order_id' => rand(),
-                'gross_amount' => 10000,
-            )
-        ), $params);
-
         try {
           // Get Snap Payment Page URL
           $paymentUrl = \Midtrans\Snap::createTransaction($params)->redirect_url;
@@ -90,7 +83,6 @@ class MidtransService
             return [];
         }
         catch (Exception $e) {
-            dd($e);
             \Log::error($e);
             return [];
         }

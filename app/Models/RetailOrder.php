@@ -39,12 +39,12 @@ class RetailOrder extends Model
 
     public function product()
     {
-        return $this->hasOne(RetailOrderProduct::class, 'retail_order_id');
+        return $this->hasOne(RetailOrderProduct::class, 'retail_order_id', 'id');
     }
 
     public function payment()
     {
-        return $this->hasOne(RetailOrderPayment::class, 'retail_order_id');
+        return $this->hasOne(RetailOrderPayment::class, 'retail_order_id', 'id');
     }
 
     public function getStatusTextAttribute()
