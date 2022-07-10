@@ -18,6 +18,7 @@ use App\Services\Partner\Api;
 use App\Services\Midtrans\MidtransService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentCallbackController extends Controller
 {
