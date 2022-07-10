@@ -43,6 +43,6 @@ class SendRetailOrderCompleted extends Mailable
         ];
 
         $subject = 'Order ' . $order->invoice_no . ' - Pembelian Selesai';
-        return $this->markdown('Emails.order-completed', $data)->subject($subject)->from($order->owner->email, $order->owner->nama);
+        return $this->markdown('Emails.retail-order-completed', $data)->subject($subject)->from($order->owner->email, $order->owner->nama);
     }
 }

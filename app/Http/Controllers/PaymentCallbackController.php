@@ -103,16 +103,16 @@ class PaymentCallbackController extends Controller
                 } else if ($request->transaction_status == 'pending') {
                     $order->status = RetailOrder::STATUS_PENDING;
                 } else if ($request->transaction_status == 'expire') {
-                    $order->status = RetailOrder::STATUS_CANCEL;
+                    $order->status = RetailOrder::STATUS_CANCELLED;
                     Mail::to($order->customer->email)->send(new SendRetailOrderCancelled($order));
                 } else if ($request->transaction_status == 'expired') {
-                    $order->status = RetailOrder::STATUS_CANCEL;
+                    $order->status = RetailOrder::STATUS_CANCELLED;
                     Mail::to($order->customer->email)->send(new SendRetailOrderCancelled($order));
                 } else if ($request->transaction_status == 'cancel') {
-                    $order->status = RetailOrder::STATUS_CANCEL;
+                    $order->status = RetailOrder::STATUS_CANCELLED;
                     Mail::to($order->customer->email)->send(new SendRetailOrderCancelled($order));
                 } else if ($request->transaction_status == 'deny') {
-                    $order->status = RetailOrder::STATUS_CANCEL;
+                    $order->status = RetailOrder::STATUS_CANCELLED;
                     Mail::to($order->customer->email)->send(new SendRetailOrderCancelled($order));
                 }
 
@@ -129,22 +129,22 @@ class PaymentCallbackController extends Controller
 
             if ($order) {
                 if ($request->transaction_status == 'settlement') {
-                    $order->status = RetailOrder::STATUS_PAID;
-                    Mail::to($order->customer->email)->send(new SendRetailOrderPaid($order));
+                    $order->status = Order::STATUS_PAID;
+                    Mail::to($order->member->email)->send(new SendOrderPaid($order));
                 } else if ($request->transaction_status == 'pending') {
-                    $order->status = RetailOrder::STATUS_PENDING;
+                    $order->status = Order::STATUS_PENDING;
                 } else if ($request->transaction_status == 'expire') {
-                    $order->status = RetailOrder::STATUS_CANCEL;
-                    Mail::to($order->customer->email)->send(new SendRetailOrderCancelled($order));
+                    $order->status = Order::STATUS_CANCELLED;
+                    Mail::to($order->member->email)->send(new SendOrderCancelled($order));
                 } else if ($request->transaction_status == 'expired') {
-                    $order->status = RetailOrder::STATUS_CANCEL;
-                    Mail::to($order->customer->email)->send(new SendRetailOrderCancelled($order));
+                    $order->status = Order::STATUS_CANCELLED;
+                    Mail::to($order->member->email)->send(new SendOrderCancelled($order));
                 } else if ($request->transaction_status == 'cancel') {
-                    $order->status = RetailOrder::STATUS_CANCEL;
-                    Mail::to($order->customer->email)->send(new SendRetailOrderCancelled($order));
+                    $order->status = Order::STATUS_CANCELLED;
+                    Mail::to($order->member->email)->send(new SendOrderCancelled($order));
                 } else if ($request->transaction_status == 'deny') {
-                    $order->status = RetailOrder::STATUS_CANCEL;
-                    Mail::to($order->customer->email)->send(new SendRetailOrderCancelled($order));
+                    $order->status = Order::STATUS_CANCELLED;
+                    Mail::to($order->member->email)->send(new SendOrderCancelled($order));
                 }
 
                 $order->save();

@@ -43,6 +43,6 @@ class SendRetailOrderDelivered extends Mailable
         ];
 
         $subject = 'Order ' . $order->invoice_no . ' - Pembelian Dikirim';
-        return $this->markdown('Emails.order-delivered', $data)->subject($subject)->from($order->owner->email, $order->owner->nama);
+        return $this->markdown('Emails.retail-order-delivered', $data)->subject($subject)->from($order->owner->email, $order->owner->nama);
     }
 }

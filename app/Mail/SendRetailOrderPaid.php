@@ -43,6 +43,6 @@ class SendRetailOrderPaid extends Mailable
         ];
 
         $subject = 'Order ' . $order->invoice_no . ' - Pembayaran Berhasil';
-        return $this->markdown('Emails.order-paid', $data)->subject($subject)->from($order->owner->email, $order->owner->nama);
+        return $this->markdown('Emails.retail-order-paid', $data)->subject($subject)->from($order->owner->email, $order->owner->nama);
     }
 }

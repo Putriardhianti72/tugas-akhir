@@ -6,9 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\RetailOrder;
+use App\Models\Order;
 
-class SendRetailOrderCreated extends Mailable
+class SendOrderCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +19,7 @@ class SendRetailOrderCreated extends Mailable
      *
      * @return void
      */
-    public function __construct(RetailOrder $order)
+    public function __construct(Order $order)
     {
         $this->order = $order;
     }
@@ -36,13 +36,12 @@ class SendRetailOrderCreated extends Mailable
         $data = [
             'order' => $order,
             'template' => $order->template,
-            'url' => route('template.orders.show', [
-                'template' => $order->template,
-                'id' => $order->id,
+            'url' => route('orders.show', [
+                'order' => $order->id,
             ])
         ];
 
         $subject = 'Order ' . $order->invoice_no . ' - Detail order Anda';
-        return $this->markdown('Emails.retail-order-created', $data)->subject($subject)->from($order->owner->email, $order->owner->nama);
+        return $this->markdown('Emails.order-created', $data)->subject($subject);
     }
 }

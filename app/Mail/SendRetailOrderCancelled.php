@@ -43,6 +43,6 @@ class SendRetailOrderCancelled extends Mailable
         ];
 
         $subject = 'Order ' . $order->invoice_no . ' - Pembelian Dibatalkan';
-        return $this->markdown('Emails.order-cancelled', $data)->subject($subject)->from($order->owner->email, $order->owner->nama);
+        return $this->markdown('Emails.retail-order-cancelled', $data)->subject($subject)->from($order->owner->email, $order->owner->nama);
     }
 }

@@ -45,11 +45,9 @@ Route::group(['prefix' => 'admin-area', 'as' => 'admin.'], function () {
         Route::get('/', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('dashboard');
         Route::resource('categories', \App\Http\Controllers\AdminCategoriesController::class);
         Route::resource('products', \App\Http\Controllers\AdminProductsController::class);
-        Route::resource('retail-products', \App\Http\Controllers\AdminRetailProductsController::class);
         Route::resource('retail-orders', \App\Http\Controllers\AdminRetailOrdersController::class);
         Route::patch('/retail-order/{retail_order}/shipping', [\App\Http\Controllers\AdminRetailOrdersController::class, 'updateShipping'])->name('retail-orders.update.shipping');
         Route::patch('/retail-order/{retail_order}/payment-status', [\App\Http\Controllers\AdminRetailOrdersController::class, 'updatePaymentStatus'])->name('retail-orders.update.payment-status');
-        Route::resource('banks', \App\Http\Controllers\AdminBanksController::class);
         Route::resource('orders', \App\Http\Controllers\AdminOrdersController::class);
     });
 });
@@ -102,9 +100,9 @@ Route::group(['prefix' => 'payment-callback', 'as' => 'payment-callback.'], func
 
 
 Route::get('/mailable', function () {
-    $invoice = App\Models\RetailOrder::find(9);
+    $invoice = App\Models\Order::first();
 
-    return new App\Mail\SendRetailOrderDelivered($invoice);
+    return new App\Mail\SendOrderCreated($invoice);
 });
 
 Route::get('/get-data-log', [\App\Http\Controllers\LandingController::class, 'dataLog']);
