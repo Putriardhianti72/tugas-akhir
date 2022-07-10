@@ -9,6 +9,7 @@ use App\Models\OrderProduct;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Services\Midtrans\MidtransService;
 
 class OrderController extends Controller
 {
@@ -42,10 +43,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'bank_id' => ['required', 'exists:banks,id'],
-        ]);
-
+        try {
         $order = Order::create([
             'invoice_no' => Order::generateInvoiceNo(),
             'user_hash' => member_auth()->hash(),
@@ -54,6 +52,7 @@ class OrderController extends Controller
 
         $orderProducts = [];
         $carts = Cart::where('user_hash', member_auth()->hash())->get();
+        $totalOrderPrice = 0;
 
         foreach ($carts as $cart) {
             $orderProduct = $order->products()->create([
@@ -65,24 +64,67 @@ class OrderController extends Controller
                 'price' => $cart->product->price,
                 'pict' => $cart->product->pict,
             ]);
+            $orderProducts[] = $orderProduct;
+
             $product = $cart->product;
             $product->in_stock = 0;
             $product->save();
+
+            $totalOrderPrice += $orderProduct->price;
+
         }
 
         $member = member_auth()->user()->toArray();
         $member['user_hash'] = member_auth()->hash();
-        $order->member()->create($member);
+        $orderMember = $order->member()->create($member);
+
+        $midtrans = new MidtransService();
+        $transactionData = [
+            'transaction_details' => [
+                'order_id' => $order->invoice_no,
+                'gross_amount' => $totalOrderPrice,
+            ],
+            'customer_details' => [
+                'first_name' => $orderMember->name,
+                'email' => $orderMember->email,
+                'phone' => $orderMember->no_hp,
+                'shipping_address' => [
+                    'first_name' => $orderMember->name,
+                    'email' => $orderMember->email,
+                    'phone' => $orderMember->no_hp,
+                    'address' => $orderMember->alamat,
+                    'city' => $orderMember->city_name,
+                ],
+            ],
+            'item_details' => [],
+        ];
+
+        foreach ($orderProducts as $orderProduct) {
+            $transactionData['item_details'][] = [
+                'id' => $orderProduct->id,
+                'price' => $orderProduct->price,
+                'quantity' => 1,
+                'name' => $orderProduct->product_name,
+                'category_id' => $orderProduct->category_id,
+                'domain' => $orderProduct->domain,
+            ];
+        }
+
+        $paymentUrl = $midtrans->createTransaction($transactionData);
+
         $order->payment()->create([
-            'destination_bank_id' => $request->bank_id,
+            'payment_url' => $paymentUrl,
+            'total_price' => $totalOrderPrice,
         ]);
 
         Cart::where('user_hash', member_auth()->hash())->delete();
 
-        $order->load('member', 'products');
+        $order->load('member', 'products', 'payment');
 
-        //redirect to index
-        return redirect()->route('orders.index', $order->id)->with(['success' => 'Order!']);
+        return redirect($paymentUrl);
+    }catch (\Throwable $e) {
+        dd($e);
+    }
     }
 
     /**
@@ -104,7 +146,6 @@ class OrderController extends Controller
         $data = [
             'order' => $order,
             'totalPrice' => $totalPrice,
-            'bank' => $order->payment->destinationBank,
         ];
 
         if ($order->status == Order::STATUS_PENDING) {

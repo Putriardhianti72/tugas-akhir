@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Bank;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
@@ -85,9 +84,7 @@ class CartControllerOld extends Controller
             }
         }
 
-        $banks = Bank::all();
-
-        return view('User.checkout', ['cart' => $carts, 'banks' => $banks]);
+        return view('User.checkout', ['cart' => $carts]);
     }
 
     /**

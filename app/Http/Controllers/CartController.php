@@ -2,9 +2,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Bank;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\OrderProduct;
 use Illuminate\Support\Facades\DB;
 
@@ -94,9 +94,7 @@ class CartController extends Controller
 
         $totalCart = count($carts);
 
-        $banks = Bank::all();
-
-        return view('User.checkout', ['cart' => $carts, 'banks' => $banks, 'totalCartPrice' => $totalCartPrice, 'totalCart' => $totalCart]);
+        return view('User.checkout', ['cart' => $carts, 'totalCartPrice' => $totalCartPrice, 'totalCart' => $totalCart]);
     }
 
     /**
@@ -138,7 +136,11 @@ class CartController extends Controller
         ]);
 
         foreach ($request->carts as $value) {
-            if (OrderProduct::where('domain', $value['domain'])->first()) {
+            $orderProduct = OrderProduct::where('domain', $value['domain'])->whereHas('order', function ($q) {
+                $q->where('status', Order::STATUS_COMPLETED);
+            })->first();
+
+            if ($orderProduct) {
                 return redirect()->back()->withErrors(['carts.*.domain' => 'Domain ' . $value['domain'] . ' tidak tersedia']);
             }
         }

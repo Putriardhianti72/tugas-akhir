@@ -68,4 +68,15 @@ class Order extends Model
 
         return 'INV' . str_pad($count + 1, 9, '0', STR_PAD_LEFT);
     }
+
+    public function getTotalPriceAttribute()
+    {
+        $total = 0;
+
+        foreach ($this->products as $product) {
+            $total += $product->price;
+        }
+
+        return $total;
+    }
 }

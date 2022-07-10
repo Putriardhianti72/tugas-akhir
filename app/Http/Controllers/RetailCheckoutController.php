@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\OrderMember;
 use App\Models\Product;
-use App\Models\RetailProduct;
 use Carbon\Carbon;
 use App\Services\Partner\Api;
 use Illuminate\Support\Facades\DB;

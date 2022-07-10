@@ -73,7 +73,12 @@ class PaymentCallbackController extends Controller
         ]);
 
         $orderInput = json_decode($request->order_id, true);
-        $orderId = $orderInput[1];
+
+        if ($orderInput && isset($orderInput[1])) {
+            $orderId = $orderInput[1];
+        } else {
+            $orderId = $request->order_id;
+        }
         $code = $request->order_id;
 
         $midtrans = new MidtransService();

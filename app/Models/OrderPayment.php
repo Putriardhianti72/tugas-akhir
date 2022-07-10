@@ -14,26 +14,23 @@ class OrderPayment extends Model
     protected $fillable=[
         'order_id',
         'destination_bank_id',
-        'bank_name',
         'acc_owner',
         'acc_number',
         'total_price',
+        'bank',
+        'va_number',
+        'payment_type',
+        'card_type',
+        'currency',
+        'transaction_id',
+        'transaction_time',
+        'fraud_status',
+        'transaction_status',
+        'signature_key',
     ];
 
     public function order()
     {
         return $this->belongsTo(Order::class);
-    }
-
-    public function destinationBank()
-    {
-        return $this->belongsTo(Bank::class, 'destination_bank_id');
-    }
-
-    public function getPaymentProofUrlAttribute()
-    {
-        if ($this->payment_proof) {
-            return Storage::url('public/payment-proof/' . $this->payment_proof);
-        }
     }
 }

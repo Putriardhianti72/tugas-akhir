@@ -36,11 +36,6 @@ class RetailOrderPayment extends Model
         return $this->belongsTo(RetailOrder::class, 'retail_order_id');
     }
 
-    public function destinationBank()
-    {
-        return $this->belongsTo(Bank::class, 'destination_bank_id');
-    }
-
     public function getPaymentProofUrlAttribute()
     {
         if ($this->payment_proof) {

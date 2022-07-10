@@ -26,11 +26,6 @@ class RetailOrderProduct extends Model
         return $this->belongsTo(RetailOrder::class);
     }
 
-    public function product()
-    {
-        return $this->belongsTo(RetailProduct::class);
-    }
-
     public function getPictUrlAttribute()
     {
         if ($this->pict) {

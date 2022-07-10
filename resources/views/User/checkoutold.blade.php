@@ -31,114 +31,55 @@
                             <section id="main">
                                 <div class="cart-grid row">
                                     <div class="col-md-9 col-12 check-info">
-                                        <form action="{{ route('orders.pay', $order->id) }}" method="post" enctype="multipart/form-data">
+                                        <form action="{{ route('orders.store') }}" method="post">
                                             @csrf
                                             <div class="row mb-4 pb-4">
                                                 <div class="col-12">
-                                                    <h1 class="title-page">Pembayaran</h1>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="row mb-4">
-                                                        <div class="col-12 col-md-4">
-                                                            <h6 class="subtitle-page">Total Pembayaran</h6>
-                                                        </div>
-                                                        <div class="col-12 col-md-8">
-                                                            <h6>{{ $totalPrice }}</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row my-4">
-                                                        <div class="col-12">
-                                                            <h6 class="subtitle-page">Informasi Bank</h6>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <div class="row">
-                                                                <div class="col-12 col-md-4">
-                                                                    Bank
-                                                                </div>
-                                                                <div class="col-12 col-md-8">
-                                                                    <strong>{{ '' }}</strong>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-12 col-md-4">
-                                                                    Nama
-                                                                </div>
-                                                                <div class="col-12 col-md-8">
-                                                                    <strong>{{ '' }}</strong>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-12 col-md-4">
-                                                                    No. Rekening
-                                                                </div>
-                                                                <div class="col-12 col-md-8">
-                                                                    <strong>{{ '' }}</strong>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row my-4">
-                                                        <div class="col-12">
-                                                            <h6 class="subtitle-page">Konfirmasi Pembayaran</h6>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <div class="row">
-                                                                <div class="col-12 col-md-4">
-                                                                    Nama Bank
-                                                                </div>
-                                                                <div class="col-12 col-md-8">
-                                                                    <div class="form-group">
-                                                                        <input type="text" name="bank_name" class="form-control" placeholder="Contoh: BCA">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-12 col-md-4">
-                                                                    Nama pengirim di Rekening Bank
-                                                                </div>
-                                                                <div class="col-12 col-md-8">
-                                                                    <div class="form-group">
-                                                                        <input type="text" name="acc_owner" class="form-control" placeholder="Nama">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-12 col-md-4">
-                                                                    No. Rekening Anda
-                                                                </div>
-                                                                <div class="col-12 col-md-8">
-                                                                    <div class="form-group">
-                                                                        <input type="text" name="acc_number" class="form-control" placeholder="0123123123">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-12 col-md-4">
-                                                                    Jumlah
-                                                                </div>
-                                                                <div class="col-12 col-md-8">
+                                                    <h1 class="title-page">Checkout</h1>
+                                                    <h6 class="subtitle-page">Product List</h6>
 
-                                                                    <div class="form-group">
-                                                                        <input type="text" name="totalPrice" class="form-control" placeholder="{{ $totalPrice }}" disabled>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-4">
-                                                        <div class="col-12 col-md-4">
-                                                            Bukti Pembayaran
-                                                        </div>
-                                                        <div class="col-12 col-md-8">
-                                                            <div class="form-group">
-                                                              <input type="file" name="payment_proof" class="form-control" id="inputGroupFile02">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <table class="std table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="first_item" width="10%">Image</th>
+                                                                <th class="item mywishlist_first">Product Name</th>
+                                                                <th class="item mywishlist_first">Price</th>
+                                                                <th class="item mywishlist_second">Domain</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($cart as $cart)
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="#">
+                                                                        <img class="img-fluid" src="{{ $cart->product->pict_url }}" alt="Organic Strawberry Fruits">
+                                                                    </a>
+                                                                </td>
+                                                                <td class="bold align_center">
+                                                                    {{ $cart->product->product_name }}
+                                                                </td>
+                                                                <td>{{ $cart->product->price }}</td>
+                                                                <td>{{ $cart->domain }}</td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
                                             </div>
                                             <hr class="my-4">
+                                            <div class="row mt-3 mb-4">
+                                                <div class="col-12">
+                                                      <div class="form-group row">
+                                                        <div class="col-12 col-md-4">
+                                                            <h6 class="subtitle-page">Payment Method</h6>
+                                                            <label for="exampleFormControlSelect1">Pilih metode pembayaran</label>
+                                                        </div>
+                                                        <div class="col-12 col-md-8">
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
                                             <div class="row mt-4">
                                                 <div class="col-12">
                                                     <button type="submit" class="continue btn btn-primary pull-xs-right">
@@ -152,13 +93,13 @@
                                         <div class="cart-summary">
                                             <div class="cart-detailed-totals">
                                                 <div class="cart-summary-products">
-                                                    <div class="summary-label">There are {{ 0 }} item in your cart</div>
+                                                    <div class="summary-label">There are {{ $totalCart }} item in your cart</div>
                                                 </div>
                                                 <div class="cart-summary-line" id="cart-subtotal-products">
                                                         <span class="label js-subtotal">
                                                             Total products:
                                                         </span>
-                                                    <span class="value">{{ 0 }}</span>
+                                                    <span class="value">{{ $totalCartPrice }}</span>
                                                 </div>
                                                 <div class="cart-summary-line" id="cart-subtotal-shipping">
                                                         <span class="label">
@@ -171,7 +112,7 @@
                                                 </div>
                                                 <div class="cart-summary-line cart-total">
                                                     <span class="label">Total:</span>
-                                                    <span class="value">{{ 0 }} (tax incl.)</span>
+                                                    <span class="value">{{ $totalCartPrice }} (tax incl.)</span>
                                                 </div>
                                             </div>
                                         </div>

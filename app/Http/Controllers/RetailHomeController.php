@@ -79,52 +79,7 @@ class RetailHomeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'destination_bank_id' => ['sometimes', 'nullable', 'exists:banks,id'],
-            'user_hash' => ['required', 'exists:orders,user_hash'],
-            'retail_product_id' => ['required', 'exists:retail_products,id'],
-            'qty' => ['required', 'min:1'],
-            'customer' => ['required', 'array'],
-            'customer.name' => ['required'],
-            'customer.email' => ['required', 'email'],
-            'customer.no_hp' => ['required'],
-            'customer.alamat' => ['required'],
-        ]);
-
-        $product = RetailProduct::findOrFail($request->retail_product_id);
-
-        $order = RetailOrder::create([
-            'invoice_no' => RetailOrder::generateInvoiceNo(),
-            'user_hash' => $request->user_hash,
-            'qty' => $request->qty,
-        ]);
-
-        $orderProduct = $order->product()->create([
-            'product_name' => $product->product_name,
-            'price' => $product->price,
-            'desc' => $product->desc,
-            'qty' => $request->qty,
-        ]);
-
-        $order->customer()->create($request->customer);
-
-        $order->payment()->create([
-            'destination_bank_id' => $request->destination_bank_id,
-            'total_price' => $orderProduct->total_price,
-        ]);
-
-        $order->load('customer', 'product', 'payment', 'owner');
-
-        if ($request->expectsJson()) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Ok',
-                'data' => $order,
-            ]);
-        }
-
-        //redirect to index
-        return redirect()->route('orders.show', $order->id)->with(['success' => 'RetailOrder!']);
+        //
     }
 
     /**
@@ -146,7 +101,6 @@ class RetailHomeController extends Controller
         $data = [
             'order' => $order,
             'totalPrice' => $totalPrice,
-            'bank' => $order->payment->destinationBank,
         ];
 
         if ($order->status == RetailOrder::STATUS_PENDING) {

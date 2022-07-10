@@ -110,7 +110,6 @@ class ShippingController extends Controller
         $data = [
             'order' => $order,
             'totalPrice' => $totalPrice,
-            'bank' => $order->payment->destinationBank,
         ];
 
         if ($order->status == RetailOrder::STATUS_PENDING) {
