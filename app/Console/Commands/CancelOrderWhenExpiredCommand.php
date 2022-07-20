@@ -29,7 +29,7 @@ class CancelOrderWhenExpiredCommand extends Command
      */
     public function handle()
     {
-        $orders = Order::->whereNotNull('expired_at')
+        $orders = Order::whereNotNull('expired_at')
                         ->where('expired_at', '<=', Carbon::now())
                         ->get();
 
