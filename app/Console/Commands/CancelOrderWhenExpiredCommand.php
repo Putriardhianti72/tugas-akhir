@@ -29,7 +29,9 @@ class CancelOrderWhenExpiredCommand extends Command
      */
     public function handle()
     {
-        $orders = Order::where('expired_at', '<=', Carbon::now())->get();
+        $orders = Order::->whereNotNull('expired_at')
+                        ->where('expired_at', '<=', Carbon::now())
+                        ->get();
 
         foreach ($orders as $order) {
             if ($order->status == Order::STATUS_PENDING) {

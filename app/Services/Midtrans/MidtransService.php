@@ -29,6 +29,7 @@ class MidtransService
         }
         catch (Exception $e) {
           \Log::error($e);
+          throw $e;
         }
     }
 

@@ -147,32 +147,39 @@ class RetailOrderController extends Controller
         session()->forget('retail_cart.' . $request->domain);
 
         $midtrans = new MidtransService();
-        $paymentUrl = $midtrans->createTransaction([
-            'transaction_details' => [
-                'order_id' => $order->invoice_no,
-                'gross_amount' => $totalOrderPrice,
-            ],
-            'customer_details' => [
-                'first_name' => $orderCustomer->name,
-                'email' => $orderCustomer->email,
-                'phone' => $orderCustomer->no_hp,
-                'shipping_address' => [
+        $paymentUrl = null;
+
+        try {
+            $paymentUrl = $midtrans->createTransaction([
+                'transaction_details' => [
+                    'order_id' => $order->invoice_no,
+                    'gross_amount' => $totalOrderPrice,
+                ],
+                'customer_details' => [
                     'first_name' => $orderCustomer->name,
                     'email' => $orderCustomer->email,
                     'phone' => $orderCustomer->no_hp,
-                    'address' => $orderCustomer->alamat,
-                    'city' => $orderCustomer->city_name,
+                    'shipping_address' => [
+                        'first_name' => $orderCustomer->name,
+                        'email' => $orderCustomer->email,
+                        'phone' => $orderCustomer->no_hp,
+                        'address' => $orderCustomer->alamat,
+                        'city' => $orderCustomer->city_name,
+                    ],
                 ],
-            ],
-            'item_details' => [
-                [
-                    'id' => $orderProduct->code,
-                    'price' => $orderProduct->price,
-                    'quantity' => $orderProduct->qty,
-                    'name' => $orderProduct->product_name,
-                ]
-            ],
-        ]);
+                'item_details' => [
+                    [
+                        'id' => $orderProduct->code,
+                        'price' => $orderProduct->price,
+                        'quantity' => $orderProduct->qty,
+                        'name' => $orderProduct->product_name,
+                    ]
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            \Log::error($e);
+            return redirect()->back();
+        }
 
         $order->payment()->create([
             'payment_url' => $paymentUrl,

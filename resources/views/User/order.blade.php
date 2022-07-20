@@ -31,12 +31,33 @@
           <section id="main">
             <div class="cart-grid row">
               <div class="col-md-9 col-12 check-info">
-                <form action="{{ route('orders.store') }}" method="post">
-                  @csrf
+
                   <div class="row mb-4 pb-4">
                     <div class="col-12">
                       <h1 class="title-page">Order Detail</h1>
 
+                      @if($order->status == \App\Models\Order::STATUS_PENDING)
+                        <div class="row mb-4">
+                          <div class="col-12">
+                            <div class="form-group row">
+                              <div class="col-12 col-md-12">
+                                <div class="card bg-warning text-white">
+                                  <div class="card-body d-flex align-items-center justify-content-between">
+                                    <div>
+                                      <h5 class="subtitle-page">Pembayaran</h5>
+                                      <label>Lanjutkan pembayaran untuk menyelesaikan order.</label>
+                                    </div>
+                                    <form action="{{ route('orders.pay', $order->id) }}" method="post">
+                                      @csrf
+                                      <button type="submit" class="btn btn-primary">Bayar Sekarang</button>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      @endif
                       <div class="card">
                         <div class="card-header text-right">
                           Invoice No. {{ $order->invoice_no }}
@@ -80,6 +101,7 @@
                     </div>
                   </div>
 
+                  @if($order->status != \App\Models\Order::STATUS_PENDING)
                   <div class="row mb-4">
                     <div class="col-12">
                       <div class="card">
@@ -130,16 +152,9 @@
                       </div>
                     </div>
                   </div>
+                  @endif
 
                   <hr class="my-4">
-                  <!-- <div class="row mt-4">
-                                        <div class="col-12">
-                                            <button type="submit" class="continue btn btn-primary pull-xs-right">
-                                                Continue
-                                            </button>
-                                        </div>
-                                    </div> -->
-                </form>
               </div>
               <div class="cart-grid-right col-xs-12 col-lg-3">
                 <div class="cart-summary">

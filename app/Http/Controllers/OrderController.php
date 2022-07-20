@@ -47,7 +47,7 @@ class OrderController extends Controller
             $order = Order::create([
                 'invoice_no' => Order::generateInvoiceNo(),
                 'user_hash' => member_auth()->hash(),
-                'expired_at' => Carbon::now()->addMinutes(1),//???
+                'expired_at' => Carbon::now()->addHours(24),
             ]);
 
             $orderProducts = [];
@@ -126,7 +126,7 @@ class OrderController extends Controller
             $order->load('member', 'products', 'payment');
 
             return redirect($paymentUrl);
-        }catch (\Throwable $e) {
+        } catch (\Throwable $e) {
             \Log::error($e);
             return redirect()->back();
         }
@@ -153,11 +153,83 @@ class OrderController extends Controller
             'totalPrice' => $totalPrice,
         ];
 
-        if ($order->status == Order::STATUS_PENDING) {
-            return view('User.payment', $data);
-        }
+        // if ($order->status == Order::STATUS_PENDING) {
+        //     return view('User.payment', $data);
+        // }
 
         return view('User.order', $data);
+    }
+
+    public function pay(Request $request, $id)
+    {
+        $order = Order::where('status', Order::STATUS_PENDING)->findOrFail($id);
+        $orderMember = $order->member;
+        $orderProducts = $order->products;
+
+        $totalOrderPrice = 0;
+
+        foreach ($orderProducts as $orderProduct) {
+            $totalOrderPrice += $orderProduct->price;
+        }
+
+        $midtrans = new MidtransService();
+
+        try {
+            $transactionData = [
+                'transaction_details' => [
+                    'order_id' => $order->invoice_no,
+                    'gross_amount' => $totalOrderPrice,
+                ],
+                'customer_details' => [
+                    'first_name' => $orderMember->name,
+                    'email' => $orderMember->email,
+                    'phone' => $orderMember->no_hp,
+                    'shipping_address' => [
+                        'first_name' => $orderMember->name,
+                        'email' => $orderMember->email,
+                        'phone' => $orderMember->no_hp,
+                        'address' => $orderMember->alamat,
+                        'city' => $orderMember->city_name,
+                    ],
+                ],
+                'item_details' => [],
+            ];
+
+            foreach ($orderProducts as $orderProduct) {
+                $transactionData['item_details'][] = [
+                    'id' => $orderProduct->id,
+                    'price' => $orderProduct->price,
+                    'quantity' => 1,
+                    'name' => $orderProduct->product_name,
+                    'category_id' => $orderProduct->category_id,
+                    'domain' => $orderProduct->domain,
+                ];
+            }
+
+            $paymentUrl = $midtrans->createTransaction($transactionData);
+
+            $order->payment()->update([
+                'payment_url' => $paymentUrl,
+            ]);
+
+            return redirect($paymentUrl);
+        } catch (\Throwable $e) {
+            $response = $midtrans->getStatus($order->payment->code ?? $order->invoice_no);
+            $transactionStatus = $response['transaction_status'] ?? null;
+
+            if ($transactionStatus === 'expire') {
+                $order->status = Order::STATUS_CANCELLED;
+                $order->save();
+
+                return redirect()->back(); // @TODO Add error message
+            }
+
+            if ($order->payment->payment_url ?? false) {
+                return redirect($order->payment->payment_url);
+            }
+
+            return redirect()->back();
+        }
     }
 
     /**

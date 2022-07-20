@@ -73,7 +73,7 @@
                       <div class="form-group row">
                         <div class="col-12 col-md-12">
                           <h6 class="subtitle-page">Pembayaran</h6>
-                          <label for="exampleFormControlSelect1">Anda akan dialihkan ke laman pembayaran @TODO</label>
+                          <label for="exampleFormControlSelect1">Anda akan dialihkan ke laman pembayaran</label>
                         </div>
                       </div>
                     </div>
