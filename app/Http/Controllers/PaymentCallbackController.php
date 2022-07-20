@@ -97,7 +97,6 @@ class PaymentCallbackController extends Controller
             $response['bank'] = $response['va_numbers'][0]['bank'];
             $response['va_number'] = $response['va_numbers'][0]['va_number'];
         }
-        dd($request->all(), $response);
 
         if (stripos($orderId, 'RINV') !== false) {
             $order = RetailOrder::where('invoice_no', $orderId)->first();
@@ -155,7 +154,7 @@ class PaymentCallbackController extends Controller
 
                 $order->save();
                 $order->payment->update($response);
-                dd($order);
+
                 return redirect()->route('orders.show', [
                     'order' => $order->id,
                 ]);

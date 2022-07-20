@@ -44,91 +44,92 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         try {
-        $order = Order::create([
-            'invoice_no' => Order::generateInvoiceNo(),
-            'user_hash' => member_auth()->hash(),
-            'expired_at' => Carbon::now()->addMinutes(1),//???
-        ]);
-
-        $orderProducts = [];
-        $carts = Cart::where('user_hash', member_auth()->hash())->get();
-        $totalOrderPrice = 0;
-
-        foreach ($carts as $cart) {
-            $orderProduct = $order->products()->create([
-                'product_id' => $cart->product_id,
-                'product_name' => $cart->product->product_name,
-                'domain' => $cart->domain,
-                'category_id' => $cart->product->category_id,
-                'desc' => $cart->product->desc,
-                'price' => $cart->product->price,
-                'pict' => $cart->product->pict,
+            $order = Order::create([
+                'invoice_no' => Order::generateInvoiceNo(),
                 'user_hash' => member_auth()->hash(),
-                'token' => member_auth()->token(),
+                'expired_at' => Carbon::now()->addMinutes(1),//???
             ]);
-            $orderProducts[] = $orderProduct;
 
-            $product = $cart->product;
-            $product->in_stock = 0;
-            $product->save();
+            $orderProducts = [];
+            $carts = Cart::where('user_hash', member_auth()->hash())->get();
+            $totalOrderPrice = 0;
 
-            $totalOrderPrice += $orderProduct->price;
-        }
+            foreach ($carts as $cart) {
+                $orderProduct = $order->products()->create([
+                    'product_id' => $cart->product_id,
+                    'product_name' => $cart->product->product_name,
+                    'domain' => $cart->domain,
+                    'category_id' => $cart->product->category_id,
+                    'desc' => $cart->product->desc,
+                    'price' => $cart->product->price,
+                    'pict' => $cart->product->pict,
+                    'user_hash' => member_auth()->hash(),
+                    'token' => member_auth()->token(),
+                ]);
+                $orderProducts[] = $orderProduct;
 
-        $member = member_auth()->user()->toArray();
-        $member['user_hash'] = member_auth()->hash();
-        $member['token'] = member_auth()->token();
-        $orderMember = $order->member()->create($member);
+                $product = $cart->product;
+                $product->in_stock = 0;
+                $product->save();
 
-        $midtrans = new MidtransService();
-        $transactionData = [
-            'transaction_details' => [
-                'order_id' => $order->invoice_no,
-                'gross_amount' => $totalOrderPrice,
-            ],
-            'customer_details' => [
-                'first_name' => $orderMember->name,
-                'email' => $orderMember->email,
-                'phone' => $orderMember->no_hp,
-                'shipping_address' => [
+                $totalOrderPrice += $orderProduct->price;
+            }
+
+            $member = member_auth()->user()->toArray();
+            $member['user_hash'] = member_auth()->hash();
+            $member['token'] = member_auth()->token();
+            $orderMember = $order->member()->create($member);
+
+            $midtrans = new MidtransService();
+            $transactionData = [
+                'transaction_details' => [
+                    'order_id' => $order->invoice_no,
+                    'gross_amount' => $totalOrderPrice,
+                ],
+                'customer_details' => [
                     'first_name' => $orderMember->name,
                     'email' => $orderMember->email,
                     'phone' => $orderMember->no_hp,
-                    'address' => $orderMember->alamat,
-                    'city' => $orderMember->city_name,
+                    'shipping_address' => [
+                        'first_name' => $orderMember->name,
+                        'email' => $orderMember->email,
+                        'phone' => $orderMember->no_hp,
+                        'address' => $orderMember->alamat,
+                        'city' => $orderMember->city_name,
+                    ],
                 ],
-            ],
-            'item_details' => [],
-        ];
-
-        //bawah ni buat apa?
-        foreach ($orderProducts as $orderProduct) {
-            $transactionData['item_details'][] = [
-                'id' => $orderProduct->id,
-                'price' => $orderProduct->price,
-                'quantity' => 1,
-                'name' => $orderProduct->product_name,
-                'category_id' => $orderProduct->category_id,
-                'domain' => $orderProduct->domain,
+                'item_details' => [],
             ];
+
+            //bawah ni buat apa?
+            foreach ($orderProducts as $orderProduct) {
+                $transactionData['item_details'][] = [
+                    'id' => $orderProduct->id,
+                    'price' => $orderProduct->price,
+                    'quantity' => 1,
+                    'name' => $orderProduct->product_name,
+                    'category_id' => $orderProduct->category_id,
+                    'domain' => $orderProduct->domain,
+                ];
+            }
+
+            $paymentUrl = $midtrans->createTransaction($transactionData);
+
+            //membuat payment order ke tabel order_payment
+            $order->payment()->create([
+                'payment_url' => $paymentUrl,
+                'total_price' => $totalOrderPrice,
+            ]);
+
+            Cart::where('user_hash', member_auth()->hash())->delete();
+
+            $order->load('member', 'products', 'payment');
+
+            return redirect($paymentUrl);
+        }catch (\Throwable $e) {
+            \Log::error($e);
+            return redirect()->back();
         }
-
-        $paymentUrl = $midtrans->createTransaction($transactionData);
-
-        //membuat payment order ke tabel order_payment
-        $order->payment()->create([
-            'payment_url' => $paymentUrl,
-            'total_price' => $totalOrderPrice,
-        ]);
-
-        Cart::where('user_hash', member_auth()->hash())->delete();
-
-        $order->load('member', 'products', 'payment');
-
-        return redirect($paymentUrl);
-    }catch (\Throwable $e) {
-        dd($e);
-    }
     }
 
     /**
