@@ -178,6 +178,7 @@ class PaymentCallbackController extends Controller
      */
     public function success(Request $request)
     {
+        \Log::info('midtrans success', $request->all());
         return $this->handle($request);
     }
 
@@ -191,7 +192,7 @@ class PaymentCallbackController extends Controller
     {
 
         \Log::info('midtrans pending', $request->all());
-        dd('pending', $request->all());
+        // dd('pending', $request->all());
     }
 
     /**
@@ -216,7 +217,7 @@ class PaymentCallbackController extends Controller
     public function notification(Request $request)
     {
         \Log::info('midtrans notification', $request->all());
-        return $this->handle($request, false);
+        // return $this->handle($request, false);
     }
 
     /**

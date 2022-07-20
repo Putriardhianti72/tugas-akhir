@@ -241,7 +241,7 @@ class OrderController extends Controller
     {
         $orderProduct = OrderProduct::where('domain', $request->domain)->whereHas('order', function ($q) {
             $q->whereIn('status', [
-                Order::STATUS_COMPLETE,
+                Order::STATUS_COMPLETED,
                 Order::STATUS_PAID,
             ]);
         })->count();
