@@ -16,13 +16,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Tables</a>
+                    <a href="{{ route('admin.retail-rewards.index') }}">Reward</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Datatables</a>
+                    <a href="#">Edit Data Reward</a>
                 </li>
             </ul>
         </div>
@@ -37,7 +37,7 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Tambah data reward</div>
+                            <div class="card-title">Edit data reward</div>
                         </div>
                         <div class="card-body">
                             <div class="form-group form-group-default">

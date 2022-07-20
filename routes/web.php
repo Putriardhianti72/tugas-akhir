@@ -36,6 +36,8 @@ Route::group([
 // });
 Route::get('/',[\App\Http\Controllers\LandingController::class,'index']);
 Route::get('/products',[\App\Http\Controllers\ProductsController::class,'index'])->name('products.index');
+Route::get('/services',[\App\Http\Controllers\LandingController::class,'services']);
+Route::get('/about-us',[\App\Http\Controllers\LandingController::class,'about_us']);
 
 Route::group(['prefix' => 'admin-area', 'as' => 'admin.'], function () {
     Route::get('login',[\App\Http\Controllers\AdminAuthController::class, 'index'])->name('login');

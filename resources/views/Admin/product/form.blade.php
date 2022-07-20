@@ -3,7 +3,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Buat Produk</h4>
+                <h4 class="page-title">Produk</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard') }}">
@@ -14,13 +14,19 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Tables</a>
+                        <a href="#">Setting Katalog</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Datatables</a>
+                        <a href="{{ route('admin.products.index') }}">Produk</a>
+                    </li>
+                     <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Edit Data Produk</a>
                     </li>
                 </ul>
             </div>
@@ -136,20 +142,4 @@
 {{--<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>--}}
 
     <!--   Core JS Files   -->
-    <script src="{{URL::asset('admin')}}/assets/js/core/jquery.3.2.1.min.js"></script>
-        <script src="{{URL::asset('admin')}}/assets/js/core/popper.min.js"></script>
-        <script src="{{URL::asset('admin')}}/assets/js/core/bootstrap.min.js"></script>
 
-        <!-- jQuery UI -->
-        <script src="{{URL::asset('admin')}}/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-        <script src="{{URL::asset('admin')}}/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-
-        <!-- jQuery Scrollbar -->
-        <script src="{{URL::asset('admin')}}/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-        <!-- Datatables -->
-        <script src="{{URL::asset('admin')}}/assets/js/plugin/datatables/datatables.min.js"></script>
-        <!-- Atlantis JS -->
-        <script src="{{URL::asset('admin')}}/assets/js/atlantis.min.js"></script>
-
-</body>
-</html>

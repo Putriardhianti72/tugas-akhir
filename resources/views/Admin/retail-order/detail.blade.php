@@ -16,26 +16,33 @@
   <div class="content">
     <div class="page-inner">
       <div class="page-header">
-        <h4 class="page-title">Forms</h4>
-        <ul class="breadcrumbs">
-          <li class="nav-home">
-            <a href="#">
-              <i class="flaticon-home"></i>
-            </a>
-          </li>
-          <li class="separator">
-            <i class="flaticon-right-arrow"></i>
-          </li>
-          <li class="nav-item">
-            <a href="#">Forms</a>
-          </li>
-          <li class="separator">
-            <i class="flaticon-right-arrow"></i>
-          </li>
-          <li class="nav-item">
-            <a href="#">Basic Form</a>
-          </li>
-        </ul>
+        <h4 class="page-title">Order Retail</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="{{ route('admin.dashboard') }}">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Penjualan</a>
+                </li>
+                  <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.retail-orders.index') }}">Order Retail</a>
+                </li>
+                 </li>
+                  <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Order Retail Detail</a>
+                </li>
+            </ul>
       </div>
       <div class="row">
         <div class="col-md-12">
@@ -382,7 +389,7 @@
       @method('PATCH')
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Update Komisi</h5>
+          <h5 class="modal-title">Update Reward</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

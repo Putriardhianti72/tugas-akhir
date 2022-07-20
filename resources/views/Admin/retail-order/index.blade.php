@@ -4,26 +4,26 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Order Retail</h4>
-                <ul class="breadcrumbs">
-                    <li class="nav-home">
-                        <a href="{{ route('admin.dashboard') }}">
-                            <i class="flaticon-home"></i>
-                        </a>
-                    </li>
-                    <li class="separator">
-                        <i class="flaticon-right-arrow"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Tables</a>
-                    </li>
-                    <li class="separator">
-                        <i class="flaticon-right-arrow"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Datatables</a>
-                    </li>
-                </ul>
+              <h4 class="page-title">Order Retail</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="{{ route('admin.dashboard') }}">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Penjualan</a>
+                </li>
+                  <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.retail-orders.index') }}">Order Retail</a>
+                </li>
+            </ul>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -87,13 +87,13 @@
                                                     {{--                                                  </button>--}}
                                                     {{--                                                      <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary">EDIT</a>--}}
 
-                                                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{route('admin.retail-orders.destroy', $order['id'])}}" method="post">
+                                                  {{--   <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{route('admin.retail-orders.destroy', $order['id'])}}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
                                                             <i class="fa fa-times"></i>
                                                         </button>
-                                                    </form>
+                                                    </form> --}}
                                                 </div>
                                                 {{--                                              <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('orders.destroy', $order->id) }}" method="POST">--}}
                                                 {{--                                                  <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary">EDITtt</a>--}}

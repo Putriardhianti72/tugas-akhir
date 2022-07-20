@@ -834,21 +834,7 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
-              <div class="newsletter-title text-center">
-                <h4>Stay informed with our newsletter</h4>
-              </div> <!-- end newsletter-title -->
-              <form class="form-inline subscription-form mailchimp" id="subscribeform">
-                  <!-- Subscription messages -->
-                  <h5 class="subscription-success"></h5>
-                  <h5 class="subscription-error"></h5>
-                <!-- Email input -->
-                <div class="form-group newsletter-field">
-                  <input type="email" name="EMAIL" class="form-control" id="subscriber-email" placeholder="jane.doe@example.com">
-                </div>
-                <!-- Subscribe button -->
-                <button type="submit" id="subscribe-button" class="btn btn-sm btn-dark">Subscribe</button>
-              </form>
-            </div> <!-- end col-sm-6 -->
+               <!-- end col-sm-6 -->
           </div> <!-- end row -->
         </div> <!-- end container -->
       </div> <!-- end subscribe-section -->
@@ -874,22 +860,22 @@
                     <!-- Testimonial -->
                     <li>
                       <img src={{ asset('assets/sailent/images/temp/client-photo.jpg') }}" alt="">
-                      <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculusultricies porta posuere.</p>
-                      <div class="testimonials-author"> ClasDesign - Front End Developer </div>
+                      <p>Sebelumnya saya setelah bangun tidur kepala pusing ngliyeng dan kaki sering kesemutan. Alhamdulillah setelah 3 hari konsumsi Proflavo ngliyeng dan kesemutan kaki saya sudah hilang. Sekarang rutin konsumsi Proflavo Propolis</p>
+                      <div class="testimonials-author"> Mbah Magi - Semarang </div>
                     </li>
 
                     <!-- Testimonial -->
                     <li>
                       <img src={{ asset('assets/sailent/images/temp/client-photo.jpg') }}" alt="">
-                      <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculusultricies porta posuere <a href="#">http://goo.gl/1OhxkS</a>.</p>
-                      <div class="testimonials-author">John Doe -  Web Developer</div>
+                      <p>Saya sebelumnya pegel kaki, ngantuk tidak bisa dihindari. Lalu saya dikenalkan Proflavo dan mulai mengonsumsinya. Setelah minum Proflavo alhamdulillah sampai sekarang tidak ada keluhan dan rasa pegel di kaki sudah tidak ada.</a>.</p>
+                      <div class="testimonials-author">Suwarno - Karanganyar</div>
                     </li>
 
                     <!-- Testimonial -->
                     <li>
                       <img src={{ asset('assets/sailent/images/temp/client-photo.jpg') }}" alt="">
-                      <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculusultricies porta posuere. <a href="#">http://goo.gl/1OhxkS</a>.</p>
-                      <div class="testimonials-author">John Doe - Web Designer</div>
+                      <p>Saya mau berbagi pengalaman saya pak. Anak saya kena amandel saya kasih proflavo 3 tetes dilarutkan dalam air sepertinya tidak begitu ngefek… besoknya saya teteskan langsung ke amandelnya katanya panas terus langsung adem dan berangsur membaik. Alhamdulillah</a>.</p>
+                      <div class="testimonials-author">Mariska - Jogja</div>
                     </li>
 
                   </ul>
@@ -942,7 +928,7 @@
               <div class="col-md-8 col-md-offset-2">
 
                 <!-- form fields -->
-                <form id="form-order" method="post" name="contactform" id="contactform" class="animated out" data-animation="fadeInUp" data-delay="0">
+              {{--   <form id="form-order" method="post" name="contactform" id="contactform" class="animated out" data-animation="fadeInUp" data-delay="0">
 
                   <fieldset>
                     <div class="form-group">
@@ -987,7 +973,7 @@
 
                   <div id="alert"></div>
 
-                </form>
+                </form> --}}
 
               </div> <!-- end col-md-8 -->
             </div> <!-- end row -->
@@ -1005,13 +991,13 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-4">
-              <a href="#"><i class="pe-7s-map-marker"></i>123 Road. New York.</a>
+              <a href="#"><i class="pe-7s-map-marker"></i>Ruko Sibedil No. B6-7 Jl Solo Karanganyar Km7 Karanganyar</a>
             </div> <!-- End col-sm-4 -->
             <div class="col-sm-4">
-            <a href="tel:+123000456"><i class="pe-7s-phone"></i>+123 000 456</a>
+            <a href="tel:+123000456"><i class="pe-7s-phone"></i>0271-736773</a>
             </div>
              <div class="col-sm-4">
-              <a href="mailto:hello@hotmail.com"><i class="pe-7s-mail"></i>hello@hotmail.com</a>
+              <a href="mailto:hello@hotmail.com"><i class="pe-7s-mail"></i>dobelnetwork@gmail.com</a>
              </div>
           </div> <!-- End row -->
         </div> <!-- End container -->

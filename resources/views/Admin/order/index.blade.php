@@ -4,7 +4,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Dashboard</h4>
+                <h4 class="page-title">Order Member</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -15,7 +15,13 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Dashboard</a>
+                        <a href="#">Penjualan</a>
+                    </li>
+                      <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Order Member</a>
                     </li>
                 </ul>
             </div>
@@ -109,13 +115,13 @@
                                                     {{--                                                  </button>--}}
                                                     {{--                                                      <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary">EDIT</a>--}}
 
-                                                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{route('admin.orders.destroy', $order['id'])}}" method="post">
+                                                    {{-- <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{route('admin.orders.destroy', $order['id'])}}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
                                                             <i class="fa fa-times"></i>
                                                         </button>
-                                                    </form>
+                                                    </form> --}}
                                                 </div>
                                                 {{--                                              <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('orders.destroy', $order->id) }}" method="POST">--}}
                                                 {{--                                                  <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary">EDITtt</a>--}}

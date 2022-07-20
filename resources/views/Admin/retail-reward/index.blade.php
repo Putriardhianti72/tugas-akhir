@@ -15,14 +15,9 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Tables</a>
+                        <a href="#">Reward</a>
                     </li>
-                    <li class="separator">
-                        <i class="flaticon-right-arrow"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Datatables</a>
-                    </li>
+
                 </ul>
             </div>
             <div class="row">

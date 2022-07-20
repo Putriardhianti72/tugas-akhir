@@ -7,7 +7,7 @@
                 <h4 class="page-title">Kategori</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
-                        <a href="{{ url('/') }}">
+                        <a href="{{ route('admin.dashboard') }}">
                             <i class="flaticon-home"></i>
                         </a>
                     </li>
@@ -161,4 +161,4 @@
 
         });
     </script>
-    @endpush
+@endpush

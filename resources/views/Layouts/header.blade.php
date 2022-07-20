@@ -112,62 +112,10 @@
                                 <a href="{{ url('/products') }}" class="parent">Product</a>
                             </li>
                             <li>
-                                <a href="#" class="parent">Page</a>
-                                <div class="dropdown-menu drop-tab">
-                                    <ul>
-                                        <li class="item container group">
-                                            <div class="dropdown-menu dropdown-tab">
-                                                <ul>
-                                                    <li class="item col-md-4 float-left">
-                                                        <span class="menu-title">Category Style</span>
-                                                        <div class="menu-content">
-                                                            <ul class="col">
-                                                                <li>
-                                                                    <a href="product-grid-sidebar-left.html">Product Grid (Sidebar Left)</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="product-grid-sidebar-right.html">Product Grid (Sidebar Right)</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="product-list-sidebar-left.html">Product List (Sidebar left) </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li class="item col-md-4 html  float-left">
-                                                        <span class="menu-title">Product Detail Style</span>
-                                                        <div class="menu-content">
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="product-detail.html">Product Detail (Sidebar Left)</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#">Product Detail (Sidebar Right)</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li class="item col-md-4 html  float-left">
-                                                        <span class="menu-title">Bonus Page</span>
-                                                        <div class="menu-content">
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="404.html">404 Page</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="about-us.html">About Us Page</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <a href="{{ url('/services') }}" class="parent">Services</a>
                             </li>
                             <li>
-                                <a href="contact.html" class="parent">Contact US</a>
+                                <a href="{{ url('/about-us') }}" class="parent">About Us</a>
                             </li>
                         </ul>
                     </div>
@@ -202,6 +150,12 @@
                                     <a class="login" href="{{ url('/profile') }}" rel="nofollow" title="Log in to your customer account">
                                         <i class="fa fa-cog"></i>
                                         <span>My Account</span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a class="login" href="{{ url('/orders') }}" rel="nofollow" title="Log in to your customer account">
+                                        <i class="fa fa-cog"></i>
+                                        <span>My Orders</span>
                                     </a>
                                 </div>
                                 <div>

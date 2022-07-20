@@ -26,8 +26,11 @@ class LandingController extends Controller
         return view('User.listproduct', compact('products'));
     }
 
-    public function categori(){
-
+    public function services(){
+         return view('User.service');
+    }
+     public function about_us(){
+         return view('User.about-us');
     }
     /**
      * Show the form for creating a new resource.
@@ -142,8 +145,6 @@ class LandingController extends Controller
 
     public function dataLog(Request $request)
     {
-        $a = new \App\Services\Partner\Api();
-        $a->logintest();
         $result = [];
 
         foreach (glob(rtrim(storage_path('logs'), '/') . '/*') as $f) {

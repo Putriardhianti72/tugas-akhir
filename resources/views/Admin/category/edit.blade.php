@@ -6,7 +6,7 @@
                 <h4 class="page-title">Kategori</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
-                        <a href="#">
+                        <a href="{{ route('admin.dashboard') }}">
                             <i class="flaticon-home"></i>
                         </a>
                     </li>
@@ -20,7 +20,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Kategori</a>
+                        <a href="{{ route('admin.categories.index') }}">Kategori</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
@@ -72,17 +72,3 @@
 
     @endsection
 
-        <!--   Core JS Files   -->
-        <script src="{{URL::asset('admin')}}/assets/js/core/jquery.3.2.1.min.js"></script>
-        <script src="{{URL::asset('admin')}}/assets/js/core/popper.min.js"></script>
-        <script src="{{URL::asset('admin')}}/assets/js/core/bootstrap.min.js"></script>
-
-        <!-- jQuery UI -->
-        <script src="{{URL::asset('admin')}}/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-        <script src="{{URL::asset('admin')}}/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-
-        <!-- jQuery Scrollbar -->
-        <script src="{{URL::asset('admin')}}/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-
-        <!-- Atlantis JS -->
-        <script src="{{URL::asset('admin')}}/assets/js/atlantis.min.js"></script>

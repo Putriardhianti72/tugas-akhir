@@ -172,6 +172,7 @@ class PaymentCallbackController extends Controller
     public function pending(Request $request)
     {
 
+        \Log::info('midtrans pending', $request->all());
         dd('pending', $request->all());
     }
 
@@ -184,6 +185,7 @@ class PaymentCallbackController extends Controller
     public function failed(Request $request)
     {
 
+        \Log::info('midtrans failed', $request->all());
         dd('failed', $request->all());
     }
 

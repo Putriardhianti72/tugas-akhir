@@ -15,10 +15,10 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Forms</h4>
+                <h4 class="page-title">Order Member</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
-                        <a href="#">
+                        <a href="{{ route('admin.dashboard') }}">
                             <i class="flaticon-home"></i>
                         </a>
                     </li>
@@ -26,13 +26,20 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Forms</a>
+                        <a href="#">Penjualan</a>
                     </li>
-                    <li class="separator">
+                      <li class="separator">
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Basic Form</a>
+                        <a href="{{ route('admin.orders.index') }}">Order Member</a>
+                    </li>
+                     </li>
+                      <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Order Member Detail</a>
                     </li>
                 </ul>
             </div>
@@ -170,11 +177,11 @@
                                         </div>
                                     </div>
                                 </div>
-
+{{--
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
                                     <button type="reset" class="btn btn-md btn-warning">RESET</button>
-                                </div>
+                                </div> --}}
 
                             </form>
                         </div>
