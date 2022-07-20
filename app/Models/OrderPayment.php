@@ -28,6 +28,7 @@ class OrderPayment extends Model
         'fraud_status',
         'transaction_status',
         'signature_key',
+        'payment_url',
     ];
 
     public function order()

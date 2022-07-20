@@ -208,9 +208,11 @@ class OrderController extends Controller
 
             $paymentUrl = $midtrans->createTransaction($transactionData);
 
-            $order->payment()->update([
-                'payment_url' => $paymentUrl,
-            ]);
+            if ($paymentUrl) {
+                $order->payment()->update([
+                    'payment_url' => $paymentUrl,
+                ]);
+            }
 
             return redirect($paymentUrl);
         } catch (\Throwable $e) {
