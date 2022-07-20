@@ -239,7 +239,12 @@ class OrderController extends Controller
      */
     public function ajaxCheckDomain(Request $request)
     {
-        $orderProduct = OrderProduct::where('domain', $request->domain)->count();
+        $orderProduct = OrderProduct::where('domain', $request->domain)->whereHas('order', function ($q) {
+            $q->whereIn('status', [
+                Order::STATUS_COMPLETE,
+                Order::STATUS_PAID,
+            ]);
+        })->count();
 
         if ($orderProduct) {
             return response()->json([

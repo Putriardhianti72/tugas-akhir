@@ -64,7 +64,7 @@ class PaymentCallbackController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function success(Request $request)
+    public function handle(Request $request, $redirect = true)
     {
         // "order_id" => "[1134192013, "RINV000000008"]"
         //   "status_code" => "201"
@@ -125,10 +125,14 @@ class PaymentCallbackController extends Controller
                 $order->payment->update($response);
             }
 
-            return redirect()->route('template.orders.show', [
-                'domain' => $order->domain,
-                'id' => $order->id,
-            ]);
+            if ($redirect) {
+                return redirect()->route('template.orders.show', [
+                    'domain' => $order->domain,
+                    'id' => $order->id,
+                ]);
+            }
+
+            return $order;
         } else {
             $order = Order::where('invoice_no', $orderId)->first();
 
@@ -155,11 +159,26 @@ class PaymentCallbackController extends Controller
                 $order->save();
                 $order->payment->update($response);
 
-                return redirect()->route('orders.show', [
-                    'order' => $order->id,
-                ]);
+                if ($redirect) {
+                    return redirect()->route('orders.show', [
+                        'order' => $order->id,
+                    ]);
+                }
+
+                return $order;
             }
         }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function success(Request $request)
+    {
+        return $this->handle($request);
     }
 
     /**
@@ -185,7 +204,7 @@ class PaymentCallbackController extends Controller
     {
 
         \Log::info('midtrans failed', $request->all());
-        dd('failed', $request->all());
+        return $this->handle($request);
     }
 
     /**
@@ -197,7 +216,7 @@ class PaymentCallbackController extends Controller
     public function notification(Request $request)
     {
         \Log::info('midtrans notification', $request->all());
-        dd('notification', $request->all());
+        return $this->handle($request, false);
     }
 
     /**
@@ -209,7 +228,7 @@ class PaymentCallbackController extends Controller
     public function paid(Request $request)
     {
         \Log::info('midtrans paid', $request->all());
-        dd('paid', $request->all());
+        return $this->handle($request);
     }
 
     /**

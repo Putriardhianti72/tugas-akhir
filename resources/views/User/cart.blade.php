@@ -32,7 +32,7 @@
             <div class="cart-grid row">
               @if(count($carts))
               <div class="col-md-9 col-xs-12 check-info">
-                <form action="{{ route('carts.update') }}" method="post">
+                <form id="form-cart" action="{{ route('carts.update') }}" method="post">
                   @csrf
                   @method('patch')
 
@@ -163,6 +163,7 @@ $(function() {
       $(this).parent().find('.valid-feedback').text('Domain valid');
       $(this).parent().find('.invalid-feedback').text('');
       $(this).addClass('is-valid').removeClass('is-invalid');
+      $('#form-cart button[type="submit"]').prop('disabled', $('#form-cart .is-invalid').length > 0);
 
       $.ajax({
         url: '{{ url('/ajax/order/check-domain') }}',
@@ -174,6 +175,7 @@ $(function() {
         success: function(res) {
           if (res.status === 'success') {
             $this.parent().find('.valid-feedback').text('Domain tersedia');
+            $('#form-cart button[type="submit"]').prop('disabled', $('#form-cart .is-invalid').length > 0);
           }
         },
         error: function(err) {
@@ -181,6 +183,7 @@ $(function() {
             $this.parent().find('.valid-feedback').text('');
             $this.parent().find('.invalid-feedback').text('Domain tidak tersedia');
             $this.addClass('is-invalid').removeClass('is-valid');
+            $('#form-cart button[type="submit"]').prop('disabled', true);
           }
         }
       });
@@ -188,6 +191,13 @@ $(function() {
       $(this).parent().find('.valid-feedback').text('');
       $(this).parent().find('.invalid-feedback').text('');
       $(this).removeClass('is-invalid').removeClass('is-valid');
+      $('#form-cart button[type="submit"]').prop('disabled', $('#form-cart .is-invalid').length > 0);
+    }
+  });
+
+  $(document).on('submit', '#form-cart', function (e) {
+    if ($('.is-invalid', this).length) {
+      e.preventDefault();
     }
   });
 });
