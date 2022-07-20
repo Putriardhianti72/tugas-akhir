@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Mail\SendOrderCreated;
+use App\Mail\SendOrderPaid;
+use App\Mail\SendOrderProcessing;
+use App\Mail\SendOrderCompleted;
+use App\Mail\SendOrderCancelled;
+use Illuminate\Support\Facades\Mail;
 
 class AdminOrdersController extends Controller
 {
@@ -37,19 +43,7 @@ class AdminOrdersController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'order_name' => 'required',
-            'acc_owner' => 'required',
-            'acc_number' => 'required'
-        ]);
-        Order::create([
-            'order_name' => $request->order_name,
-            'acc_owner' => $request->acc_owner,
-            'acc_number' => $request->acc_number
-        ]);
-
-        //redirect to index
-        return redirect()->route('admin.orders.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        //
     }
 
     /**
@@ -64,13 +58,29 @@ class AdminOrdersController extends Controller
 
         $orderStatuses = [
             Order::STATUS_PENDING => 'Pending',
-            Order::STATUS_COMPLETED => 'Completed',
             Order::STATUS_PAID => 'Paid',
-            Order::STATUS_PENDING_REVIEW => 'Pending Review',
+            Order::STATUS_PROCESSING => 'Processing',
+            Order::STATUS_COMPLETED => 'Completed',
             Order::STATUS_CANCELLED => 'Cancelled',
         ];
 
-        return view('admin.order.detail', compact('order', 'orderStatuses'));
+        $paymentStatuses = [
+            'pending' => 'Pending',
+            // 'capture' => 'Capture',
+            'settlement' => 'Settlement',
+            // 'deny' => 'Deny',
+            'cancel' => 'Cancel',
+            'expire' => 'Expire',
+            'failure' => 'Failure',
+            'refund' => 'Refund',
+            // 'chargeback' => 'Chargeback',
+            // 'partial_refund' => 'Partial Refund',
+            // 'partial_chargeback' => 'Partial Chargeback',
+            // 'authorize' => 'Authorize',
+        ];
+
+
+        return view('admin.order.detail', compact('order', 'orderStatuses','paymentStatuses'));
     }
 
     /**
@@ -102,7 +112,7 @@ class AdminOrdersController extends Controller
         $data = $request->validate([
             'status' => 'required',
         ]);
-
+        $isDirty = $order->status != $request->status;
         $order->fill($request->all());
 
         if ($request->status == Order::STATUS_COMPLETED) {
@@ -119,11 +129,58 @@ class AdminOrdersController extends Controller
                 }
         }
 
+        if ($isDirty) {
+            if ($order->status == Order::STATUS_PAID) {
+                Mail::to($order->member->email)->send(new SendOrderPaid($order));
+            } else if ($order->status == Order::STATUS_PROCESSING) {
+                Mail::to($order->member->email)->send(new SendOrderProcessing($order));
+            } else if ($order->status == Order::STATUS_COMPLETED) {
+                Mail::to($order->member->email)->send(new SendOrderCompleted($order));
+            } else if ($order->status == Order::STATUS_CANCELLED) {
+                Mail::to($order->member->email)->send(new SendOrderCancelled($order));
+            }
+        }
         $order->save();
 
-        return redirect()->route('admin.orders.index');
+        return redirect()->back();
 
 
+    }
+
+    public function updatePaymentStatus(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+
+        //validate form
+        $this->validate($request, [
+            'transaction_status' => 'required',
+        ]);
+
+        $payment = $order->payment;
+        $payment->transaction_status = $request->transaction_status;
+        $payment->save();
+
+        // if ($payment->status === 'pending') {
+        //     $order->status = RetailOrder::STATUS_PENDING;
+        //     $order->save();
+        // } else if ($payment->status === 'settlement') {
+        //     $order->status = RetailOrder::STATUS_PAID;
+        //     $order->save();
+        // } else if ($payment->status === 'cancel') {
+        //     $order->status = RetailOrder::STATUS_PENDING;
+        //     $order->save();
+        // } else if ($payment->status === 'expire') {
+        //     $order->status = RetailOrder::STATUS_PENDING;
+        //     $order->save();
+        // } else if ($payment->status === 'failure') {
+        //     $order->status = RetailOrder::STATUS_PENDING;
+        //     $order->save();
+        // } else if ($payment->status === 'refund') {
+        //     $order->status = RetailOrder::STATUS_CANCELLED;
+        //     $order->save();
+        // }
+
+        return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**

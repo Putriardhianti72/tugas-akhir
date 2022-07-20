@@ -11,7 +11,7 @@
 
 
 
-<body class="@yield('class-body')">
+<body class="@yield('class-body')" id="@yield('id-body')">
 <!-- <body class="user-login blog"> -->
 
    @include('Layouts.header')

@@ -6,9 +6,9 @@
 <section>
   <div id="checkout-section">
     <div class="container">
-      <form id="form-order" action="{{ route('template.orders.store', $template) }}" method="post" class="animated out" data-animation="fadeInUp" data-delay="0">
+      <form id="form-order" action="{{ route('template.orders.store', $domain) }}" method="post" class="animated out" data-animation="fadeInUp" data-delay="0">
         @csrf
-        <input type="hidden" name="user_hash" value="{{ env('SAILENT_USER_HASH') }}">
+        <input type="hidden" name="domain" value="{{ env('SAILENT_DOMAIN') }}">
         <input type="hidden" name="customer[province_name]" value="{{ old('customer[name]') }}">
         <input type="hidden" name="customer[city_name]" value="{{ old('customer[city_name]') }}">
         <input type="hidden" name="customer[subdistrict_name]" value="{{ old('customer[subdistrict_name]') }}">
@@ -205,7 +205,7 @@
       $city.html('');
 
       $.ajax({
-        url: '{{ url($template . '/ajax/shipping/city') }}?province=' + val,
+        url: '{{ route('template.ajax.shipping.city', $domain) }}?province=' + val,
         success: function (res) {
           if (res.status === 'success') {
             var html = '<option value="">Pilih Kota/Kabupaten</option>';
@@ -243,7 +243,7 @@
         $subdistrict.html('');
 
         $.ajax({
-          url: '{{ url($template . '/ajax/shipping/subdistrict') }}?city=' + val,
+          url: '{{ route('template.ajax.shipping.subdistrict', $domain) }}?city=' + val,
           success: function (res) {
             if (res.status === 'success') {
               var html = '<option value="">Pilih Kecamatan</option>';
@@ -298,7 +298,7 @@
         $('input[name="shipping[weight]"]').val(totalWeight);
 
         $.ajax({
-          url: '{{ url($template . '/ajax/shipping/cost') }}?weight=' + totalWeight + '&subdistrict_id=' + subdistrict,
+          url: '{{ route('template.ajax.shipping.cost', $domain) }}?weight=' + totalWeight + '&subdistrict_id=' + subdistrict,
           success: function (res) {
             if (res.status === 'success') {
               var result = [];

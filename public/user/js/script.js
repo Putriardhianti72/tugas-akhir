@@ -35,6 +35,8 @@ $(function () {
 
     $(document).on('click', '[data-add-to-cart]', function (e) {
         e.preventDefault();
+        $(this).prop('disabled', true)
+        var $this = $(this);
 
         $.ajax({
             type: 'POST',
@@ -44,6 +46,9 @@ $(function () {
                     loadHeaderCartContent();
                     window.location.href = BASE_URL + '/carts';
                 }
+            },
+            complete: function () {
+              $this.prop('disabled', false)
             }
         })
     })

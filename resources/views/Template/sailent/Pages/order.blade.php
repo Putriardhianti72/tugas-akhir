@@ -163,7 +163,7 @@
       $city.html('');
 
       $.ajax({
-        url: '{{ url($template . '/ajax/shipping/city') }}?province=' + val,
+        url: '{{ url($domain . '/ajax/shipping/city') }}?province=' + val,
         success: function (res) {
           if (res.status === 'success') {
             var html = '<option value="">Pilih Kota/Kabupaten</option>';
@@ -201,7 +201,7 @@
         $subdistrict.html('');
 
         $.ajax({
-          url: '{{ url($template . '/ajax/shipping/subdistrict') }}?city=' + val,
+          url: '{{ url($domain . '/ajax/shipping/subdistrict') }}?city=' + val,
           success: function (res) {
             if (res.status === 'success') {
               var html = '<option value="">Pilih Kecamatan</option>';
@@ -256,7 +256,7 @@
         $('input[name="shipping[weight]"]').val(totalWeight);
 
         $.ajax({
-          url: '{{ url($template . '/ajax/shipping/cost') }}?weight=' + totalWeight + '&subdistrict_id=' + subdistrict,
+          url: '{{ url($domain . '/ajax/shipping/cost') }}?weight=' + totalWeight + '&subdistrict_id=' + subdistrict,
           success: function (res) {
             if (res.status === 'success') {
               var result = [];

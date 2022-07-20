@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
-use App\Models\OrderMember;
+use App\Models\OrderProduct;
+use App\Models\Order;
 use App\Models\RetailOrder;
 use App\Models\RetailOrderProduct;
+use App\Models\RetailReward;
 use App\Services\Midtrans\MidtransService;
 use Carbon\Carbon;
 use App\Services\Partner\Api;
@@ -24,11 +26,11 @@ class RetailOrderController extends Controller
      */
     public function index(Request $request)
     {
-        $template = $request->template;
+        $template = $this->getTemplateName($request);
         $order = RetailOrder::where('user_hash', member_auth()->hash())->latest()->get();
 
         return view('Template.' . $template . '.Pages.home', [
-            'template' => $template,
+            'domain' => $request->domain,
             'order' => $order,
         ]);
     }
@@ -41,23 +43,28 @@ class RetailOrderController extends Controller
         return $api->getProduct($this->getTemplateToken($request), $code) ?: [];
     }
 
+    protected function getTemplateName(Request $request)
+    {
+        if ($request->domain === env('SAILENT_DOMAIN')) {
+            return 'sailent';
+        }
+    }
+
     protected function getTemplateToken(Request $request)
     {
-        $hash = null;
+        $domain = $request->domain;
 
-        if ($request->template === 'sailent') {
-            $hash = env('SAILENT_USER_HASH');
-        }
-
-        if ($hash) {
-            $member = OrderMember::where('user_hash', $hash)->first();
-            return $member->token;
+        if ($domain) {
+            $product = OrderProduct::where('domain', $domain)->whereHas('order', function ($q) {
+                $q->where('orders.status', Order::STATUS_COMPLETED);
+            })->first();
+            return $product->token;
         }
     }
 
     protected function getCarts(Request $request)
     {
-        $carts = session('retail_cart.' . $request->template);
+        $carts = session('retail_cart.' . $request->domain);
 
         if (is_array($carts)) {
             foreach ($carts as $i => $cart) {
@@ -92,7 +99,7 @@ class RetailOrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'user_hash' => ['required', 'exists:orders,user_hash'],
+            'domain' => ['required', 'exists:order_products,domain'],
             'customer' => ['required', 'array'],
             'customer.name' => ['required'],
             'customer.email' => ['required', 'email'],
@@ -113,8 +120,7 @@ class RetailOrderController extends Controller
 
         $order = RetailOrder::create([
             'invoice_no' => RetailOrder::generateInvoiceNo(),
-            'user_hash' => $request->user_hash,
-            'template' => $request->template,
+            'domain' => $request->domain,
         ]);
 
         $carts = $this->getCarts($request);
@@ -136,9 +142,9 @@ class RetailOrderController extends Controller
 
         $orderCustomer = $order->customer()->create($request->customer);
 
-        $order->shipping()->create($request->shipping);
+        $orderShipping = $order->shipping()->create($request->shipping);
 
-        session()->forget('retail_cart.' . $request->template);
+        session()->forget('retail_cart.' . $request->domain);
 
         $midtrans = new MidtransService();
         $paymentUrl = $midtrans->createTransaction([
@@ -173,6 +179,9 @@ class RetailOrderController extends Controller
             'total_price' => $totalOrderPrice,
         ]);
 
+        $order->commission = RetailReward::where('code', $orderProduct->code)->first()->reward ?? 0;
+        $order->save();
+
         $order->load('customer', 'shipping', 'product', 'owner');
 
         Mail::to($order->customer->email)->send(new SendRetailOrderCreated($order));
@@ -191,7 +200,7 @@ class RetailOrderController extends Controller
         return redirect($paymentUrl);
 
         // return redirect()->route('template.orders.show', [
-        //     'template' => $request->template,
+        //     'domain' => $request->domain,
         //     'id' => $order->id,
         // ]);
     }
@@ -204,12 +213,12 @@ class RetailOrderController extends Controller
      */
     public function show(Request $request)
     {
-        $template = $request->template;
+        $template = $this->getTemplateName($request);
 
         $order = RetailOrder::findOrFail($request->id);
 
         return view('Template.' . $template . '.Pages.order', [
-            'template' => $template,
+            'domain' => $request->domain,
             'order' => $order,
         ]);
     }
@@ -272,58 +281,6 @@ class RetailOrderController extends Controller
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
         return redirect('banks');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function pay(Request $request, $id)
-    {
-        $data = $request->validate([
-            'bank_name' => 'required',
-            'acc_owner' => 'required',
-            'acc_number' => 'required',
-        ]);
-        $order = RetailOrder::findOrFail($id);
-
-        $payment = $order->payment;
-        $payment->bank_name = $request->bank_name;
-        $payment->acc_owner = $request->acc_owner;
-        $payment->acc_number = $request->acc_number;
-
-        $totalPrice = 0;
-
-        foreach ($order->products as $product) {
-            $totalPrice += $product->price;
-        }
-
-        $payment->total_price = $totalPrice;
-
-        if ($request->payment_proof) {
-            $this->validate($request, [
-                'payment_proof'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            ]);
-
-            Storage::delete('public/payment-proof/'. $payment->payment_proof);
-
-            //upload image
-            $paymentProof = $request->file('payment_proof');
-            $paymentProofHashName = $paymentProof->hashName();
-            $paymentProof->storeAs('public/payment-proof', $paymentProofHashName);
-
-            $payment->payment_proof = $paymentProofHashName;
-        }
-
-        $payment->save();
-
-        $order->status = RetailOrder::STATUS_PENDING_REVIEW;
-        $order->save();
-
-        return redirect()->route('orders.show', $order->id);
     }
 
     /**

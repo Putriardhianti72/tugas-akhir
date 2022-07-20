@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RetailOrderController;
 use App\Http\Controllers\PaymentCallbackController;
+use App\Http\Controllers\MemberAreaHomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,8 @@ use App\Http\Controllers\PaymentCallbackController;
 */
 
 Route::group([
-    'domain' => '{template}.tugasakhir.loc',
-    'where' => ['template' => 'sailent|templatlain|templatelain2'],
+    'domain' => '{domain}.tugasakhir.loc',
+    'where' => ['domain' => 'sailent|templatlain|templatelain2'],
     'as' => 'template.',
 ], function () {
     include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
@@ -34,7 +35,7 @@ Route::group([
 //    return view('User.listproduct');
 // });
 Route::get('/',[\App\Http\Controllers\LandingController::class,'index']);
-Route::get('/products',[\App\Http\Controllers\ProductsController::class,'index']);
+Route::get('/products',[\App\Http\Controllers\ProductsController::class,'index'])->name('products.index');
 
 Route::group(['prefix' => 'admin-area', 'as' => 'admin.'], function () {
     Route::get('login',[\App\Http\Controllers\AdminAuthController::class, 'index'])->name('login');
@@ -45,10 +46,17 @@ Route::group(['prefix' => 'admin-area', 'as' => 'admin.'], function () {
         Route::get('/', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('dashboard');
         Route::resource('categories', \App\Http\Controllers\AdminCategoriesController::class);
         Route::resource('products', \App\Http\Controllers\AdminProductsController::class);
+        Route::resource('retail-rewards', \App\Http\Controllers\AdminRetailRewardsController::class);
+
         Route::resource('retail-orders', \App\Http\Controllers\AdminRetailOrdersController::class);
+        Route::get('sales-recap/export', [\App\Http\Controllers\AdminSalesRecapController::class,'export'])->name('sales-recap.export');
+        Route::resource('sales-recap', \App\Http\Controllers\AdminSalesRecapController::class);
         Route::patch('/retail-order/{retail_order}/shipping', [\App\Http\Controllers\AdminRetailOrdersController::class, 'updateShipping'])->name('retail-orders.update.shipping');
         Route::patch('/retail-order/{retail_order}/payment-status', [\App\Http\Controllers\AdminRetailOrdersController::class, 'updatePaymentStatus'])->name('retail-orders.update.payment-status');
+        Route::patch('/retail-order/{retail_order}/commission', [\App\Http\Controllers\AdminRetailOrdersController::class, 'updateCommission'])->name('retail-orders.update.commission');
+        //order
         Route::resource('orders', \App\Http\Controllers\AdminOrdersController::class);
+        Route::patch('/order/{order}/payment-status', [\App\Http\Controllers\AdminOrdersController::class, 'updatePaymentStatus'])->name('orders.update.payment-status');
     });
 });
 
@@ -76,6 +84,10 @@ Route::group(['middleware' => 'partner_auth:member'], function () {
     Route::patch('/carts', [CartController::class,'update'])->name('carts.update');
     Route::get('/checkout', [CartController::class,'checkout'])->name('carts.checkout');
     Route::resource('orders', \App\Http\Controllers\OrderController::class);
+
+    Route::get('member-area/{domain?}', [MemberAreaHomeController::class, 'index'])->name('member-area.index');
+    Route::get('member-area/{domain}/order/{id}', [MemberAreaHomeController::class, 'show'])->name('member-area.show');
+
     Route::post('/orders/pay/{id}', [OrderController::class,'pay'])->name('orders.pay');
 
     Route::group(['prefix' => 'ajax'], function () {
@@ -91,11 +103,11 @@ Route::group(['prefix' => 'retail', 'as' => 'retail.'], function () {
 });
 
 Route::group(['prefix' => 'payment-callback', 'as' => 'payment-callback.'], function () {
-    Route::get('/success', [PaymentCallbackController::class, 'success'])->name('success');
-    Route::get('/pending', [PaymentCallbackController::class, 'pending'])->name('pending');
-    Route::get('/error', [PaymentCallbackController::class, 'error'])->name('error');
-    Route::post('/notification', [PaymentCallbackController::class, 'notification'])->name('notification');
-    Route::post('/paid', [PaymentCallbackController::class, 'paid'])->name('paid');
+    Route::match(['get','post'], '/success', [PaymentCallbackController::class, 'success'])->name('success');
+    Route::match(['get','post'], '/pending', [PaymentCallbackController::class, 'pending'])->name('pending');
+    Route::match(['get','post'], '/error', [PaymentCallbackController::class, 'error'])->name('error');
+    Route::match(['get','post'], '/notification', [PaymentCallbackController::class, 'notification'])->name('notification');
+    Route::match(['get','post'], '/paid', [PaymentCallbackController::class, 'paid'])->name('paid');
 });
 
 
@@ -107,10 +119,10 @@ Route::get('/mailable', function () {
 
 Route::get('/get-data-log', [\App\Http\Controllers\LandingController::class, 'dataLog']);
 
-Route::group([
-    'prefix' => '{template}',
-    'where' => ['template' => 'sailent|templatlain|templatelain2'],
-    'as' => 'template.',
-], function () {
-    include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
-});
+// Route::group([
+//     'prefix' => '{domain}',
+//     'where' => ['domain' => 'sailent|templatlain|templatelain2'],
+//     'as' => 'template.',
+// ], function () {
+//     include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
+// });

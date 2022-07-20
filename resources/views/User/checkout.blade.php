@@ -2,7 +2,8 @@
 
 @section('class-body', 'product-cart checkout-cart blog')
 
-@section('isi')<div class="main-content" id="cart">
+@section('isi')
+<div class="main-content" id="cart">
   <!-- main -->
   <div id="wrapper-site">
     <!-- breadcrumb -->
@@ -11,13 +12,13 @@
         <div class="breadcrumb">
           <ol>
             <li>
-              <a href="#">
+              <a href="{{ url('/') }}">
                 <span>Home</span>
               </a>
             </li>
             <li>
               <a href="#">
-                <span>Shopping Cart</span>
+                <span>Checkout</span>
               </a>
             </li>
           </ol>
@@ -51,7 +52,7 @@
                           <tr>
                             <td>
                               <a href="#">
-                                <img class="img-fluid" src="{{ $cart->product->pict_url }}" alt="Organic Strawberry Fruits">
+                                <img class="img-fluid" src="{{ $cart->product->pict_url }}" alt=" {{ $cart->product->product_name }}">
                               </a>
                             </td>
                             <td class="bold align_center">
@@ -161,7 +162,7 @@ $(function() {
         $(this).addClass('is-valid').removeClass('is-invalid');
 
         $.ajax({
-          url: '{{ url(' / ajax / order / check - domain ') }}',
+          url: '{{ url('/ajax/rder/check-domain ') }}',
           method: 'POST',
           data: {
             _token: '{{ csrf_token() }}',

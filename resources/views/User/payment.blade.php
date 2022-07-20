@@ -12,13 +12,13 @@
                         <div class="breadcrumb">
                             <ol>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ url('/') }}">
                                         <span>Home</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <span>Shopping Cart</span>
+                                        <span>Payment</span>
                                     </a>
                                 </li>
                             </ol>

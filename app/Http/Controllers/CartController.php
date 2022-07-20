@@ -17,6 +17,8 @@ class CartController extends Controller
      */
     public function index()
     {
+
+
         $carts = Cart::where('user_hash', member_auth()->hash())->get();
         $totalCartPrice = 0;
 
@@ -47,16 +49,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'bank_name' => 'required',
-            'acc_owner' => 'required',
-            'acc_number' => 'required'
-        ]);
-
-        dd('hancur');
-
-        //redirect to index
-        return redirect()->route('banks.index')->with(['success' => 'Data Berhasil Disimpan!']);
+       //
     }
 
     /**
@@ -105,19 +98,20 @@ class CartController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::where('in_stock', 1)->findOrFail($id);
-        $cart = Cart::where('user_hash', member_auth()->hash())->where('product_id', $product->id)->first();
+        // $product = Product::where('in_stock', 1)->findOrFail($id);
+        // $cart = Cart::where('user_hash', member_auth()->hash())->where('product_id', $product->id)->first();
 
-        if (! $cart) {
-            $cart = Cart::create([
-                'product_id' => $product->id,
-                'token' => member_auth()->hash(),
-            ]);
-        }
+        // if (! $cart) {
+        //     $cart = Cart::create([
+        //         'product_id' => $product->id,
+        //         'token' => member_auth()->hash(),
+        //     ]);
+        // }
 
-        session()->flash('force_redirect', '/carts');
+        // session()->flash('force_redirect', '/carts');
 
-        return redirect()->back();
+        // return redirect()->back();
+        //
     }
 
     /**
@@ -136,9 +130,13 @@ class CartController extends Controller
         ]);
 
         foreach ($request->carts as $value) {
-            $orderProduct = OrderProduct::where('domain', $value['domain'])->whereHas('order', function ($q) {
-                $q->where('status', Order::STATUS_COMPLETED);
-            })->first();
+            $orderProduct = OrderProduct::where('domain', $value['domain'])
+                                    ->whereHas('order', function ($q) {
+                                        $q->whereIn('status', [
+                                            Order::STATUS_PAID,
+                                            Order::STATUS_COMPLETED
+                                        ]);
+                                    })->first();
 
             if ($orderProduct) {
                 return redirect()->back()->withErrors(['carts.*.domain' => 'Domain ' . $value['domain'] . ' tidak tersedia']);
@@ -147,10 +145,11 @@ class CartController extends Controller
 
         $orderProducts = [];
         $carts = Cart::where('user_hash', member_auth()->hash())->get();
+        //kenapa di diget lagi?
 
-        foreach ($request->carts as $value) {
-            foreach ($carts as $cart) {
-                if ($value['id'] == $cart->id) {
+        foreach ($request->carts as $value) {//ini ambil cart kan?
+            foreach ($carts as $cart) {//nah bentar kok diforeach again
+                if ($value['id'] == $cart->id) {//kenapa di if
                     $cart->domain = $value['domain'];
                     $cart->save();
                     break;
@@ -187,7 +186,7 @@ class CartController extends Controller
         $product = Product::findOrFail($id);
         $cart = Cart::where('user_hash', member_auth()->hash())->where('product_id', $product->id)->first();
 
-        if (! $cart) {
+        if (! $cart) {//ini di if karena pake first kan ? biar ga null? kok if ! $cart. if bukan cart dong?
             $cart = Cart::create([
                 'product_id' => $product->id,
                 'user_hash' => member_auth()->hash(),

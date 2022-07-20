@@ -1053,19 +1053,19 @@
       var $this = $(this);
       var data = {
         codeProduct: $this.data('code-product'),
-        user_hash: '{{ env('SAILENT_USER_HASH') }}',
+        domain: '{{ env('SAILENT_DOMAIN') }}',
         qty: 1,
         _token: '{{ csrf_token() }}'
       }
 
       $.ajax({
-        url: '{{ route('template.carts.store', $template) }}',
+        url: '{{ route('template.carts.store', $domain) }}',
         method: 'post',
         data: data,
         dataType: 'json',
         success: function (res) {
           if (res.status === 'success') {
-            window.location.href = '{{ route('template.carts.index', $template) }}'
+            window.location.href = '{{ route('template.carts.index', $domain) }}'
           }
         },
         error: function (err) {
@@ -1083,7 +1083,7 @@
       $city.html('');
 
       $.ajax({
-        url: '{{ url($template . '/ajax/shipping/city') }}?province=' + val,
+        url: '{{ url($domain . '/ajax/shipping/city') }}?province=' + val,
         success: function (res) {
           if (res.status === 'success') {
             var html = '<option value="">Pilih Kota/Kabupaten</option>';
@@ -1111,7 +1111,7 @@
         $subdistrict.html('');
 
         $.ajax({
-          url: '{{ url($template . '/ajax/shipping/subdistrict') }}?city=' + val,
+          url: '{{ url($domain . '/ajax/shipping/subdistrict') }}?city=' + val,
           success: function (res) {
             if (res.status === 'success') {
               var html = '<option value="">Pilih Kecamatan</option>';

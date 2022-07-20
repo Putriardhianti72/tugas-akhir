@@ -23,7 +23,7 @@ class RetailOrderProduct extends Model
 
     public function order()
     {
-        return $this->belongsTo(RetailOrder::class);
+        return $this->belongsTo(RetailOrder::class, 'retail_order_id', 'id');
     }
 
     public function getPictUrlAttribute()

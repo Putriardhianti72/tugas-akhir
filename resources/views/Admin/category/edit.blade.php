@@ -3,7 +3,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Forms</h4>
+                <h4 class="page-title">Kategori</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -14,13 +14,19 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Forms</a>
+                        <a href="#">Setting Katalog</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Basic Form</a>
+                        <a href="#">Kategori</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Edit Data Kategori</a>
                     </li>
                 </ul>
             </div>
@@ -63,7 +69,7 @@
         </div>
     </div>
 </div>
-    </div>
+
     @endsection
 
         <!--   Core JS Files   -->
@@ -80,5 +86,3 @@
 
         <!-- Atlantis JS -->
         <script src="{{URL::asset('admin')}}/assets/js/atlantis.min.js"></script>
-</body>
-</html>

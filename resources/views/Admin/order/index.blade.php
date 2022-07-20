@@ -27,9 +27,9 @@
                                 <h4 class="card-title">Data Order</h4>
 
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#exampleModal">
+                               {{--  <button type="button" class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#exampleModal">
                                     + Tambah Data Order
-                                </button>
+                                </button> --}}
                             </div>
                         </div>
                         <div class="card-body">
@@ -38,12 +38,12 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Input data order</h5>
+                                           {{--  <h5 class="modal-title" id="exampleModalLabel">Input data order</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
-                                            </button>
+                                            </button> --}}
                                         </div>
-                                        <form method="POST" action="{{route('admin.orders.store')}}">
+                                       {{--  <form method="POST" action="{{route('admin.orders.store')}}">
                                             @csrf
                                             <div class="modal-body">
                                                 <div class="form-group form-floating-label">
@@ -54,7 +54,7 @@
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
-                                        </form>
+                                        </form> --}}
                                     </div>
                                 </div>
                             </div>

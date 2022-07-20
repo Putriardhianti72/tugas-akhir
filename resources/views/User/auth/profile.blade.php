@@ -10,7 +10,7 @@
                 <div class="breadcrumb">
                     <ol>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('/') }}">
                                 <span>Home</span>
                             </a>
                         </li>
@@ -50,11 +50,11 @@
                         </table>
 
                     </div>
-                    <button class="btn btn-primary" data-link-action="sign-in" type="submit">
+               {{--      <button class="btn btn-primary" data-link-action="sign-in" type="submit">
                         view Address
-                    </button>
+                    </button> --}}
                     <div class="order">
-                        <h4>Order
+                        <h4>Reward
                             <span class="detail">History</span>
                         </h4>
                         <p>You haven't placed any orders yet.</p>

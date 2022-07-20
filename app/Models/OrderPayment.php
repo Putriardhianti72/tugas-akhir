@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class OrderPayment extends Model
 {
@@ -32,5 +33,16 @@ class OrderPayment extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function getPaymentTypeTextAttribute()
+    {
+        $type = $this->payment_type;
+
+        if ($type === 'bank_transfer') {
+            return 'Bank Transfer';
+        }
+
+        return Str::headline($type);
     }
 }

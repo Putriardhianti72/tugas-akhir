@@ -47,7 +47,7 @@ class OrderController extends Controller
         $order = Order::create([
             'invoice_no' => Order::generateInvoiceNo(),
             'user_hash' => member_auth()->hash(),
-            'expired_at' => Carbon::now()->addMinutes(1),
+            'expired_at' => Carbon::now()->addMinutes(1),//???
         ]);
 
         $orderProducts = [];
@@ -63,6 +63,8 @@ class OrderController extends Controller
                 'desc' => $cart->product->desc,
                 'price' => $cart->product->price,
                 'pict' => $cart->product->pict,
+                'user_hash' => member_auth()->hash(),
+                'token' => member_auth()->token(),
             ]);
             $orderProducts[] = $orderProduct;
 
@@ -71,11 +73,11 @@ class OrderController extends Controller
             $product->save();
 
             $totalOrderPrice += $orderProduct->price;
-
         }
 
         $member = member_auth()->user()->toArray();
         $member['user_hash'] = member_auth()->hash();
+        $member['token'] = member_auth()->token();
         $orderMember = $order->member()->create($member);
 
         $midtrans = new MidtransService();
@@ -99,6 +101,7 @@ class OrderController extends Controller
             'item_details' => [],
         ];
 
+        //bawah ni buat apa?
         foreach ($orderProducts as $orderProduct) {
             $transactionData['item_details'][] = [
                 'id' => $orderProduct->id,
@@ -112,6 +115,7 @@ class OrderController extends Controller
 
         $paymentUrl = $midtrans->createTransaction($transactionData);
 
+        //membuat payment order ke tabel order_payment
         $order->payment()->create([
             'payment_url' => $paymentUrl,
             'total_price' => $totalOrderPrice,
@@ -199,72 +203,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'bank_name' => 'required',
-            'acc_owner' => 'required',
-            'acc_number' => 'required'
-        ]);
-        $category = DB::table('databanks')
-            ->where('id', $id)
-            ->update([
-                'bank_name' => $request->bank_name,
-                'acc_owner' => $request->acc_owner,
-                'acc_number' => $request->acc_number,
-                'updated_at' => date('Y-m-d H:i:s')
-            ]);
-        return redirect('banks');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function pay(Request $request, $id)
-    {
-        $data = $request->validate([
-            'bank_name' => 'required',
-            'acc_owner' => 'required',
-            'acc_number' => 'required',
-        ]);
-        $order = Order::findOrFail($id);
-
-        $payment = $order->payment;
-        $payment->bank_name = $request->bank_name;
-        $payment->acc_owner = $request->acc_owner;
-        $payment->acc_number = $request->acc_number;
-
-        $totalPrice = 0;
-
-        foreach ($order->products as $product) {
-            $totalPrice += $product->price;
-        }
-
-        $payment->total_price = $totalPrice;
-
-        if ($request->payment_proof) {
-            $this->validate($request, [
-                'payment_proof'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            ]);
-
-            Storage::delete('public/payment-proof/'. $payment->payment_proof);
-
-            //upload image
-            $paymentProof = $request->file('payment_proof');
-            $paymentProofHashName = $paymentProof->hashName();
-            $paymentProof->storeAs('public/payment-proof', $paymentProofHashName);
-
-            $payment->payment_proof = $paymentProofHashName;
-        }
-
-        $payment->save();
-
-        $order->status = Order::STATUS_PENDING_REVIEW;
-        $order->save();
-
-        return redirect()->route('orders.show', $order->id);
+        //
     }
 
     /**

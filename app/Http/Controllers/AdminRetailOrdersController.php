@@ -91,7 +91,6 @@ class AdminRetailOrdersController extends Controller
             RetailOrder::STATUS_PENDING => 'Pending',
             RetailOrder::STATUS_PAID => 'Paid',
             RetailOrder::STATUS_DELIVERY => 'Out for Delivery',
-            // RetailOrder::STATUS_PENDING_REVIEW => 'Pending Review',
             RetailOrder::STATUS_COMPLETED => 'Completed',
             RetailOrder::STATUS_CANCELLED => 'Cancelled',
         ];
@@ -231,6 +230,32 @@ class AdminRetailOrdersController extends Controller
         //     $order->status = RetailOrder::STATUS_CANCELLED;
         //     $order->save();
         // }
+
+        return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateCommission(Request $request, $id)
+    {
+        $order = RetailOrder::findOrFail($id);
+
+        if ($order->status != RetailOrder::STATUS_COMPLETED) {
+            return abort(403);
+        }
+
+        //validate form
+        $this->validate($request, [
+            'commission' => 'required',
+        ]);
+
+        $order->commission = $request->commission;
+        $order->save();
 
         return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
     }

@@ -19,6 +19,7 @@ class OrderMember extends Model
         'kota',
         'propinsi',
         'user_hash',
+        'token',
     ];
 
     public function order()

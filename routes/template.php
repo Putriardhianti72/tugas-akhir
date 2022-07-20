@@ -28,8 +28,8 @@ Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
     Route::post('/pay/{id}', [RetailOrderController::class,'pay'])->name('pay');
 });
 
-Route::group(['prefix' => 'ajax'], function () {
-    Route::get('/shipping/city', [\App\Http\Controllers\ShippingController::class, 'ajaxGetCity']);
-    Route::get('/shipping/subdistrict', [\App\Http\Controllers\ShippingController::class, 'ajaxGetSubdistrict']);
-    Route::get('/shipping/cost', [\App\Http\Controllers\ShippingController::class, 'ajaxGetCost']);
+Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function () {
+    Route::get('/shipping/city', [\App\Http\Controllers\ShippingController::class, 'ajaxGetCity'])->name('shipping.city');
+    Route::get('/shipping/subdistrict', [\App\Http\Controllers\ShippingController::class, 'ajaxGetSubdistrict'])->name('shipping.subdistrict');
+    Route::get('/shipping/cost', [\App\Http\Controllers\ShippingController::class, 'ajaxGetCost'])->name('shipping.cost');
 });

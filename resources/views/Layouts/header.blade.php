@@ -10,8 +10,8 @@
 
             <!-- logo -->
             <div class="mobile-logo">
-                <a href="index-2.html">
-                    <img class="logo-mobile img-fluid" src="{{ asset('user') }}/img/home/logo-mobie.png" alt="Prestashop_Furnitica">
+                <a href="{{ url('/') }}">
+                    <img class="logo-mobile img-fluid" src="{{ asset('user') }}/img/home/selleria-logo.png" alt="Prestashop_Furnitica">
                 </a>
             </div>
 
@@ -31,29 +31,28 @@
                     </button>
                 </form>
             </div>
-            <div class="desktop_cart">
+          <div class="desktop_cart">
                 <div class="blockcart block-cart cart-preview tiva-toggle">
                     <div class="header-cart tiva-toggle-btn">
-                        <span class="cart-products-count">1</span>
+                        <span class="cart-products-count">0</span>
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     </div>
                     <div class="dropdown-content">
                         <div class="cart-content">
                             <table>
-                                <tbody>
+                                <tbody data-template-content="cart-list">
                                     <tr>
                                         <td class="product-image">
                                             <a href="product-detail.html">
-                                                <img src="{{asset('user')}}/img/product/5.jpg" alt="Product">
+                                                <img src="" alt="Product">
                                             </a>
                                         </td>
                                         <td>
                                             <div class="product-name">
-                                                <a href="product-detail.html">Organiccc Strawberry Fruits</a>
+                                                <a href="#"></a>
                                             </div>
                                             <div>
-                                                2 x
-                                                <span class="product-price">£28.98</span>
+                                                <span class="product-price"></span>
                                             </div>
                                         </td>
                                         <td class="action">
@@ -62,16 +61,18 @@
                                             </a>
                                         </td>
                                     </tr>
+                                </tbody>
+                                <tbody>
                                     <tr class="total">
                                         <td colspan="2">Total:</td>
-                                        <td>£92.96</td>
+                                        <td>0</td>
                                     </tr>
 
                                     <tr>
                                         <td colspan="3" class="d-flex justify-content-center">
                                             <div class="cart-button">
-                                                <a href="product-cart.html" title="View Cart">View Cart</a>
-                                                <a href="product-checkout.html" title="Checkout">Checkout</a>
+                                                <a href="{{ member_auth()->check() ? url('/carts') : url('login') }}" title="View Cart">View Cart</a>
+                                                <a href="{{ member_auth()->check() ? url('/carts') : url('login') }}" title="Checkout">Checkout</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -79,6 +80,7 @@
                             </table>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -91,8 +93,8 @@
                 <!-- logo -->
                 <div class="col-sm-2 col-md-2 d-flex align-items-center">
                     <div id="logo">
-                        <a href="index-2.html">
-                            <img class="img-fluid" src="{{asset('user')}}/img/home/logo.png" alt="logo">
+                        <a href="{{ url('/') }}">
+                            <img class="img-fluid" src="{{asset('user')}}/img/home/selleria-logo.png" alt="logo">
                         </a>
                     </div>
                 </div>

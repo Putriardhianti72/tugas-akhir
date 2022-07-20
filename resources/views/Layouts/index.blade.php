@@ -282,7 +282,7 @@
                     <!-- recent posts -->
                     <div class="container">
                         <div class="section recent-post">
-                            <div class="title-block">RECENT POST</div>
+                            <div class="title-block">CATEGORIES</div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="item-post">

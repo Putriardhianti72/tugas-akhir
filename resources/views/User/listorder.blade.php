@@ -12,7 +12,7 @@
                         <div class="breadcrumb">
                             <ol>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ url('/') }}">
                                         <span>Home</span>
                                     </a>
                                 </li>

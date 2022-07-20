@@ -18,6 +18,8 @@ class OrderProduct extends Model
         'desc',
         'price',
         'pict',
+        'user_hash',
+        'token',
     ];
 
     public function order()
@@ -33,6 +35,11 @@ class OrderProduct extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function member()
+    {
+        return $this->belongsTo(OrderMember::class, 'user_hash', 'user_hash');
     }
 
     public function getPictUrlAttribute()

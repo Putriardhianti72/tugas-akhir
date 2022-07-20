@@ -6,7 +6,7 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-8">
-          <form action="{{ route('template.carts.checkout', $template) }}" method="post">
+          <form action="{{ route('template.carts.checkout', $domain) }}" method="post">
             @csrf
             <div class="panel panel-info">
               <div class="panel-heading">
@@ -109,7 +109,7 @@
       }
 
       $.ajax({
-        url: '{{ route('template.carts.destroy', ['template' => $template, 'cart' => 1]) }}',
+        url: '{{ route('template.carts.destroy', ['domain' => $domain, 'cart' => 1]) }}',
         method: 'delete',
         data: data,
         dataType: 'json',
@@ -118,7 +118,7 @@
             $this.closest('.cart-row').remove();
 
             if (!$this.closest('form').find('.cart-row').length) {
-              window.location.replace('{{ route('template.home', $template) }}')
+              window.location.replace('{{ route('template.home', $domain) }}')
             }
           }
         },

@@ -4,17 +4,17 @@
             <div class="footer-top col-lg-12 col-xs-12">
                 <div class="row">
                     <div class="tiva-html col-lg-4 col-md-12 col-xs-12">
-                        <div class="block">
+                        <div class="block ">
                             <div class="block-content">
                                 <p class="logo-footer">
-                                    <img src="{{ asset('/user/img/home/logo.png') }}" alt="img">
+                                    <img src="{{ asset('/user/img/home/selleria-logo.png') }}" alt="img" width="80%">
                                 </p>
-                                <p class="content-logo">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt
-                                    ut labore et dolore magna aliqua. Ut enim ad minim
+                                <p class="content-logo">Perusahaan Network Marketing anak bangsa yang sudah teruji bekerjasama dengan ratusan komunitas di seluruh Nusantara. Pastikan Anda termasuk di dalam gelombang perubahan Bangsa untuk kehidupan yang lebih layak
+- Kesuksesan itu harus diperjuangkan -
                                 </p>
                             </div>
                         </div>
-                        <div class="block">
+                       {{--  <div class="block">
                             <div class="block-content">
                                 <ul>
                                     <li>
@@ -41,7 +41,7 @@
                                     <img class="img-fluid" src="{{ asset('/user/img/home/payment-footer.png') }}" alt="img">
                                 </p>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="tiva-html col-lg-4 col-md-6">
                         <div class="block m-top">
@@ -55,7 +55,9 @@
                                         <span>Address :</span>
                                     </div>
                                     <div class="content-contact address-contact">
-                                        <p>123 Suspendis matti, Visaosang Building VST District NY Accums, North American</p>
+                                      {{--   <p>Ruko Sibedil No. B6-7 Jl Solo Karanganyar Km7 Karanganyar</p> --}}
+                                        <p>Solo Paragon Mall & Resident Lantai M1
+                                        Surakarta Jawa Tengah</p>
                                     </div>
                                 </div>
                                 <div class="contact-us">
@@ -64,7 +66,7 @@
                                         <span>Email :</span>
                                     </div>
                                     <div class="content-contact mail-contact">
-                                        <p>support@domain.com</p>
+                                        <p>dobelnetwork@gmail.com</p>
                                     </div>
                                 </div>
                                 <div class="contact-us">
@@ -73,10 +75,10 @@
                                         <span>Hotline :</span>
                                     </div>
                                     <div class="content-contact phone-contact">
-                                        <p>+0012-345-67890</p>
+                                        <p>0271-736773</p>
                                     </div>
                                 </div>
-                                <div class="contact-us">
+                               {{--  <div class="contact-us">
                                     <div class="title-content">
                                         <i class="fa fa-clock-o" aria-hidden="true"></i>
                                         <span>Opening Hours :</span>
@@ -85,34 +87,14 @@
                                         <p>Monday - Sunday / 08.00AM - 19.00</p>
                                         <span>(Except Holidays)</span>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
                     <div class="tiva-modules col-lg-4 col-md-6">
-                        <div class="block m-top">
-                            <div class="block-content">
-                                <div class="title-block">Newsletter</div>
-                                <div class="sub-title">Sign up to our newsletter to get the latest articles, lookbooks voucher codes direct
-                                    to your inbox
-                                </div>
-                                <div class="block-newsletter">
-                                    <form action="#" method="post">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="email" value="" placeholder="Enter Your Email">
-                                            <span class="input-group-btn">
-                                                <button class="effect-btn btn btn-secondary " name="submitNewsletter" type="submit">
-                                                    <span>subscribe</span>
-                                                </button>
-                                            </span>
-                                        </div>
-                                        <input type="hidden" name="action" value="0">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                         <div class="block m-top1">
                             <div class="block-content">
+
                                 <div class="social-content">
                                     <div class="title-block">
                                         Follow us on

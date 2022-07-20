@@ -16,6 +16,7 @@ use App\Mail\SendRetailOrderCancelled;
 use App\Mail\SendOrderPaid;
 use App\Mail\SendOrderCompleted;
 use App\Mail\SendOrderCancelled;
+use App\Mail\SendOrderProcessing;
 use Carbon\Carbon;
 use App\Services\Partner\Api;
 use App\Services\Midtrans\MidtransService;
@@ -96,6 +97,7 @@ class PaymentCallbackController extends Controller
             $response['bank'] = $response['va_numbers'][0]['bank'];
             $response['va_number'] = $response['va_numbers'][0]['va_number'];
         }
+        dd($request->all(), $response);
 
         if (stripos($orderId, 'RINV') !== false) {
             $order = RetailOrder::where('invoice_no', $orderId)->first();
@@ -125,7 +127,7 @@ class PaymentCallbackController extends Controller
             }
 
             return redirect()->route('template.orders.show', [
-                'template' => $order->template,
+                'domain' => $order->domain,
                 'id' => $order->id,
             ]);
         } else {
@@ -153,6 +155,10 @@ class PaymentCallbackController extends Controller
 
                 $order->save();
                 $order->payment->update($response);
+                dd($order);
+                return redirect()->route('orders.show', [
+                    'order' => $order->id,
+                ]);
             }
         }
     }

@@ -4,10 +4,10 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Dashboard</h4>
+                <h4 class="page-title">Kategori</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
-                        <a href="#">
+                        <a href="{{ url('/') }}">
                             <i class="flaticon-home"></i>
                         </a>
                     </li>
@@ -15,7 +15,13 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Dashboard</a>
+                        <a href="#">Setting Katalong</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Kategori</a>
                     </li>
                 </ul>
             </div>

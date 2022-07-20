@@ -16,7 +16,7 @@ class LandingController extends Controller
      */
     public function index()
     {
-        $products = Product::where('in_stock', 1)->get();
+        $products = Product::where('in_stock', 1)->limit(3)->orderBy('created_at','desc')->get();
         return view('Layouts.index', compact('products'));
     }
 

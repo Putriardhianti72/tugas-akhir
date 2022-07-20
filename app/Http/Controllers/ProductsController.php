@@ -14,10 +14,15 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::where('in_stock', 1)->get();
-        return view('User.listproduct', compact('products'));
+        $categories = Category::all();
+        $products = Product::where('in_stock', 1);
+        if($request->category_id){
+            $products->where('category_id', $request->category_id);
+        }
+        $products = $products->get();
+        return view('User.listproduct', compact('products','categories'));
     }
 
     public function categori(){

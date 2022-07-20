@@ -20,8 +20,8 @@ class Order extends Model
 
     public const STATUS_PENDING = 0;
     public const STATUS_COMPLETED = 1;
-    public const STATUS_PENDING_REVIEW = 2;
-    public const STATUS_PAID = 3;
+    public const STATUS_PAID = 2;
+    public const STATUS_PROCESSING = 3;
     public const STATUS_CANCELLED = 4;
 
     public function member()
@@ -53,9 +53,10 @@ class Order extends Model
             return 'Paid';
         }
 
-        if ($this->status == self::STATUS_PENDING_REVIEW) {
-            return 'Pending Review';
+        if ($this->status == self::STATUS_PROCESSING) {
+            return 'Processing';
         }
+
 
         if ($this->status == self::STATUS_CANCELLED) {
             return 'Cancelled';
@@ -66,7 +67,7 @@ class Order extends Model
     {
         $count = static::count('id');
 
-        return 'INV' . str_pad($count + 1, 9, '0', STR_PAD_LEFT);
+        return 'INV' . str_pad($count + 1, 7, '0', STR_PAD_LEFT);
     }
 
     public function getTotalPriceAttribute()

@@ -179,57 +179,6 @@ class ShippingController extends Controller
         return redirect('banks');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function pay(Request $request, $id)
-    {
-        $data = $request->validate([
-            'bank_name' => 'required',
-            'acc_owner' => 'required',
-            'acc_number' => 'required',
-        ]);
-        $order = RetailOrder::findOrFail($id);
-
-        $payment = $order->payment;
-        $payment->bank_name = $request->bank_name;
-        $payment->acc_owner = $request->acc_owner;
-        $payment->acc_number = $request->acc_number;
-
-        $totalPrice = 0;
-
-        foreach ($order->products as $product) {
-            $totalPrice += $product->price;
-        }
-
-        $payment->total_price = $totalPrice;
-
-        if ($request->payment_proof) {
-            $this->validate($request, [
-                'payment_proof'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            ]);
-
-            Storage::delete('public/payment-proof/'. $payment->payment_proof);
-
-            //upload image
-            $paymentProof = $request->file('payment_proof');
-            $paymentProofHashName = $paymentProof->hashName();
-            $paymentProof->storeAs('public/payment-proof', $paymentProofHashName);
-
-            $payment->payment_proof = $paymentProofHashName;
-        }
-
-        $payment->save();
-
-        $order->status = RetailOrder::STATUS_PENDING_REVIEW;
-        $order->save();
-
-        return redirect()->route('orders.show', $order->id);
-    }
 
     /**
      * Remove the specified resource from storage.

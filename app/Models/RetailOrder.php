@@ -12,19 +12,19 @@ class RetailOrder extends Model
     protected $table ='retail_orders';
     protected $primaryKey ='id';
     protected $fillable=[
-        'user_hash', 'status', 'invoice_no', 'qty', 'template',
+        'status', 'invoice_no', 'qty', 'domain',
+        'commission', 'total_price',
     ];
 
     public const STATUS_PENDING = 0;
     public const STATUS_COMPLETED = 1;
-    public const STATUS_PENDING_REVIEW = 2;
-    public const STATUS_PAID = 3;
-    public const STATUS_CANCELLED = 4;
-    public const STATUS_DELIVERY = 5;
+    public const STATUS_PAID = 2;
+    public const STATUS_CANCELLED = 3;
+    public const STATUS_DELIVERY = 4;
 
     public function owner()
     {
-        return $this->hasOne(OrderMember::class, 'user_hash', 'user_hash');
+        return $this->hasOne(OrderProduct::class, 'domain', 'domain');
     }
 
     public function customer()
@@ -61,10 +61,6 @@ class RetailOrder extends Model
             return 'Paid';
         }
 
-        if ($this->status == self::STATUS_PENDING_REVIEW) {
-            return 'Pending Review';
-        }
-
         if ($this->status == self::STATUS_CANCELLED) {
             return 'Cancelled';
         }
@@ -78,14 +74,14 @@ class RetailOrder extends Model
     {
         $count = static::count('id');
 
-        return 'RINV' . str_pad($count + 1, 9, '0', STR_PAD_LEFT);
+        return 'RINV' . str_pad($count + 1, 7, '0', STR_PAD_LEFT);
     }
 
-    public function getTotalPriceAttribute()
-    {
-        $shipping = $this->shipping->price ?? 0;
-        $product = $this->product->total_price ?? 0;
+    // public function getTotalPriceAttribute()
+    // {
+    //     $shipping = $this->shipping->price ?? 0;
+    //     $product = $this->product->total_price ?? 0;
 
-        return $shipping + $product;
-    }
+    //     return $shipping + $product;
+    // }
 }

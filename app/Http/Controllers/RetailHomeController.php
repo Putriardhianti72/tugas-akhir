@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\OrderProduct;
 use App\Models\OrderMember;
 use App\Models\RetailOrder;
 use App\Models\RetailOrderProduct;
+use App\Models\Order;
 use App\Services\Partner\Api;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +24,7 @@ class RetailHomeController extends Controller
      */
     public function index(Request $request)
     {
-        $template = $request->template;
+        $template = $this->getTemplateName($request);
 
         $response = Rajaongkir::setEndpoint('province')
             ->setBase(env("RAJAONGKIR_TYPE"))
@@ -34,7 +36,7 @@ class RetailHomeController extends Controller
         $product = $this->getApiProduct($request, 'PFLAVO');
 
         return view('Template.' . $template . '.Pages.home', [
-            'template' => $template,
+            'domain' => $request->domain,
             'provinces' => $provinces,
             'product' => $product,
         ]);
@@ -47,17 +49,22 @@ class RetailHomeController extends Controller
         return $api->getProduct($this->getTemplateToken($request), $code) ?: [];
     }
 
+    protected function getTemplateName(Request $request)
+    {
+        if ($request->domain === env('SAILENT_DOMAIN')) {
+            return 'sailent';
+        }
+    }
+
     protected function getTemplateToken(Request $request)
     {
-        $hash = null;
+        $domain = $request->domain;
 
-        if ($request->template === 'sailent') {
-            $hash = env('SAILENT_USER_HASH');
-        }
-
-        if ($hash) {
-            $member = OrderMember::where('user_hash', $hash)->first();
-            return $member->token;
+        if ($domain) {
+            $product = OrderProduct::where('domain', $domain)->whereHas('order', function ($q) {
+                $q->where('orders.status', Order::STATUS_COMPLETED);
+            })->first();
+            return $product->token;
         }
     }
 
@@ -168,58 +175,6 @@ class RetailHomeController extends Controller
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
         return redirect('banks');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function pay(Request $request, $id)
-    {
-        $data = $request->validate([
-            'bank_name' => 'required',
-            'acc_owner' => 'required',
-            'acc_number' => 'required',
-        ]);
-        $order = RetailOrder::findOrFail($id);
-
-        $payment = $order->payment;
-        $payment->bank_name = $request->bank_name;
-        $payment->acc_owner = $request->acc_owner;
-        $payment->acc_number = $request->acc_number;
-
-        $totalPrice = 0;
-
-        foreach ($order->products as $product) {
-            $totalPrice += $product->price;
-        }
-
-        $payment->total_price = $totalPrice;
-
-        if ($request->payment_proof) {
-            $this->validate($request, [
-                'payment_proof'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            ]);
-
-            Storage::delete('public/payment-proof/'. $payment->payment_proof);
-
-            //upload image
-            $paymentProof = $request->file('payment_proof');
-            $paymentProofHashName = $paymentProof->hashName();
-            $paymentProof->storeAs('public/payment-proof', $paymentProofHashName);
-
-            $payment->payment_proof = $paymentProofHashName;
-        }
-
-        $payment->save();
-
-        $order->status = RetailOrder::STATUS_PENDING_REVIEW;
-        $order->save();
-
-        return redirect()->route('orders.show', $order->id);
     }
 
     /**

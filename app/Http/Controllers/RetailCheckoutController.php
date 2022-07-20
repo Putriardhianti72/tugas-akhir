@@ -3,7 +3,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\OrderProduct;
 use App\Models\OrderMember;
+use App\Models\Order;
 use App\Models\Product;
 use Carbon\Carbon;
 use App\Services\Partner\Api;
@@ -21,11 +23,11 @@ class RetailCheckoutController extends Controller
      */
     public function index(Request $request)
     {
-        $template = $request->template;
+        $template = $this->getTemplateName($request);
         $carts = $this->getCarts($request);
 
         if (! $carts) {
-            return redirect()->route('template.home', $template);
+            return redirect()->route('template.home', $request->domain);
         }
 
         $totalCartPrice = 0;
@@ -71,7 +73,7 @@ class RetailCheckoutController extends Controller
         ];
 
         return view('Template.' . $template . '.Pages.checkout', [
-            'template' => $template,
+            'domain' => $request->domain,
             'carts' => $carts,
             'totalCartPrice' => $totalCartPrice,
             'provinces' => $provinces,
@@ -86,23 +88,28 @@ class RetailCheckoutController extends Controller
         return $api->getProduct($this->getTemplateToken($request), $code) ?: [];
     }
 
+    protected function getTemplateName(Request $request)
+    {
+        if ($request->domain === env('SAILENT_DOMAIN')) {
+            return 'sailent';
+        }
+    }
+
     protected function getTemplateToken(Request $request)
     {
-        $hash = null;
+        $domain = $request->domain;
 
-        if ($request->template === 'sailent') {
-            $hash = env('SAILENT_USER_HASH');
-        }
-
-        if ($hash) {
-            $member = OrderMember::where('user_hash', $hash)->first();
-            return $member->token;
+        if ($domain) {
+            $product = OrderProduct::where('domain', $domain)->whereHas('order', function ($q) {
+                $q->where('orders.status', Order::STATUS_COMPLETED);
+            })->first();
+            return $product->token;
         }
     }
 
     protected function getCarts(Request $request)
     {
-        $carts = session('retail_cart.' . $request->template);
+        $carts = session('retail_cart.' . $request->domain);
 
         if (is_array($carts)) {
             foreach ($carts as $i => $cart) {
@@ -136,7 +143,7 @@ class RetailCheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        $carts = session('retail_cart.' . $request->template) ?: [];
+        $carts = session('retail_cart.' . $request->domain) ?: [];
 
         $exists = false;
 
@@ -154,7 +161,7 @@ class RetailCheckoutController extends Controller
                 'user_hash' => $request->user_hash,
             ];
 
-            session(['retail_cart.' . $request->template => $carts]);
+            session(['retail_cart.' . $request->domain => $carts]);
         }
 
         if ($request->expectsJson()) {
@@ -165,7 +172,7 @@ class RetailCheckoutController extends Controller
             ]);
         }
 
-        return redirect()->route('template.carts.index', $request->template);
+        return redirect()->route('template.carts.index', $request->domain);
     }
 
     /**
@@ -221,9 +228,9 @@ class RetailCheckoutController extends Controller
             }
         }
 
-        session(['retail_cart.' . $request->template => $carts]);
+        session(['retail_cart.' . $request->domain => $carts]);
 
-        return redirect()->route('template.checkout.index', $request->template);
+        return redirect()->route('template.checkout.index', $request->domain);
     }
 
     /**
@@ -234,7 +241,7 @@ class RetailCheckoutController extends Controller
      */
     public function destroy(Request $request)
     {
-        $carts = session('retail_cart.' . $request->template);
+        $carts = session('retail_cart.' . $request->domain);
 
         if (is_array($carts)) {
             foreach ($carts as $i => $cart) {
@@ -243,7 +250,7 @@ class RetailCheckoutController extends Controller
                 }
             }
 
-            session(['retail_cart.' . $request->template => $carts]);
+            session(['retail_cart.' . $request->domain => $carts]);
         }
 
         if ($request->expectsJson()) {
@@ -254,6 +261,6 @@ class RetailCheckoutController extends Controller
             ]);
         }
 
-        return redirect()->route('template.carts.index', $request->template);
+        return redirect()->route('template.carts.index', $request->domain);
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class RetailOrderPayment extends Model
 {
@@ -41,5 +42,16 @@ class RetailOrderPayment extends Model
         if ($this->payment_proof) {
             return Storage::url('public/retail-payment-proof/' . $this->payment_proof);
         }
+    }
+
+    public function getPaymentTypeTextAttribute()
+    {
+        $type = $this->payment_type;
+
+        if ($type === 'bank_transfer') {
+            return 'Bank Transfer';
+        }
+
+        return Str::headline($type);
     }
 }
