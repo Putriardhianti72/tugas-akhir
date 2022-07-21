@@ -94,14 +94,14 @@
             <li class="active"><a class="section-scroll" href="#wrapper">Home</a></li>
             <li><a href="#landing-offer">About</a></li>
             <li><a href="#features-section">Services</a></li>
+            <li><a href="#price-section-1">Price</a></li>
             <li><a href="#testimonials-section">Testimoni</a></li>
             <li><a href="#contact-section">Contact</a></li>
-            <li><a href="#team-section">Team</a></li>
-            <li><a href="#screenshots-section">Works</a></li>
-            <li><a href="#prices-section">Prices</a></li>
+       {{--      <li><a href="#screenshots-section">Works</a></li>
+            <li><a href="#prices-section">Prices</a></li> --}}
 
 
-            <li class="dropdown dropdown-navbar-cart active">
+            {{-- <li class="dropdown dropdown-navbar-cart active">
               <a href="#" class="dropdown-toggle" id="navbarDrop1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-shopping-cart"></i> Cart</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDrop1">
                   <div class="media">
@@ -119,7 +119,7 @@
                       <a href="#three">Checkout</a>
                     </div>
                 </div>
-            </li>
+            </li> --}}
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container -->

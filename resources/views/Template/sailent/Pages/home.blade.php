@@ -179,7 +179,7 @@
 
             <div class="col-md-6">
               <div class="features-image animated out" data-animation="fadeInUp" data-delay="0">
-<!--                <img src={{ asset('assets/sailent/images/temp/woman.jpg') }}" alt="">-->
+                <img src="{{ asset('assets/sailent/images/hero-bg/1.png') }}" alt="" width="70%">
               </div> <!-- end features-image -->
             </div> <!-- end col-md-6 -->
 
@@ -198,40 +198,40 @@
                   <!-- feature -->
                   <li>
                     <div class="right-features-box animated out" data-animation="fadeInRight" data-delay="0">
-                      <span class="iconbox"><i class="icon-video"></i></span>
+                      <span class="iconbox"></span>
                       <div class="features-box-content">
-                        <h6>Video</h6>
-                        <p>Mauris eros tortor, tristique cursus porttitor et, luctus sed urna</p>
+                        {{-- <h6>Video</h6> --}}
+                        <p>Membantu mengatasi gangguan pencernaan dan pernafasan</p>
                       </div>
                     </div>
                   </li>
                   <!-- feature -->
                   <li>
                     <div class="right-features-box animated out" data-animation="fadeInRight" data-delay="0">
-                      <span class="iconbox"><i class="icon-camera"></i></span>
+                      <span class="iconbox"></span>
                       <div class="features-box-content">
-                        <h6>Photography</h6>
-                        <p>Mauris eros tortor, tristique cursus porttitor et, luctus sed urna.</p>
+                        {{-- <h6>Photography</h6> --}}
+                        <p>Membantu mengatasi penyakit jantung dan pembuluh darah</p>
                       </div>
                     </div>
                   </li>
                   <!-- feature -->
                   <li>
                     <div class="right-features-box animated out" data-animation="fadeInRight" data-delay="0">
-                      <span class="iconbox"><i class="icon-presentation"></i></span>
+                      <span class="iconbox"></span>
                       <div class="features-box-content">
-                        <h6>Marketing</h6>
-                        <p>Mauris eros tortor, tristique cursus porttitor et, luctus sed urna.</p>
+                        {{-- <h6>Marketing</h6> --}}
+                        <p>Membantu untuk menurunkan kadar kolestrol jahat dan trigliserida</p>
                       </div>
                     </div>
                   </li>
                   <!-- feature -->
                   <li>
                     <div class="right-features-box animated out" data-animation="fadeInRight" data-delay="0">
-                      <span class="iconbox"><i class="fa fa-life-ring"></i></span>
+                      <span class="iconbox"></span>
                       <div class="features-box-content">
-                        <h6>Support</h6>
-                        <p>Mauris eros tortor, tristique cursus porttitor et, luctus sed urna.</p>
+                        {{-- <h6>Support</h6> --}}
+                        <p>Membantu penyembuhan luka dengan kemampuannya meredakan inflamasi (radang)</p>
                       </div>
                     </div>
                   </li>
@@ -264,317 +264,40 @@
     </section>
     <!-- End Video section -->
 
-    <!-- Team
-    ================================================== -->
-    <section>
-      <div id="team-section" class="pad-sec">
-        <div class="container">
-          <div class="title-section animated out" data-animation="fadeInUp" data-delay="0">
-            <div class="row">
-              <div class="col-sm-8 col-sm-offset-2">
-                <h2>Our awesome team</h2>
-                <hr>
-                <p>Seamlessly restore client-focused potentialities rather than functional strategic theme areas. Credibly e-enable value-added portals with clicks-and-mortar initiatives.</p>
-              </div>
-            </div> <!-- End row -->
-          </div> <!-- end title-section -->
 
-          <div class="team-members">
-            <div class="row">
 
-              <!-- member-team -->
-              <div class="col-sm-4">
-                <div class="member-team animated out" data-animation="fadeInLeft" data-delay="0">
-                  <img src={{ asset('assets/sailent/images/team/m1.jpg') }}" alt="">
-                  <div class="magnifier">
-                    <div class="magnifier-inner">
-                      <h3>MICHAEL ROOF</h3>
-                      <p>Co_founder &amp; Designer</p>
-                      <p>We’ll etch your brand onto tangible objects: business cards, ads, stickers, brochures, you name it. You won’t see business cards, ads, stickers, brochures anything until we’re done drooling at the result.</p>
-                      <ul class="social-icons">
 
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Facebook" href="#" data-original-title="" title=""><i class="fa fa-facebook"></i></a></li>
 
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Twitter" href="#" data-original-title="" title=""><i class="fa fa-twitter"></i></a></li>
-
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Google Plus" href="#" data-original-title="" title=""><i class="fa fa-google-plus"></i></a></li>
-
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Skype" href="#" data-original-title="" title=""><i class="fa fa-skype"></i></a></li>
-
-                      </ul>
-                    </div> <!-- End magnifier-inner -->
-                  </div> <!-- End magnifier -->
-                </div> <!-- End member-team -->
-              </div> <!-- End col-sm-4 -->
-
-              <!-- member-team -->
-              <div class="col-sm-4">
-                <div class="member-team animated out" data-animation="fadeInUp" data-delay="0">
-                  <img src={{ asset('assets/sailent/images/team/m2.jpg') }}" alt="">
-                  <div class="magnifier">
-                    <div class="magnifier-inner">
-                      <h3>CHARLES WHITE</h3>
-                      <p>Co_founder &amp; Designer</p>
-                      <p>We’ll etch your brand onto tangible objects: business cards, ads, stickers, brochures, you name it. You won’t see business cards, ads, stickers, brochures anything until we’re done drooling at the result.</p>
-                      <ul class="social-icons">
-
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Facebook" href="#" data-original-title="" title=""><i class="fa fa-facebook"></i></a></li>
-
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Twitter" href="#" data-original-title="" title=""><i class="fa fa-twitter"></i></a></li>
-
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Google Plus" href="#" data-original-title="" title=""><i class="fa fa-google-plus"></i></a></li>
-
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Skype" href="#" data-original-title="" title=""><i class="fa fa-skype"></i></a></li>
-
-                      </ul>
-                    </div> <!-- End magnifier-inner -->
-                  </div> <!-- End magnifier -->
-                </div> <!-- End member-team -->
-              </div> <!-- End col-sm-4 -->
-
-              <!-- member-team -->
-              <div class="col-sm-4">
-                <div class="member-team animated out" data-animation="fadeInRight" data-delay="0">
-                  <img src={{ asset('assets/sailent/images/team/m3.jpg') }}" alt="">
-                  <div class="magnifier">
-                    <div class="magnifier-inner">
-                      <h3>MARTIN CAMBRIGE</h3>
-                      <p>Head Support</p>
-                      <p>We’ll etch your brand onto tangible objects: business cards, ads, stickers, brochures, you name it. You won’t see business cards, ads, stickers, brochures anything until we’re done drooling at the result.</p>
-                      <ul class="social-icons">
-
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Facebook" href="#" data-original-title="" title=""><i class="fa fa-facebook"></i></a></li>
-
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Twitter" href="#" data-original-title="" title=""><i class="fa fa-twitter"></i></a></li>
-
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Google Plus" href="#" data-original-title="" title=""><i class="fa fa-google-plus"></i></a></li>
-
-                        <li><a data-rel="tooltip" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" data-title="Skype" href="#" data-original-title="" title=""><i class="fa fa-skype"></i></a></li>
-
-                      </ul>
-                    </div> <!-- End magnifier-inner -->
-                  </div> <!-- End magnifier -->
-                </div> <!-- End member-team -->
-              </div> <!-- End col-sm-4 -->
-
-            </div>
-          </div> <!-- End team-members -->
-        </div> <!-- End container -->
-      </div> <!-- End team-section -->
-    </section>
-    <!-- End team section -->
-
-    <!-- About Team
-    ================================================== -->
-    <section>
-      <div id="about-team">
-        <div class="container">
-            <div class="row">
-
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="title-section">
-                  <h3>Our team skills</h3>
-                </div>
-                <p>Sit ad etiam dissentias, viderer intellegebat usu et, per aliquam delectus ut. In inermis suavitate tincidunt quo, habeo lorem quis nulla eget, dictum pretium magna. Praesent id metus mattis tellus consectetur posuere. Aenean vel enim ut massa luctus efficitur a nec magna.</p>
-              </div> <!-- end col-md-6 -->
-
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="progress-bars">
-
-                  <!-- skillbar -->
-                  <div class="p-bar">
-                    <!-- meta -->
-                    <div class="progress-meta">
-                      <h6 class="progress-title">photoshop</h6>
-                      <h6 class="progress-value">75%</h6>
-                    </div>
-
-                    <div class="progress">
-                      <div class="progress-bar" aria-valuenow="75" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-
-                  </div> <!-- end p-bar -->
-
-                  <!-- skillbar -->
-                  <div class="p-bar">
-                    <!-- meta -->
-                    <div class="progress-meta">
-                      <h6 class="progress-title">html</h6>
-                      <h6 class="progress-value">95%</h6>
-                    </div>
-
-                    <div class="progress">
-                      <div class="progress-bar" aria-valuenow="95" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-
-                  </div> <!-- end p-bar -->
-
-                  <!-- skillbar -->
-                  <div class="p-bar">
-                    <!-- meta -->
-                    <div class="progress-meta">
-                      <h6 class="progress-title">css</h6>
-                      <h6 class="progress-value">85%</h6>
-                    </div>
-
-                    <div class="progress">
-                      <div class="progress-bar" aria-valuenow="85" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-
-                  </div> <!-- end p-bar -->
-
-                  <!-- skillbar -->
-                  <div class="p-bar">
-                    <!-- meta -->
-                    <div class="progress-meta">
-                      <h6 class="progress-title">jquery</h6>
-                      <h6 class="progress-value">73%</h6>
-                    </div>
-
-                    <div class="progress">
-                      <div class="progress-bar" aria-valuenow="73" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-
-                  </div> <!-- end p-bar -->
-
-                </div> <!-- end skills-bars -->
-              </div> <!-- end col-md-6 -->
-            </div> <!-- end row -->
-        </div>
-      </div>
-    </section>
-    <!-- End About Team -->
-
-    <!-- Banner-Services
-    ================================================== -->
-    <section>
-      <div id="banner-services" data-stellar-background-ratio="0">
-        <div class="container">
-          <div class="row">
-
-            <div class="col-sm-6">
-              <div class="banner-content animated out" data-animation="fadeInUp" data-delay="0">
-                <h3 class="banner-heading">Looking for exclusive digital services?</h3>
-                <div class="banner-decription">
-                  Proin fringilla augue at maximus vestibulum. Nam pulvinar vitae neque et porttitor. Integer non dapibus diam, ac eleifend lectus.
-                </div> <!-- end banner-decription -->
-                <div>
-                  <a href="contact.html" class="btn btn-sm btn-clean">Lets talk</a>
-                </div>
-              </div> <!-- end banner-content -->
-            </div> <!-- end col-sm-6 -->
-
-            <div class="col-sm-6">
-              <div class="banner-image animated out" data-animation="fadeInUp" data-delay="0">
-                <img src={{ asset('assets/sailent/images/temp/banner-img.png') }}" alt="">
-              </div> <!-- end banner-image -->
-            </div> <!-- end col-sm-6 -->
-
-          </div> <!-- end row -->
-        </div> <!-- end container -->
-      </div>
-    </section>
-    <!-- End Banner services section -->
-
-    <!-- Features App 2
-    ================================================== -->
-    <section>
-      <div id="features-app-section-2" class="pad-sec">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6 features-app-content-left animated out" data-animation="fadeInLeft" data-delay="0">
-              <div class="section_header">
-                <h2>Simple. Intuitive. <span>Powerful.</span></h2>
-              </div> <!-- End section_header -->
-                <p> Lorem ipsum <span>dolor</span> sit amet, consectetur adipisicing elit.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
-                <ul class="features-app-list">
-
-                  <!-- feature -->
-                  <li>
-                    <div class="feature-app-box animated out" data-animation="fadeInLeft" data-delay="0">
-                      <div class="app-feature-icon pull-left"><span class="pe-7s-graph"></span></div>
-                      <div class="feature-app-box-content">
-                        <h6>Beautiful, modern design</h6>
-                        <p>Mauris vehicula tortor id augue rutrum consequat ac at massa. Interdum et malesuada fames ac ante ipsum primis.</p>
-                      </div>
-                    </div>
-                  </li>
-
-                  <!-- feature -->
-                  <li>
-                    <div class="feature-app-box animated out" data-animation="fadeInLeft" data-delay="0">
-                      <div class="app-feature-icon pull-left"><span class="pe-7s-config"></span></div>
-                      <div class="feature-app-box-content">
-                        <h6>Easy to set up</h6>
-                        <p>Phasellus consequat facilisis volutpat ma faucibus odio vitae semper. Ae volutpat lobortis.</p>
-                      </div>
-                    </div>
-                  </li>
-
-                  <!-- feature -->
-                  <li>
-                    <div class="feature-app-box animated out" data-animation="fadeInLeft" data-delay="0">
-                      <div class="app-feature-icon pull-left"><span class="pe-7s-refresh-2"></span></div>
-                      <div class="feature-app-box-content">
-                        <h6>Stunning flexibility</h6>
-                        <p>Phasellus consequat facilisis volutpat ma faucibus odio vitae semper. Ae volutpat lobortis.</p>
-                      </div>
-                    </div>
-                  </li>
-
-                  <!-- feature -->
-                  <li>
-                    <div class="feature-app-box animated out" data-animation="fadeInLeft" data-delay="0">
-                      <div class="app-feature-icon pull-left"><span class="pe-7s-lock"></span></div>
-                      <div class="feature-app-box-content">
-                        <h6>Reliable and Secure Platform</h6>
-                        <p>Phasellus consequat facilisis volutpat ma faucibus odio vitae semper. Ae volutpat lobortis.</p>
-                      </div>
-                    </div>
-                  </li>
-
-                </ul>
-            </div> <!-- End feature-content -->
-
-            <div class="col-sm-5 col-sm-offset-1 text-center img-app-right animated out" data-animation="fadeInRight" data-delay="0">
-              <figure>
-                <img src={{ asset('assets/sailent/images/app/phone-2.png') }}" alt="">
-              </figure>
-            </div> <!-- End col-sm-8 -->
-
-          </div> <!-- End row -->
-        </div> <!-- End container -->
-      </div> <!-- End feature-section -->
-    </section>
-    <!-- End Features App 2 section -->
 
     <section>
       <div class="sep-section"></div>
     </section>
 
-    <!-- Creative section-1
+    <!-- Price section-1
     ================================================== -->
     <section>
-      <div id="creative-section-1" class="pad-sec">
+      <div id="price-section-1" class="pad-sec">
         <div class="container">
           <div class="row">
 
             <div class="col-sm-7 img-creative-left text-center animated out" data-animation="fadeInLeft" data-delay="0">
               <figure>
-                <img src={{ asset('assets/sailent/images/temp/cover.png') }}" alt="">
+                <img src="{{ asset('assets/sailent/images/hero-bg/1.png') }}" alt="" width="50%">
               </figure>
             </div> <!-- End col-sm-8 -->
 
             <div class="col-sm-5 creative-content-right animated out" data-animation="fadeInRight" data-delay="0">
               <div class="section_header">
-                <h2>Creative project</h2>
+                <h2>Proflavo Nano Propolis</h2>
               </div> <!-- End section_header -->
 
-                <p> Lorem ipsum <span>dolor</span> sit amet, consectetur adipisicing elit.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p> Propolis dengan nano teknologi. Untuk membantu menjaga imun Anda</p>
 
+                <br>
+                <br>
+                 <h2>Rp. {{ $product['harga'] ?? '' }}</h2>
               <div class="view-more">
-                <a href="#services-section" class="btn btn-lg btn-primary">View online</a>
+                <button type="button" class="btn btn-lg btn-primary" data-action="add-to-cart" data-code-product="{{ $product['codeProduct'] ?? '' }}">Beli Sekarang</button>
               </div>
             </div> <!-- End feature-content -->
 
@@ -588,244 +311,7 @@
       <div class="sep-section"></div>
     </section>
 
-    <!-- Screenshots
-    ================================================== -->
-      <section>
-        <div id="screenshots-section" class="pad-sec">
-          <div class="container">
-           <div class="title-section text-center animated out" data-animation="fadeInUp" data-delay="0">
-              <div class="row">
-                <div class="col-sm-8 col-sm-offset-2">
-                  <h2>Screenshots gallery</h2>
-                  <hr>
-                  <p>Seamlessly restore client-focused potentialities rather than functional strategic theme areas.</p>
-              </div>
-            </div> <!-- End row -->
-          </div> <!-- end title-section -->
 
-            <div class="row">
-              <div class="col-md-12">
-                <div class="screenshots-carousel animated out" data-animation="fadeInUp" data-delay="0">
-
-                  <div class="shot">
-                    <div class="screen">
-                      <a class="zoom" href={{ asset('assets/sailent/images/screenshots/1.jpg') }}"><img src={{ asset('assets/sailent/images/screenshots/1.jpg') }}" alt="screenshot"></a>
-                    </div> <!-- end screen -->
-                  </div> <!-- end shot -->
-
-                  <div class="shot">
-                    <div class="screen">
-                      <a class="zoom" href={{ asset('assets/sailent/images/screenshots/2.jpg') }}"><img src={{ asset('assets/sailent/images/screenshots/1.jpg') }}" alt="screenshot"></a>
-                    </div> <!-- end screen -->
-                  </div> <!-- end shot -->
-
-                  <div class="shot">
-                    <div class="screen">
-                      <a class="zoom" href={{ asset('assets/sailent/images/screenshots/1.jpg') }}"><img src={{ asset('assets/sailent/images/screenshots/2.jpg') }}" alt="screenshot"></a>
-                    </div> <!-- end screen -->
-                  </div> <!-- end shot -->
-
-                  <div class="shot">
-                    <div class="screen">
-                      <a class="zoom" href={{ asset('assets/sailent/images/screenshots/2.jpg') }}"><img src={{ asset('assets/sailent/images/screenshots/1.jpg') }}" alt="screenshot"></a>
-                    </div> <!-- end screen -->
-                  </div> <!-- end shot -->
-
-
-                  <div class="shot">
-                    <div class="screen">
-                      <a class="zoom" href={{ asset('assets/sailent/images/screenshots/1.jpg') }}"><img src={{ asset('assets/sailent/images/screenshots/2.jpg') }}" alt="screenshot"></a>
-                    </div> <!-- end screen -->
-                  </div> <!-- end shot -->
-
-                  <div class="shot">
-                    <div class="screen">
-                      <a class="zoom" href={{ asset('assets/sailent/images/screenshots/2.jpg') }}"><img src={{ asset('assets/sailent/images/screenshots/1.jpg') }}" alt="screenshot"></a>
-                    </div> <!-- end screen -->
-                  </div> <!-- end shot -->
-
-                  <div class="shot">
-                    <div class="screen">
-                      <a class="zoom" href={{ asset('assets/sailent/images/screenshots/1.jpg') }}"><img src={{ asset('assets/sailent/images/screenshots/2.jpg') }}" alt="screenshot"></a>
-                    </div> <!-- end screen -->
-                  </div> <!-- end shot -->
-
-                  <div class="shot">
-                    <div class="screen">
-                      <a class="zoom" href={{ asset('assets/sailent/images/screenshots/2.jpg') }}"><img src={{ asset('assets/sailent/images/screenshots/1.jpg') }}" alt="screenshot"></a>
-                    </div> <!-- end screen -->
-                  </div> <!-- end shot -->
-
-                </div> <!-- end screenshots-carousel -->
-              </div> <!-- end col-md-12 -->
-            </div> <!-- end row -->
-          </div><!--  end container -->
-        </div>
-      </section>
-      <!-- End screenshots-section -->
-
-      <!-- Clients-section
-    ================================================== -->
-    <section>
-      <div id="clients-section" class="clients-bg" data-stellar-background-ratio="0">
-        <div class="container">
-          <div class="row">
-
-             <!-- client -->
-            <div class="col-xs-4 col-sm-2">
-              <div class="client">
-                <a href="#"><img src={{ asset('assets/sailent/images/clients/client_1.png') }}" alt=""></a>
-              </div>
-            </div> <!-- end col-xs-6 -->
-
-             <!-- client -->
-            <div class="col-xs-4 col-sm-2">
-              <div class="client">
-                <a href="#"><img src={{ asset('assets/sailent/images/clients/client_2.png') }}" alt=""></a>
-              </div>
-            </div> <!-- end col-xs-6 -->
-
-             <!-- client -->
-            <div class="col-xs-4 col-sm-2">
-              <div class="client">
-                <a href="#"><img src={{ asset('assets/sailent/images/clients/client_3.png') }}" alt=""></a>
-              </div>
-            </div> <!-- end col-xs-6 -->
-
-             <!-- client -->
-            <div class="col-xs-4 col-sm-2">
-              <div class="client">
-                <a href="#"><img src={{ asset('assets/sailent/images/clients/client_4.png') }}" alt=""></a>
-              </div>
-            </div> <!-- end col-xs-6 -->
-
-             <!-- client -->
-            <div class="col-xs-4 col-sm-2">
-              <div class="client">
-                <a href="#"><img src={{ asset('assets/sailent/images/clients/client_1.png') }}" alt=""></a>
-              </div>
-            </div> <!-- end col-xs-6 -->
-
-             <!-- client -->
-            <div class="col-xs-4 col-sm-2">
-              <div class="client">
-                <a href="#"><img src={{ asset('assets/sailent/images/clients/client_2.png') }}" alt=""></a>
-              </div>
-            </div> <!-- end col-xs-6 -->
-
-          </div> <!-- End row -->
-        </div> <!-- End container -->
-      </div>
-    </section>
-    <!-- End clients-section -->
-
-    <!-- Prices
-    ================================================== -->
-    <section>
-      <div id="prices-section" class="pad-sec">
-        <div class="container">
-          <div class="title-section text-center animated out" data-animation="fadeInUp" data-delay="0">
-            <div class="row">
-              <div class="col-sm-8 col-sm-offset-2">
-                <h2>Our Prices</h2>
-                <hr>
-                <p>Seamlessly restore client-focused potentialities rather than functional strategic theme areas.</p>
-              </div>
-            </div> <!-- End row -->
-          </div> <!-- end title-section -->
-
-          <div class="row">
-            <div class="col-sm-4">
-              <ul class="price-table animated out" data-animation="fadeInLeft" data-delay="0">
-                  <li class="title-price">
-                    <h3>Basic Pack</h3>
-                  </li>
-                  <li class="price-box">
-                      <p class="price"><span class="currency">$</span>5.99</p>
-                      <p class="months">per month</p>
-                  </li>
-                  <li><p>Full Access</p></li>
-                  <li>
-                      <p>5 Projects</p>
-                  </li>
-                  <li>
-                      <p>5 GB Storage</p>
-                  </li>
-                  <li>
-                      <p>100GB Monthly Bandwidth</p>
-                  </li>
-                  <li><p>Premium Support</p></li>
-                  <li>
-                      <p>Your domain</p>
-                  </li>
-                  <li>
-                      <a href="#" class="btn btn-sm btn-dark">Purchase</a>
-                  </li>
-              </ul>
-            </div> <!-- end col-sm-4 -->
-
-            <div class="col-sm-4">
-              <ul class="price-table animated out" data-animation="fadeInUp" data-delay="0">
-                  <li class="title-price">
-                    <h3>Basic Pack</h3>
-                  </li>
-                  <li class="price-box">
-                      <p class="price"><span class="currency">$</span>5.99</p>
-                      <p class="months">per month</p>
-                  </li>
-                  <li><p>Full Access</p></li>
-                  <li>
-                      <p>5 Projects</p>
-                  </li>
-                  <li>
-                      <p>5 GB Storage</p>
-                  </li>
-                  <li>
-                      <p>100GB Monthly Bandwidth</p>
-                  </li>
-                  <li><p>Premium Support</p></li>
-                  <li>
-                      <p>Your domain</p>
-                  </li>
-                  <li>
-                      <a href="#" class="btn btn-sm btn-dark">Purchase</a>
-                  </li>
-              </ul>
-            </div> <!-- end col-sm-4 -->
-
-            <div class="col-sm-4">
-              <ul class="price-table animated out" data-animation="fadeInRight" data-delay="0">
-                  <li class="title-price">
-                    <h3>Basic Pack</h3>
-                  </li>
-                  <li class="price-box">
-                      <p class="price"><span class="currency">$</span>5.99</p>
-                      <p class="months">per month</p>
-                  </li>
-                  <li><p>Full Access</p></li>
-                  <li>
-                      <p>5 Projects</p>
-                  </li>
-                  <li>
-                      <p>5 GB Storage</p>
-                  </li>
-                  <li>
-                      <p>100GB Monthly Bandwidth</p>
-                  </li>
-                  <li><p>Premium Support</p></li>
-                  <li>
-                      <p>Your domain</p>
-                  </li>
-                  <li>
-                      <a href="#" class="btn btn-sm btn-dark">Purchase</a>
-                  </li>
-              </ul>
-            </div> <!-- end col-sm-4 -->
-          </div> <!-- end row -->
-        </div> <!-- end container -->
-      </div>
-    </section>
-    <!-- End prices section -->
 
     <!-- Subscribe-section
     ================================================== -->
@@ -859,21 +345,21 @@
 
                     <!-- Testimonial -->
                     <li>
-                      <img src={{ asset('assets/sailent/images/temp/client-photo.jpg') }}" alt="">
+                      <img src="{{ asset('assets/sailent/images/temp/client-photo.jpg') }}" alt="">
                       <p>Sebelumnya saya setelah bangun tidur kepala pusing ngliyeng dan kaki sering kesemutan. Alhamdulillah setelah 3 hari konsumsi Proflavo ngliyeng dan kesemutan kaki saya sudah hilang. Sekarang rutin konsumsi Proflavo Propolis</p>
                       <div class="testimonials-author"> Mbah Magi - Semarang </div>
                     </li>
 
                     <!-- Testimonial -->
                     <li>
-                      <img src={{ asset('assets/sailent/images/temp/client-photo.jpg') }}" alt="">
+                      <img src="{{ asset('assets/sailent/images/temp/client-photo.jpg') }}" alt="">
                       <p>Saya sebelumnya pegel kaki, ngantuk tidak bisa dihindari. Lalu saya dikenalkan Proflavo dan mulai mengonsumsinya. Setelah minum Proflavo alhamdulillah sampai sekarang tidak ada keluhan dan rasa pegel di kaki sudah tidak ada.</a>.</p>
                       <div class="testimonials-author">Suwarno - Karanganyar</div>
                     </li>
 
                     <!-- Testimonial -->
                     <li>
-                      <img src={{ asset('assets/sailent/images/temp/client-photo.jpg') }}" alt="">
+                      <img src="{{ asset('assets/sailent/images/temp/client-photo.jpg') }}" alt="">
                       <p>Saya mau berbagi pengalaman saya pak. Anak saya kena amandel saya kasih proflavo 3 tetes dilarutkan dalam air sepertinya tidak begitu ngefek… besoknya saya teteskan langsung ke amandelnya katanya panas terus langsung adem dan berangsur membaik. Alhamdulillah</a>.</p>
                       <div class="testimonials-author">Mariska - Jogja</div>
                     </li>
@@ -909,7 +395,7 @@
     <!-- Contact-section
     ================================================== -->
     <section>
-      <div id="contact-section" class="pad-sec">
+      <div id="contact-section" >
 
         <div class="container">
 
@@ -919,90 +405,26 @@
                   <h2>Contact</h2>
                   <hr>
                   <p>Hubungi kami</p>
-              </div>
-            </div> <!-- End row -->
+                </div>
+              </div><br><br>
+              <div class="row md-5">
+                <div class="col-sm-4">
+                  <a href="#"><i class="pe-7s-map-marker"></i>Ruko Sibedil No. B6-7 Jl Solo Karanganyar Km7 Karanganyar</a>
+                </div> <!-- End col-sm-4 -->
+                <div class="col-sm-4">
+                  <a href="tel:+123000456"><i class="pe-7s-phone"></i>0271-736773</a>
+                </div>
+                <div class="col-sm-4">
+                  <a href="mailto:dobelnetwork@gmail.com"><i class="pe-7s-mail"></i>dobelnetwork@gmail.com</a>
+                </div>
+              </div> <!-- End row -->
           </div> <!-- end title-section -->
-
-          <div class="form-wrapper">
-            <div class="row">
-              <div class="col-md-8 col-md-offset-2">
-
-                <!-- form fields -->
-              {{--   <form id="form-order" method="post" name="contactform" id="contactform" class="animated out" data-animation="fadeInUp" data-delay="0">
-
-                  <fieldset>
-                    <div class="form-group">
-                      <input class="form-control br-b" type="text" name="customer[name]" id="name" placeholder="Name">
-                    </div>
-
-                    <div class="form-group">
-                      <input class="form-control br-b" type="email" name="customer[email]" id="email" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                      <input class="form-control br-b" type="text" name="customer[no_hp]" id="no_hp" placeholder="No WhatsApp">
-                    </div>
-                    <div class="form-group">
-                      <input class="form-control br-b" type="text" name="qty" id="qty" placeholder="Qty">
-                    </div>
-                    <div class="form-group">
-                      <textarea class="form-control br-b" name="customer[alamat]" id="alamat" placeholder="Alamat..."></textarea>
-                    </div>
-                    <div class="form-group">
-                      <select class="form-control br-b" name="customer[province_id]" data-shipping="province">
-                        @foreach ($provinces as $province)
-                        <option value="{{ $province['province_id'] }}" {{ config('rajaongkir_api.default_selected.province_id') == $province['province_id'] ? 'selected' : '' }}>{{ $province['province'] }}</option>
-                        @endforeach
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <select class="form-control br-b" name="customer[city_id]" data-shipping="city">
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <select class="form-control br-b" name="customer[subdistrict_id]" data-shipping="subdistrict">
-                      </select>
-                    </div>
-                  </fieldset>
-
-                  <!-- submit button -->
-                  <div class="form-group">
-                    <input type="submit" name="submit" value="Send message" id="submit" class="btn btn-sm btn-dark">
-                  </div>
-
-                  <div id="alert"></div>
-
-                </form> --}}
-
-              </div> <!-- end col-md-8 -->
-            </div> <!-- end row -->
-          </div>  <!-- end form-wrapper -->
-
         </div> <!-- end container -->
 
       </div> <!-- End contact-section -->
     </section>
 
-    <!-- Contact-info
-    ================================================== -->
-    <section>
-      <div class="contact-info">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-4">
-              <a href="#"><i class="pe-7s-map-marker"></i>Ruko Sibedil No. B6-7 Jl Solo Karanganyar Km7 Karanganyar</a>
-            </div> <!-- End col-sm-4 -->
-            <div class="col-sm-4">
-            <a href="tel:+123000456"><i class="pe-7s-phone"></i>0271-736773</a>
-            </div>
-             <div class="col-sm-4">
-              <a href="mailto:hello@hotmail.com"><i class="pe-7s-mail"></i>dobelnetwork@gmail.com</a>
-             </div>
-          </div> <!-- End row -->
-        </div> <!-- End container -->
-      </div> <!-- End contact-info -->
-    </section>
+
 
     <!-- Footer
     ================================================== -->
