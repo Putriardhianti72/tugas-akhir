@@ -3,7 +3,14 @@
 
 Halo {{ $order->customer->name }},
 
-Pembelian Anda sedang dalam pengiriman.
+Pesanan Anda telah dikirim pada {{ $order->shipping->updated_at ?? null ? $order->shipping->updated_at->format('d/m/Y') : '' }}.
+
+Mohon menerima dan mengkonfirmasi pesanan di e-mail ini apabila barang telah Anda terima. Klik tombol konfirmasi terima barang.
+
+
+@component('mail::button', ['url' => $confirmUrl])
+Konfirmasi Terima Barang
+@endcomponent
 
 @component('mail::table')
 | Alamat Pengiriman            |
@@ -38,5 +45,5 @@ Lihat Order
 @endcomponent
 
 Terima kasih,<br>
-{{ $order->owner->nama }}
+{{ $order->owner->member->nama ?? '' }}
 @endcomponent

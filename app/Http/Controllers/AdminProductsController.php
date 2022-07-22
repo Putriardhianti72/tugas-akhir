@@ -74,7 +74,9 @@ class AdminProductsController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('admin.products.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('admin.products.index')->with([
+            'alert_success' => 'Data produk berhasil disimpan!'
+        ]);
     }
 
     /**
@@ -140,7 +142,9 @@ class AdminProductsController extends Controller
         $product->save();
 
         //redirect to index
-        return redirect()->route('admin.products.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('admin.products.index')->with([
+            'alert_success' => 'Data produk berhasil disimpan!'
+        ]);
     }
 
     /**
@@ -158,7 +162,9 @@ class AdminProductsController extends Controller
         $product->delete();
 
         //redirect to index
-        return redirect()->route('admin.products.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('admin.products.index')->with([
+            'alert_success' => 'Data produk berhasil dihapus!'
+        ]);
     }
 
     public function detail_product($id){

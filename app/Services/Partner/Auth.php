@@ -3,6 +3,7 @@
 namespace App\Services\Partner;
 
 use Illuminate\Support\Facades\Session;
+use App\Models\Order;
 
 class Auth
 {
@@ -38,6 +39,11 @@ class Auth
     public function hash()
     {
         return Session::get('partner_api.hash');
+    }
+
+    public function hasOrder()
+    {
+        return Order::where('status', Order::STATUS_COMPLETED)->where('user_hash', $this->hash())->count('id') > 0;
     }
 
     public function login(array $credentials)

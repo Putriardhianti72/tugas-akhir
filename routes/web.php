@@ -36,6 +36,7 @@ Route::group([
 // });
 Route::get('/',[\App\Http\Controllers\LandingController::class,'index']);
 Route::get('/products',[\App\Http\Controllers\ProductsController::class,'index'])->name('products.index');
+Route::get('/products/{id}',[\App\Http\Controllers\ProductsController::class,'show'])->name('products.show');
 Route::get('/services',[\App\Http\Controllers\LandingController::class,'services']);
 Route::get('/about-us',[\App\Http\Controllers\LandingController::class,'about_us']);
 
@@ -114,9 +115,9 @@ Route::group(['prefix' => 'payment-callback', 'as' => 'payment-callback.'], func
 
 
 Route::get('/mailable', function () {
-    $invoice = App\Models\Order::first();
+    $invoice = App\Models\RetailOrder::find(4);
 
-    return new App\Mail\SendOrderCreated($invoice);
+    return new App\Mail\SendRetailOrderCompleted($invoice);
 });
 
 Route::get('/get-data-log', [\App\Http\Controllers\LandingController::class, 'dataLog']);

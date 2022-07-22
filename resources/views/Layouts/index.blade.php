@@ -17,13 +17,13 @@
             <div class="tiva-slideshow-wrapper">
                 <div id="tiva-slideshow" class="nivoSlider">
                     <a href="#">
-                        <img class="img-responsive" src="{{asset('user')}}/img/home/home1-banner1.jpg" title="#caption1" alt="Slideshow image">
+                        <img class="img-responsive" src="{{asset('user')}}/img/home/home-th.png" title="#caption1" alt="Slideshow image">
                     </a>
                     <a href="#">
-                        <img class="img-responsive" src="{{asset('user')}}/img/home/home1-banner2.jpg" title="#caption2" alt="Slideshow image">
+                        <img class="img-responsive" src="{{asset('user')}}/img/home/home-th4.png" title="#caption2" alt="Slideshow image">
                     </a>
                     <a href="#">
-                        <img class="img-responsive" src="{{asset('user')}}/img/home/home1-banner3.jpg" title="#caption3" alt="Slideshow image">
+                        <img class="img-responsive" src="{{asset('user')}}/img/home/home-th3.png" title="#caption3" alt="Slideshow image">
                     </a>
                 </div>
             </div>
@@ -45,9 +45,9 @@
                                         <div class="block-content">
                                             <div class="policy-item">
                                                 <div class="policy-content iconpolicy1">
-                                                    <img src="img/home/home1-policy.png" alt="img">
-                                                    <div class="policy-name mb-5">FREE DELIVERY FROM $ 250</div>
-                                                    <div class="policy-des">Lorem ipsum dolor amet consectetur</div>
+                                                    <img src="{{ asset('user') }}/img/home/home1-policy.png" alt="img">
+                                                    <div class="policy-name mb-5">INTEGRATED SHIPPING</div>
+                                                    <div class="policy-des">Website marketing terintegrasi RajaOngkir</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -58,9 +58,9 @@
                                         <div class="block-content">
                                             <div class="policy-item">
                                                 <div class="policy-content iconpolicy2">
-                                                    <img src="img/home/home1-policy2.png" alt="img">
-                                                    <div class="policy-name mb-5">FREE INSTALLATION</div>
-                                                    <div class="policy-des">Lorem ipsum dolor amet consectetur</div>
+                                                    <img src="{{ asset('user') }}/img/home/home1-policy2.png" alt="img">
+                                                    <div class="policy-name mb-5">FREE MAINTANANCE</div>
+                                                    <div class="policy-des">Website akan terus update dari perusahaan</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -71,9 +71,9 @@
                                         <div class="block-content">
                                             <div class="policy-item">
                                                 <div class="policy-content iconpolicy3">
-                                                    <img src="img/home/home1-policy3.png" alt="img">
-                                                    <div class="policy-name mb-5">MONEY BACK GUARANTEED</div>
-                                                    <div class="policy-des">Lorem ipsum dolor amet consectetur</div>
+                                                    <img src="{{ asset('user') }}/img/home/home1-policy3.png" alt="img">
+                                                    <div class="policy-name mb-5">AUTOMATIC REWARD</div>
+                                                    <div class="policy-des">Reward otomatis ke tangan Anda</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +111,7 @@
                                                         <div class="item text-center" >
                                                             <div class="product-miniature first-item js-product-miniature item-one">
                                                                 <div class="thumbnail-container">
-                                                                    <a href="product-detail.html">
+                                                                    <a href="{{ route('products.show', $product->id) }}">
                                                                         <img class="img-fluid image-cover" src="{{ $product->pict_url }}" alt="img">
                                                                         <img class="img-fluid image-secondary" src="{{ $product->pict_url }}" alt="img">
                                                                     </a>
@@ -119,7 +119,7 @@
                                                                 <div class="product-description">
                                                                     <div class="product-groups">
                                                                         <div class="product-title">
-                                                                            <a href="product-detail.html">{{$product->product_name}}</a>
+                                                                            <a href="{{ route('products.show', $product->id) }}">{{$product->product_name}}</a>
                                                                         </div>
                                                                         <div class="product-group-price">
                                                                             <div class="product-price-and-shipping">
@@ -172,14 +172,14 @@
                                 <div class="col-lg-6 col-md-6">
                                     <div class="effect">
                                         <a href="#">
-                                            <img class="img-fluid" src="img/home/effect1.jpg" alt="banner-1" title="banner-1">
+                                            <img class="img-fluid" src="{{asset('user')}}/img/home/home-bn.png" alt="banner-1" title="banner-1">
                                         </a>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="effect">
                                         <a href="#">
-                                            <img class="img-fluid" src="img/home/effect2.jpg" alt="banner-2" title="banner-2">
+                                            <img class="img-fluid" src="{{asset('user')}}/img/home/home-bn.png" alt="banner-2" title="banner-2">
                                         </a>
                                     </div>
                                 </div>

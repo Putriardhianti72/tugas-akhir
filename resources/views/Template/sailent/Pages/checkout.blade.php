@@ -192,7 +192,6 @@
       $('[data-cart="total_harga"]').text(total).data('total', total);
     });
 
-
     var oldCityValue = '{{ old('customer[city_id]') }}'
 
     $(document).on('change', '[data-shipping="province"]', function () {
@@ -201,8 +200,8 @@
 
       var $city = $('[data-shipping="city"]');
 
-      $city.val('').change();
-      $city.html('');
+      $city.val('').change(); //nilai value menjadi kosong
+      $city.html(''); //nilai option menjadi kosong
 
       $.ajax({
         url: '{{ route('template.ajax.shipping.city', $domain) }}?province=' + val,
@@ -215,7 +214,6 @@
             });
 
             $city.html(html);
-
 
             if (oldCityValue) {
               $city.val(oldCityValue).trigger('change');

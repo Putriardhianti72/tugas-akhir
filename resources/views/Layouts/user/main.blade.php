@@ -700,10 +700,29 @@
     <script src="{{URL::asset('user/libs/slider-range/js/draggable-0.1.js')}}"></script>
     <script src="{{URL::asset('user/libs/slider-range/js/jquery.slider.js')}}"></script>
     <script src="{{URL::asset('user/libs/slick-slider/js/slick.min.js')}}"></script>
+    <script src="{{URL::asset('user/libs/toastr/toastr.min.js')}}"></script>
 
     <!-- Template JS -->
     <script src="{{URL::asset('user/js/theme.js')}}"></script>
     <script src="{{URL::asset('user/js/script.js')}}"></script>
+
+    <script type="text/javascript">
+    $(function () {
+        @if(session()->has('alert_success'))
+        toastr.success('{{ session()->pull('alert_success') }}');
+        @endif
+        @if(session()->has('alert_error'))
+        toastr.error('{{ session()->pull('alert_error') }}');
+        @endif
+        @if(session()->has('alert_info'))
+        toastr.info('{{ session()->pull('alert_info') }}');
+        @endif
+        @if(session()->has('alert_warning'))
+        toastr.warning('{{ session()->pull('alert_warning') }}');
+        @endif
+    });
+    </script>
+
     @stack('js')
 </body>
 

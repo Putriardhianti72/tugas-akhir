@@ -44,6 +44,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         try {
+            DB::beginTransaction();
             $order = Order::create([
                 'invoice_no' => Order::generateInvoiceNo(),
                 'user_hash' => member_auth()->hash(),
@@ -113,7 +114,19 @@ class OrderController extends Controller
                 ];
             }
 
-            $paymentUrl = $midtrans->createTransaction($transactionData);
+            $paymentUrl = null;
+
+            try {
+                $paymentUrl = $midtrans->createTransaction($transactionData);
+            } catch (\Throwable $e) {
+                DB::rollBack();
+
+                \Log::error($e);
+
+                return redirect()->back()->with([
+                    'alert_error' => 'Terjadi kesalahan saat membuat transaksi pembayaran',
+                ]);
+            }
 
             //membuat payment order ke tabel order_payment
             $order->payment()->create([
@@ -125,10 +138,16 @@ class OrderController extends Controller
 
             $order->load('member', 'products', 'payment');
 
+            DB::commit();
             return redirect($paymentUrl);
         } catch (\Throwable $e) {
+            DB::rollBack();
+
             \Log::error($e);
-            return redirect()->back();
+
+            return redirect()->back()->with([
+                'alert_error' => 'Gagal membuat order. Mohon ulangi kembali setelah beberapa saat'
+            ]);
         }
     }
 
@@ -223,14 +242,18 @@ class OrderController extends Controller
                 $order->status = Order::STATUS_CANCELLED;
                 $order->save();
 
-                return redirect()->back(); // @TODO Add error message
+                return redirect()->back()->with([
+                    'alert_error' => 'Order dibatalkan. Status pembayaran Anda telah kedaluwarsa.'
+                ]);
             }
 
             if ($order->payment->payment_url ?? false) {
                 return redirect($order->payment->payment_url);
             }
 
-            return redirect()->back();
+            return redirect()->back()->with([
+                'alert_error' => 'Gagal membuat transaksi pembayaran. Mohon ulangi setelah beberapa saat.',
+            ]);
         }
     }
 

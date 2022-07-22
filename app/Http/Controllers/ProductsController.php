@@ -46,6 +46,10 @@ class ProductsController extends Controller
         return view('Layouts.index', compact('products'));
 
     }
+
+    public function detail(){
+
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -54,32 +58,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //validate form
-        $this->validate($request, [
-            'product_name' => 'required',
-            'category_id' => 'required',
-            'desc' => 'required',
-            'price' => 'required',
-            'pict'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
-
-        //upload image
-        $pict = $request->file('pict');
-        $pict->storeAs('public/pict', $pict->hashName());
-//        $pictName = time().'.'.$request->pict->extension();
-//        $request->pict->move(public_path('pict'), $pictName);
-
-        //create post
-        Product::create([
-            'product_name' => $request->product_name,
-            'category_id' => $request->category_id,
-            'desc' => $request->desc,
-            'price' => $request->price,
-            'pict'     => $pict->hashName()
-        ]);
-
-        //redirect to index
-        return redirect()->route('products.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        //
     }
 
     /**
@@ -90,7 +69,10 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $categories = Category::all();
+        $product = Product::where('in_stock', 1)->findOrFail($id);
+
+        return view('User.product-detail', compact('categories', 'product'));
     }
 
     /**

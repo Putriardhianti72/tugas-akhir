@@ -39,7 +39,11 @@ class SendRetailOrderDelivered extends Mailable
             'url' => route('template.orders.show', [
                 'domain' => $order->domain,
                 'id' => $order->id,
-            ])
+            ]),
+            'confirmUrl' => route('template.orders.confirm-receive', [
+                'domain' => $order->domain,
+                'token' => encrypt($order->id),
+            ]),
         ];
 
         $subject = 'Order ' . $order->invoice_no . ' - Pembelian Dikirim';

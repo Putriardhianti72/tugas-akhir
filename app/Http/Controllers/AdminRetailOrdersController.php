@@ -158,7 +158,9 @@ class AdminRetailOrdersController extends Controller
         }
 
         //redirect to index
-        return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->back()->with([
+            'alert_success' => 'Data berhasil disimpan!'
+        ]);
     }
 
     /**
@@ -188,7 +190,9 @@ class AdminRetailOrdersController extends Controller
             $order->save();
         }
 
-        return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->back()->with([
+            'alert_success' => 'Data pengiriman berhasil diubah!'
+        ]);
     }
 
     /**
@@ -231,7 +235,9 @@ class AdminRetailOrdersController extends Controller
         //     $order->save();
         // }
 
-        return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->back()->with([
+            'alert_success' => 'Data pembayaran berhasil diubah!'
+        ]);
     }
 
     /**

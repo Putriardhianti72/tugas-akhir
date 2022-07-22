@@ -23,9 +23,10 @@ Route::resource('carts', \App\Http\Controllers\RetailCartController::class);
 Route::resource('checkout', \App\Http\Controllers\RetailCheckoutController::class);
 
 Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
+    Route::get('/confirm-receive', [RetailOrderController::class,'confirmReceive'])->name('confirm-receive');
     Route::get('/{id}', [RetailOrderController::class,'show'])->name('show');
     Route::post('/', [RetailOrderController::class,'store'])->name('store');
-    Route::post('/pay/{id}', [RetailOrderController::class,'pay'])->name('pay');
+    // Route::post('/pay/{id}', [RetailOrderController::class,'pay'])->name('pay');
 });
 
 Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function () {

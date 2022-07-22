@@ -33,16 +33,32 @@
               <div class="col-3">
                 <div class="card">
                   <div class="card-body pb-3">
-                    <h6 class="card-subtitle text-muted">Total Order</h6>
-                    <h5 class="card-title mb-0">{{ $totalOrder }}</h5>
+                    <h6 class="card-subtitle text-muted">Total Reward</h6>
+                    <h5 class="card-title mb-0">{{ $totalCommission }}</h5>
                   </div>
                 </div>
               </div>
               <div class="col-3">
                 <div class="card">
                   <div class="card-body pb-3">
-                    <h6 class="card-subtitle text-muted">Total Reward</h6>
-                    <h5 class="card-title mb-0">{{ $totalCommission }}</h5>
+                    <h6 class="card-subtitle text-muted">Total Order Selesai</h6>
+                    <h5 class="card-title mb-0">{{ $totalOrderCompleted }}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="card">
+                  <div class="card-body pb-3">
+                    <h6 class="card-subtitle text-muted">Total Order Dikirim</h6>
+                    <h5 class="card-title mb-0">{{ $totalOrderDelivery }}</h5>
+                  </div>
+                </div>
+              </div>
+               <div class="col-3">
+                <div class="card">
+                  <div class="card-body pb-3">
+                    <h6 class="card-subtitle text-muted" style="font-size: 0.9rem">Total Order Belum Dibayar</h6>
+                    <h5 class="card-title mb-0">{{ $totalOrderPending }}</h5>
                   </div>
                 </div>
               </div>
@@ -72,7 +88,7 @@
                           <th class="item mywishlist_first">Customer</th>
                           <th class="item mywishlist_first">Qty</th>
                           <th class="item mywishlist_first">Harga</th>
-                          <th class="item mywishlist_first">Komisi</th>
+                          <th class="item mywishlist_first">Reward</th>
                           <th class="item mywishlist_first">Status</th>
                           <th class="item mywishlist_second">Created</th>
                           <th class="item mywishlist_second"></th>

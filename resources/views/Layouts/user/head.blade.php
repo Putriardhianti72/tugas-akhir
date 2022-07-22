@@ -2,7 +2,7 @@
     <!-- Basic Page Needs -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Furnitica - Minimalist Furniture HTML Template</title>
+    <title>Selleria - Marketing System Information</title>
 
     <meta name="keywords" content="Furniture, Decor, Interior">
     <meta name="description" content="Furnitica - Minimalist Furniture HTML Template">
@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{URL::asset('user/libs/font-material/css/material-design-iconic-font.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('user/libs/slider-range/css/jslider.css')}}">
     <link rel="stylesheet" href="{{URL::asset('user/libs/owl-carousel/assets/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('user/libs/toastr/toastr.min.css') }}">
 
     <!-- Template CSS -->
     <link rel="stylesheet" type="text/css" href="{{URL::asset('user/css/style.css')}}">
@@ -49,4 +50,5 @@
             'base_url' => url('/'),
         ]) !!}
     </script>
+    @stack('css')
 </head>

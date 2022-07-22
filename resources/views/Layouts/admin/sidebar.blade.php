@@ -24,8 +24,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#settings">
-                                    <span class="link-collapse">Settings</span>
+                                <a data-action="logout" href="#">
+                                    <span class="link-collapse">Logout</span>
                                 </a>
                             </li>
                         </ul>
@@ -90,7 +90,7 @@
                 </li>
                 <li class="nav-item {{\Route::currentRouteName() == 'admin.retail-rewards.index' ? 'active' : '' }}">
                     <a href="{{route('admin.retail-rewards.index')}}">
-                        <i class="fa-solid fa-sack-dollar"></i>
+                        <i class="fas fa-file-invoice-dollar- fa-dollar-sign"></i>
                         <p>Reward</p>
                     </a>
                 </li>

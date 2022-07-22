@@ -17,8 +17,13 @@
               </a>
             </li>
             <li>
+              <a href="{{ url('/orders') }}">
+                <span>My Orders</span>
+              </a>
+            </li>
+            <li>
               <a href="#">
-                <span>Shopping Cart</span>
+                <span>Detail Order</span>
               </a>
             </li>
           </ol>

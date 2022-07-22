@@ -123,16 +123,16 @@ class PaymentCallbackController extends Controller
 
                 $order->save();
                 $order->payment->update($response);
-            }
 
-            if ($redirect) {
-                return redirect()->route('template.orders.show', [
-                    'domain' => $order->domain,
-                    'id' => $order->id,
-                ]);
-            }
+                if ($redirect) {
+                    return redirect()->route('template.orders.show', [
+                        'domain' => $order->domain,
+                        'id' => $order->id,
+                    ]);
+                }
 
-            return $order;
+                return $order;
+            }
         } else {
             $order = Order::where('invoice_no', $orderId)->first();
 

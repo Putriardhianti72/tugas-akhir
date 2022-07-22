@@ -45,7 +45,9 @@ class AdminCategoriesController extends Controller
             'category_name'=> 'required'
         ]);
         if (Category::create($data)) {
-            return redirect()->route('admin.categories.index');
+            return redirect()->route('admin.categories.index')->with([
+            'alert_success' => 'Data kategori berhasil ditambah!'
+        ]);
 //            dd($data);
         }else{
             abort(500);
@@ -108,7 +110,9 @@ class AdminCategoriesController extends Controller
 //                'category_name'=>$request->category_name,
 //                'updated_at' => date('Y-m-d H:i:s')
 //            ]);
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.categories.index')->with([
+            'alert_success' => 'Data kategori berhasil disimpan!'
+        ]);
     }
 
     /**
@@ -122,7 +126,9 @@ class AdminCategoriesController extends Controller
 //        $data = Category::findOrFail($id);
         $data = Category::find($id);
         $data->delete();
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.categories.index')->with([
+            'alert_success' => 'Data kategori berhasil dihapus!'
+        ]);
 //        dd($id);
     }
 }

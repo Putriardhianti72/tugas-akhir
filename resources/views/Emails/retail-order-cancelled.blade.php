@@ -31,5 +31,5 @@ Lihat Order
 @endcomponent
 
 Terima kasih,<br>
-{{ $order->owner->nama }}
+{{ $order->owner->member->nama ?? '' }}
 @endcomponent

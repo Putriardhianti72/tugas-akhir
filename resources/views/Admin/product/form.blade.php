@@ -68,9 +68,8 @@
                         <div class="form-group form-group-default">
                             <label>Kategori db</label>
                             <select class="form-control" id="category_id" name="category_id">
-            0                   @foreach($categories as $id => $category)
-                                <option value="{{ $id }}">
-                                    {{ old('category_id', $product->category_id) == $id ? 'selected' : '' }}
+                               @foreach($categories as $id => $category)
+                                <option value="{{ $id }}" {{ old('category_id', $product->category_id) == $id ? 'selected' : '' }}>
                                     {{ $category }}
                                 </option>
                                 @endforeach
@@ -80,7 +79,7 @@
                         <br>
                         <div class="form-group form-group-default">
                             <label class="font-weight-bold">Deskripsi</label>
-                            <input id="desc" name="desc" @error('desc') is-invalid @enderror" type="textarea" class="form-control" value="{{ old('desc', $product->desc) }}">
+                            <textarea id="desc" name="desc" @error('desc') is-invalid @enderror" type="textarea" class="form-control" rows="4">{{ old('desc', $product->desc) }}</textarea>
                         </div>
                         @error('desc')
                         <div class="alert alert-danger mt-2">
@@ -124,10 +123,14 @@
                             </div>
                             @enderror
                         </div>
-<br>
-<br>
-                        <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
-                        <button type="reset" class="btn btn-md btn-warning">RESET</button>
+
+                        <br>
+                        <br>
+
+                        <div class="d-flex justify-content-end align-items-center">
+                          <a href="{{ route('admin.products.index') }}" class="btn btn-link btn-md btn-warning- mr-2">BATAL</a>
+                          <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
+                        </div>
 
                     </form>
                 </div>

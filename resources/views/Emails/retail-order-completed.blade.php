@@ -37,6 +37,8 @@ Terima kasih, pembelian Anda telah selesai.
 Lihat Order
 @endcomponent
 
+Jika hendak mengirimkan keluhan, saran atau masukan silahkan email melalui selleria9@gmail.com
+
 Terima kasih,<br>
-{{ $order->owner->nama }}
+{{ $order->owner->member->nama ?? '' }}
 @endcomponent

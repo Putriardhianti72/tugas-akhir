@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Admin Area - Atlantis Lite - Bootstrap 4 Admin Dashboard</title>
+    <title>Admin Area - Selleria Admin Dashboard</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{URL::asset('admin')}}/assets/img/icon.ico" type="image/x-icon"/>
 
@@ -157,12 +157,25 @@
 
 <script type="text/javascript">
 $(function () {
-    $(document).on('click.logout', '.dropdown-user [data-action="logout"]', function (e) {
+    $(document).on('click.logout', '[data-action="logout"]', function (e) {
         e.preventDefault();
 
         window.location.replace('{{ route('admin.logout')  }}');
-    })
-})
+    });
+
+    @if(session()->has('alert_success'))
+    toastr.success('{{ session()->pull('alert_success') }}');
+    @endif
+    @if(session()->has('alert_error'))
+    toastr.error('{{ session()->pull('alert_error') }}');
+    @endif
+    @if(session()->has('alert_info'))
+    toastr.info('{{ session()->pull('alert_info') }}');
+    @endif
+    @if(session()->has('alert_warning'))
+    toastr.warning('{{ session()->pull('alert_warning') }}');
+    @endif
+});
 </script>
 
 @stack('js')

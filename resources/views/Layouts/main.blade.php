@@ -3,7 +3,7 @@
 <!--[if IE 9 ]><html class="ie ie9" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <!--<![endif]-->
-<html lang="zxx">
+<html lang="id">
 
 
 
@@ -11,7 +11,7 @@
     <!-- Basic Page Needs -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Furnitica - Minimalist Furniture HTML Template</title>
+    <title>Selleria - Marketing System Information</title>
 
     <meta name="keywords" content="Furniture, Decor, Interior">
     <meta name="description" content="Furnitica - Minimalist Furniture HTML Template">
@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="{{URL::asset('user/libs/nivo-slider/css/animate.css') }}">
     <link rel="stylesheet" href="{{URL::asset('user/libs/nivo-slider/css/style.css') }}">
     <link rel="stylesheet" href="{{URL::asset('user/libs/owl-carousel/assets/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{URL::asset('user/libs/toastr/toastr.min.css') }}">
 
     <!-- Template CSS -->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('user/css/style.css') }}">
@@ -729,10 +730,28 @@
     <script src="{{URL::asset('user/libs/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{URL::asset('user/libs/nivo-slider/js/jquery.nivo.slider.js')}} "></script>
     <script src="{{URL::asset('user/libs/owl-carousel/owl.carousel.min.js')}}"></script>
+    <script src="{{URL::asset('user/libs/toastr/toastr.min.js')}}"></script>
 
     <!-- Template JS -->
     <script src="{{URL::asset('user/js/theme.js')  }}"></script>
     <script src="{{URL::asset('user/js/script.js')  }}"></script>
+
+    <script type="text/javascript">
+    $(function () {
+        @if(session()->has('alert_success'))
+        toastr.success('{{ session()->pull('alert_success') }}');
+        @endif
+        @if(session()->has('alert_error'))
+        toastr.error('{{ session()->pull('alert_error') }}');
+        @endif
+        @if(session()->has('alert_info'))
+        toastr.info('{{ session()->pull('alert_info') }}');
+        @endif
+        @if(session()->has('alert_warning'))
+        toastr.warning('{{ session()->pull('alert_warning') }}');
+        @endif
+    });
+    </script>
 
     @stack('js')
 </body>

@@ -59,10 +59,12 @@ class MemberAreaHomeController extends Controller
             abort(404);
         }
 
-        $totalOrder = RetailOrder::whereIn('domain', $domains)->where('status', RetailOrder::STATUS_COMPLETED)->count('id');
+        $totalOrderCompleted = RetailOrder::whereIn('domain', $domains)->where('status', RetailOrder::STATUS_COMPLETED)->count('id');
+        $totalOrderPending = RetailOrder::whereIn('domain', $domains)->where('status', RetailOrder::STATUS_PENDING)->count('id');
+        $totalOrderDelivery = RetailOrder::whereIn('domain', $domains)->where('status', RetailOrder::STATUS_DELIVERY)->count('id');
         $totalCommission = RetailOrder::whereIn('domain', $domains)->where('status', RetailOrder::STATUS_COMPLETED)->sum('commission');
 
-        return view('User.memberarea')->with(compact('orderProducts', 'orders', 'domain', 'totalOrder', 'totalCommission'));
+        return view('User.memberarea')->with(compact('orderProducts', 'orders', 'domain', 'totalOrderCompleted','totalOrderPending','totalOrderDelivery', 'totalCommission'));
     }
 
 

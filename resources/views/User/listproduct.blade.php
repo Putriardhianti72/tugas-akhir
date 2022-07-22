@@ -94,7 +94,7 @@
                                                     <div class="item text-center col-md-4">
                                                         <div class="product-miniature js-product-miniature item-one first-item">
                                                             <div class="thumbnail-container border">
-                                                                <a href="product-detail.html">
+                                                                <a href="{{ route('products.show', $product->id) }}">
                                                                     <img class="img-fluid image-cover" src="public\pict\{{ $product->pict  }}" alt="img">
                                                                     <img class="img-fluid image-secondary" src="public\pict\{{ $product->pict  }}" alt="img">
                                                                 </a>
@@ -102,7 +102,7 @@
                                                             <div class="product-description">
                                                                 <div class="product-groups">
                                                                     <div class="product-title">
-                                                                        <a href="product-detail.html">{{$product->product_name}}</a>
+                                                                        <a href="{{ route('products.show', $product->id) }}">{{$product->product_name}}</a>
                                                                     </div>
                                                                     <div class="product-group-price">
                                                                         <div class="product-price-and-shipping">
@@ -148,7 +148,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-4">
                                                                     <div class="thumbnail-container border">
-                                                                        <a href="product-detail.html">
+                                                                        <a href="{{ route('products.show', $product->id) }}">
                                                                             <img class="img-fluid image-cover" src="{{ $product->pict_url  }}" alt="img">
                                                                             <img class="img-fluid image-secondary" src="{{ $product->pict_url  }}" alt="img">
                                                                         </a>
@@ -158,7 +158,7 @@
                                                                     <div class="product-description">
                                                                         <div class="product-groups">
                                                                             <div class="product-title">
-                                                                                <a href="product-detail.html">{{$product->product_name}}</a>
+                                                                                <a href="{{ route('products.show', $product->id) }}">{{$product->product_name}}</a>
                                                                                 <span class="info-stock">
                                                                                     <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                                                                     In Stock

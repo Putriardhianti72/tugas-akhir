@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendRetailOrderCreated;
+use App\Mail\SendRetailOrderCompleted;
 
 class RetailOrderController extends Controller
 {
@@ -263,6 +264,33 @@ class RetailOrderController extends Controller
         session()->flash('force_redirect', '/carts');
 
         return redirect()->back();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmReceive(Request $request)
+    {
+        $this->validate($request, [
+            'token' => 'required',
+        ]);
+
+        $token = $request->token;
+
+        $order  = RetailOrder::find(decrypt($token));
+        $order->status = RetailOrder::STATUS_COMPLETED;
+        $order->save();
+
+        Mail::to($order->customer->email)->send(new SendRetailOrderCompleted($order));
+
+        return redirect()->route('template.orders.show', [
+            'domain' => $order->domain,
+            'id' => $order->id,
+        ]);
     }
 
     /**

@@ -60,8 +60,13 @@
 {{--                            </div>--}}
 {{--                            @enderror--}}
 {{--                        </div>--}}
-                        <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
-                        <button type="reset" class="btn btn-md btn-warning">RESET</button>
+                        {{-- <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
+                        <button type="reset" class="btn btn-md btn-warning">RESET</button> --}}
+
+                         <div class="d-flex justify-content-end align-items-center">
+                          <a href="{{ route('admin.categories.index') }}" class="btn btn-link btn-md btn-warning- mr-2">BATAL</a>
+                          <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
+                        </div>
 
                     </form>
                 </div>

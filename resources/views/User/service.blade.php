@@ -1,7 +1,15 @@
 @extends('Layouts.user.main')
 
 @section('class-body', 'product-cart checkout-cart blog')
-
+@push('css')
+<style type="text/css">
+  .card-group-service .card-img-top{
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem 1rem;
+  }
+</style>
+@endpush
 @section('isi')
 <div class="main-content" id="cart">
   <!-- main -->
@@ -18,7 +26,7 @@
             </li>
             <li>
               <a href="#">
-                <span>Service</span>
+                <span>Services</span>
               </a>
             </li>
           </ol>
@@ -29,7 +37,45 @@
       <div class="row">
         <div id="content-wrapper" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 onecol">
           <section id="main">
-
+            <h1 class="text-center title-page">Mengapa Memilih Kami?</h1>
+          <div class="card-group card-group-service">
+            <div class="card">
+              <div class="card-img-top">
+                <img src="{{ asset('/user/img/icons/1.png') }}" alt="Card image cap" width="30%">
+              </div>
+              <div class="card-body">
+                <h5 class=" card-title">Marketing Plan Aman & Legal</h5>
+                <p class=" card-text">Perijinan Perusahaan sudah Lengkap & Marketing Plan Terverifikasi Pemerintah</p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-img-top">
+                <img src="{{ asset('/user/img/icons/2.png') }}" alt="Card image cap" width="30%">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">PRODUK UNGGULAN</h5>
+                <p class="card-text">Semua Produk telah Teruji Dan Berijin Lengkap & Merupakan Kebutuhan Masyarakat</p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-img-top">
+                <img src="{{ asset('/user/img/icons/4.png') }}" alt="Card image cap" width="30%">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">SUPPORT SYSTEM</h5>
+                <p class="card-text">Support Perusahaan & Leader yang Handal. Jaminan Kemudahan dan Kecepatan Hasil Bisnis</p>
+              </div>
+            </div>
+             <div class="card">
+              <div class="card-img-top">
+                <img src="{{ asset('/user/img/icons/5.png') }}" alt="Card image cap" width="30%">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">IT HANDAL</h5>
+                <p class="card-text">Dukuangan IT yang Handal memberikan Rasa Aman dan Kemudahan Akses</p>
+              </div>
+            </div>
+          </div>
           </section>
         </div>
       </div>

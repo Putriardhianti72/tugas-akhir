@@ -23,14 +23,14 @@
 
         <!-- search -->
         <div id="mobile_search" class="d-flex">
-            <div id="mobile_search_content">
+            {{-- <div id="mobile_search_content">
                 <form method="get" action="#">
                     <input type="text" name="s" value="" placeholder="Search">
                     <button type="submit">
                         <i class="fa fa-search"></i>
                     </button>
                 </form>
-            </div>
+            </div> --}}
           <div class="desktop_cart">
                 <div class="blockcart block-cart cart-preview tiva-toggle">
                     <div class="header-cart tiva-toggle-btn">
@@ -123,12 +123,12 @@
 
                 <!-- search-->
                 <div id="search_widget" class="col-sm-6 col-md-5 align-items-center justify-content-end d-flex">
-                    <form method="get" action="#">
+                 {{--    <form method="get" action="#">
                         <input type="text" name="s" value="" placeholder="Search ..." class="ui-autocomplete-input" autocomplete="off">
                         <button type="submit">
                             <i class="fa fa-search"></i>
                         </button>
-                    </form>
+                    </form> --}}
 
                     <!-- acount  -->
                     <div id="block_myaccount_infos" class="hidden-sm-down dropdown">
@@ -158,6 +158,7 @@
                                         <span>My Orders</span>
                                     </a>
                                 </div>
+                                @if(member_auth()->hasOrder())
                                 <div>
                                     <a class="login" href="{{ url('/member-area') }}" rel="nofollow" title="Log in to your customer account">
                                         <i class="fa fa-cog"></i>
@@ -165,7 +166,7 @@
                                     </a>
                                 </div>
                                 @endif
-                                @if(!member_auth()->check())
+                                @else
                                 <div>
                                     <a class="login" href="{{ url('/login') }}" rel="nofollow" title="Log in to your customer account">
                                         <i class="fa fa-sign-in"></i>
@@ -199,41 +200,6 @@
                                     </a>
                                 </div>
                                 @endif
-
-                                <div id="desktop_currency_selector" class="currency-selector groups-selector hidden-sm-down">
-                                    <ul class="list-inline">
-                                        <li>
-                                            <a title="Euro" rel="nofollow" href="#">EUR</a>
-                                        </li>
-                                        <li class="current list-inline-item">
-                                            <a title="British Pound Sterling" rel="nofollow" href="#">GBP</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div id="desktop_language_selector" class="language-selector groups-selector hidden-sm-down">
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item current">
-                                            <a href="#">
-                                                <img class="img-fluid" src="{{ asset('user') }}/img/home/home1-flas.jpg" alt="English" width="16" height="11">
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">
-                                                <img class="img-fluid" src="{{ asset('user') }}/img/home/home1-flas2.jpg" alt="Italiano" width="16" height="11">
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">
-                                                <img class="img-fluid" src="{{ asset('user') }}/img/home/home1-flas3.jpg" alt="Français" width="16" height="11">
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#">
-                                                <img class="img-fluid" src="{{ asset('user') }}/img/home/home1-flas4.jpg" alt="Español" width="16" height="11">
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>
