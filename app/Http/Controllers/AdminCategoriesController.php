@@ -15,10 +15,6 @@ class AdminCategoriesController extends Controller
      */
     public function index()
     {
-//        $data = [
-//            'categories' => Category::all(),
-//            "title" => "Kategori"
-//            ];
         $categories = Category::all();
         return view('Admin.category.index',compact('categories'));
     }
