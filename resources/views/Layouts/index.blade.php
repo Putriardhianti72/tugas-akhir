@@ -142,7 +142,7 @@
                                                                             </a>
                                                                             @endif
                                                                         </form>
-                                                                        <a href="#" class="quick-view hidden-sm-down" data-link-action="quickview">
+                                                                        <a href="{{ route('products.show', $product->id) }}" class="quick-view hidden-sm-down" data-link-action="quickview">
                                                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                                                         </a>
                                                                     </div>
