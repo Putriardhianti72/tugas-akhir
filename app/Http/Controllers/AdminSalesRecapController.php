@@ -39,7 +39,7 @@ class AdminSalesRecapController extends Controller
         $orders = RetailOrder::selectRaw('retail_orders.*, date(retail_orders.created_at) as date, count(retail_orders.id) total_order, sum(retail_order_products.total_price) total_price, sum(retail_order_shippings.price) shipping_price')
                                 ->join('retail_order_products', 'retail_order_products.retail_order_id', '=', 'retail_orders.id')
                                 ->join('retail_order_shippings', 'retail_order_shippings.retail_order_id', '=', 'retail_orders.id')
-                                ->where('retail_orders.status',RetailOrder::STATUS_COMPLETED)
+                                ->whereIn('retail_orders.status',[RetailOrder::STATUS_PAID, RetailOrder::STATUS_DELIVERY, RetailOrder::STATUS_COMPLETED])
                                 ->whereDate('retail_orders.created_at', '>=', $from)
                                 ->whereDate('retail_orders.created_at', '<=', $to)
                                 ->groupBy('date')
