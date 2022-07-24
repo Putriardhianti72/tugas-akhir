@@ -127,7 +127,7 @@ class PaymentCallbackController extends Controller
                 if ($redirect) {
                     return redirect()->route('template.orders.show', [
                         'domain' => $order->domain,
-                        'id' => $order->id,
+                        'id' => encrypt($order->id),
                     ]);
                 }
 

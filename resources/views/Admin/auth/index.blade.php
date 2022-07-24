@@ -32,7 +32,7 @@
                                     <img src="{{ $product->pict_url }}" class="rounded" style="width: 150px">
                                 </td>
                                 <td>{{ $product->product_name }}</td>
-                                <td>{{ $product->price}}</td>
+                                <td>{{ format_currency($product->price)}}</td>
                                 <td class="text-center">
                                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('products.destroy', $product->id) }}" method="POST">
                                         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">EDIT</a>

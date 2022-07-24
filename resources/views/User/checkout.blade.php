@@ -58,7 +58,7 @@
                             <td class="bold align_center">
                               {{ $cart->product->product_name }}
                             </td>
-                            <td>{{ $cart->product->price }}</td>
+                            <td>{{ format_currency($cart->product->price) }}</td>
                             <td>{{ $cart->domain }}</td>
                           </tr>
                           @endforeach

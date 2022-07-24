@@ -98,7 +98,7 @@
                                                               {{ $product->product_name }}
                                                           </td>
                                                           <td>{{ $product->domain }}</td>
-                                                          <td>{{ $product->price }}</td>
+                                                          <td>{{ format_currency($product->price) }}</td>
                                                       </tr>
                                                       @endforeach
                                                   </tbody>
@@ -160,7 +160,7 @@
                                                             Jumlah Pembayaran
                                                         </div>
                                                         <div class="col-12 col-md-8">
-                                                            {{ $order->payment->total_price }}
+                                                            {{ format_currency($order->payment->total_price) }}
                                                         </div>
                                                     </div>
                                                 </div>

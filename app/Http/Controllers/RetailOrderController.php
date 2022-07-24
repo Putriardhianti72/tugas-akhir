@@ -209,7 +209,7 @@ class RetailOrderController extends Controller
 
         // return redirect()->route('template.orders.show', [
         //     'domain' => $request->domain,
-        //     'id' => $order->id,
+        //     'id' => encrypt($order->id),
         // ]);
     }
 
@@ -222,8 +222,15 @@ class RetailOrderController extends Controller
     public function show(Request $request)
     {
         $template = $this->getTemplateName($request);
+        $id = null;
 
-        $order = RetailOrder::findOrFail($request->id);
+        try {
+            $id = decrypt($request->id);
+        } catch (\Exception $e) {
+            return redirect()->route('template.home', ['domain' => $request->domain]);
+        }
+
+        $order = RetailOrder::findOrFail($id);
 
         return view('Template.' . $template . '.Pages.order', [
             'domain' => $request->domain,
@@ -289,7 +296,7 @@ class RetailOrderController extends Controller
 
         return redirect()->route('template.orders.show', [
             'domain' => $order->domain,
-            'id' => $order->id,
+            'id' => encrypt($order->id),
         ]);
     }
 

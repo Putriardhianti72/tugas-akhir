@@ -47,17 +47,17 @@
                             <!--  product left content: image-->
                             <div class="product-line-grid-left col-md-2">
                               <span class="product-image media-middle">
-                                <a href="product-detail.html">
+                                <a href="{{ route('products.show', $cart->product->id) }}" target="_blank">
                                   <img class="img-fluid" src="{{ $cart->product->pict_url }}" alt="{{ $cart->product->product_name }}">
                                 </a>
                               </span>
                             </div>
                             <div class="product-line-grid-body col-md-6">
                               <div class="product-line-info">
-                                <a class="label" href="product-detail.html" data-id_customization="0">{{ $cart->product->name }}</a>
+                                <a class="label" href="{{ route('products.show', $cart->product->id) }}" target="_blank" data-id_customization="0">{{ $cart->product->product_name }}</a>
                               </div>
                               <div class="product-line-info product-price">
-                                <span class="value">{{ $cart->product->price }}</span>
+                                <span class="value">{{ format_currency($cart->product->price) }}</span>
                               </div>
                             </div>
                             <div class="product-line-grid-right product-line-actions col-md-4">
@@ -94,7 +94,7 @@
               </div>
               @endif
               <div class="cart-grid-right col-xs-12 col-lg-3">
-                <div class="cart-summary">
+                <div class="cart-summary px-4">
                   <div class="cart-detailed-totals">
                     <div class="cart-summary-products">
                       <div class="summary-label">There are {{ $totalCart }} item in your cart</div>
@@ -103,7 +103,7 @@
                       <span class="label js-subtotal">
                         Total products:
                       </span>
-                      <span class="value">{{ $totalCartPrice }}</span>
+                      <span class="value">{{ format_currency($totalCartPrice) }}</span>
                     </div>
                     <div class="cart-summary-line" id="cart-subtotal-shipping">
                       <span class="label">
@@ -116,7 +116,7 @@
                     </div>
                     <div class="cart-summary-line cart-total">
                       <span class="label">Total:</span>
-                      <span class="value">{{ $totalCartPrice }} (tax incl.)</span>
+                      <span class="value">{{ format_currency($totalCartPrice) }} (tax incl.)</span>
                     </div>
                   </div>
                 </div>

@@ -145,11 +145,11 @@ class CartController extends Controller
 
         $orderProducts = [];
         $carts = Cart::where('user_hash', member_auth()->hash())->get();
-        //kenapa di diget lagi?
 
-        foreach ($request->carts as $value) {//ini ambil cart kan?
-            foreach ($carts as $cart) {//nah bentar kok diforeach again
-                if ($value['id'] == $cart->id) {//kenapa di if
+
+        foreach ($request->carts as $value) {
+            foreach ($carts as $cart) {
+                if ($value['id'] == $cart->id) {
                     $cart->domain = $value['domain'];
                     $cart->save();
                     break;

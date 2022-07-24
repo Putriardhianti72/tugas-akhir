@@ -55,7 +55,7 @@
                       <div class="product-info col-xs-12 col-md-7 col-sm-7">
                         <div class="detail-description">
                           <div class="price-del">
-                            <span class="price">{{ $product->price }}</span>
+                            <span class="price">{{ format_currency($product->price) }}</span>
                             <span class="float-right">
                               <span class="availb">Availability: </span>
                               @if($product->in_stock)

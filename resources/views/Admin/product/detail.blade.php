@@ -68,7 +68,7 @@
                             <b>Harga </b>
                           </div>
                           <div class="col-12 col-md-8">
-                            : {{ $product->price }}
+                            : {{ format_currency($product->price) }}
                           </div>
                           <div class="col-12 col-md-4">
                             <b>Tanggal Pembuatan </b>

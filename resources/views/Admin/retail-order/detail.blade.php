@@ -131,12 +131,12 @@
                           </div>
                           <div class="col-12 col-md-3">
                             <div class="col-12 text-right">
-                              <h6>{{ $order->product->price }} <span class="text-muted">x</span> {{ $order->product->qty }}</h6>
+                              <h6>{{ format_currency($order->product->price) }} <span class="text-muted">x</span> {{ $order->product->qty }}</h6>
                             </div>
                           </div>
                           <div class="col-12 col-md-3">
                             <div class="col-12 text-right">
-                              <h6>{{ $order->product->total_price }}</h6>
+                              <h6>{{ format_currency($order->product->total_price) }}</h6>
                             </div>
                           </div>
                         </div>
@@ -199,7 +199,7 @@
                                 Order Total
                               </div>
                               <div class="col-12 col-md-8">
-                                {{ $order->product->total_price }}
+                                {{ format_currency($order->product->total_price) }}
                               </div>
                             </div>
                             <div class="row">
@@ -207,7 +207,7 @@
                                 Shipping Total
                               </div>
                               <div class="col-12 col-md-8">
-                                {{ $order->shipping->price }}
+                                {{ format_currency($order->shipping->price) }}
                               </div>
                             </div>
                             <div class="row">
@@ -215,7 +215,7 @@
                                 Grand Total
                               </div>
                               <div class="col-12 col-md-8">
-                                {{ $order->total_price }}
+                                {{ format_currency($order->total_price) }}
                               </div>
                             </div>
 
@@ -243,7 +243,7 @@
                           @if($order->status == \App\Models\RetailOrder::STATUS_COMPLETED)
                           <span class="ml-2">
                             <strong>
-                              {{ $order->commission ?: 'N/A' }}
+                              {{ $order->commission ? format_currency($order->commission): 'N/A' }}
                             </strong>
                           </span>
                           @else

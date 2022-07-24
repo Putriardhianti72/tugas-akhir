@@ -96,12 +96,7 @@
                                                     <li>
                                                         <a href="#new" data-toggle="tab" class="active">New Arrivals</a>
                                                     </li>
-                                                    <li>
-                                                        <a href="#best" data-toggle="tab">Best Sellers</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#sale" data-toggle="tab">Special Products</a>
-                                                    </li>
+
                                                 </ul>
                                             </div>
                                             <div class="tab-content">
@@ -123,8 +118,8 @@
                                                                         </div>
                                                                         <div class="product-group-price">
                                                                             <div class="product-price-and-shipping">
-                                                                                <span class="price">{{$product->price}}</span>
-                                                                                <del class="regular-price">£28.68</del>
+                                                                                <span class="price">{{format_currency($product->price)}}</span>
+                                                                                {{-- <del class="regular-price">£28.68</del> --}}
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -281,93 +276,7 @@
 
                     <!-- recent posts -->
                     <div class="container">
-                        <div class="section recent-post">
-                            <div class="title-block">CATEGORIES</div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="item-post">
-                                        <div class="thumbnail-img">
-                                            <a href="blog-detail.html">
-                                                <img src="img/home/home1-post1.jpg" alt="img">
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <div class="post-info">
-                                                <span class="comment">
-                                                    <i class="fa fa-comments-o" aria-hidden="true"></i>
-                                                    <span>0 Comments</span>
-                                                </span>
-                                                <span class="datetime">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                    <span>April 12, 2018</span>
-                                                </span>
-                                            </div>
-                                            <div class="post-title">
-                                                <a href="blog-detail.html">Lorem ipsum dolor sit amet</a>
-                                            </div>
-                                            <div class="post-desc">
-                                                Lorem ipsum dolor sit amet, consecte adipis cing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="item-post">
-                                        <div class="thumbnail-img">
-                                            <a href="blog-detail.html">
-                                                <img src="img/home/home1-post2.jpg" alt="img">
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <div class="post-info">
-                                                <span class="comment">
-                                                    <i class="fa fa-comments-o" aria-hidden="true"></i>
-                                                    <span>0 Comments</span>
-                                                </span>
-                                                <span class="datetime">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                    <span>April 12, 2018</span>
-                                                </span>
-                                            </div>
-                                            <div class="post-title">
-                                                <a href="blog-detail.html">Lorem ipsum dolor sit amet</a>
-                                            </div>
-                                            <div class="post-desc">
-                                                Lorem ipsum dolor sit amet, consecte adipis cing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="item-post">
-                                        <div class="thumbnail-img">
-                                            <a href="blog-detail.html">
-                                                <img src="img/home/home1-post3.jpg" alt="img">
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <div class="post-info">
-                                                <span class="comment">
-                                                    <i class="fa fa-comments-o" aria-hidden="true"></i>
-                                                    <span>0 Comments</span>
-                                                </span>
-                                                <span class="datetime">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                    <span>April 12, 2018</span>
-                                                </span>
-                                            </div>
-                                            <div class="post-title">
-                                                <a href="blog-detail.html">Lorem ipsum dolor sit amet</a>
-                                            </div>
-                                            <div class="post-desc">
-                                                Lorem ipsum dolor sit amet, consecte adipis cing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </div>
-                        </div>
 
                         <!-- partner -->
                         <div class="section introduct-logo">
@@ -378,43 +287,33 @@
                                             <div class="item">
                                                 <div class="logo-manu">
                                                     <a href="#" title="view products">
-                                                        <img class="img-fluid" src="img/home/icon-logo1.jpg" alt="img" />
+                                                        <img class="img-fluid" src="{{ asset('user/img/banks/bca.svg') }}" alt="img" />
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="item">
                                                 <div class="logo-manu">
-                                                    <a href="#" title="view products">
-                                                        <img class="img-fluid" src="img/home/icon-logo2.jpg" alt="img" />
-                                                    </a>
+                                                  <img class="img-fluid" src="{{ asset('user/img/banks/bni.svg') }}" alt="img" />
                                                 </div>
                                             </div>
                                             <div class="item">
                                                 <div class="logo-manu">
-                                                    <a href="#" title="view products">
-                                                        <img class="img-fluid" src="img/home/icon-logo3.jpg" alt="img" />
-                                                    </a>
+                                                    <img class="img-fluid" src="{{ asset('user/img/banks/mandiri.svg') }}" alt="img" />
                                                 </div>
                                             </div>
                                             <div class="item">
                                                 <div class="logo-manu">
-                                                    <a href="#" title="view products">
-                                                        <img class="img-fluid" src="img/home/icon-logo4.jpg" alt="img" />
-                                                    </a>
+                                                    <img class="img-fluid" src="{{ asset('user/img/banks/permata.svg') }}" alt="img" />
                                                 </div>
                                             </div>
                                             <div class="item">
                                                 <div class="logo-manu">
-                                                    <a href="#" title="view products">
-                                                        <img class="img-fluid" src="img/home/icon-logo5.jpg" alt="img" />
-                                                    </a>
+                                                    <img class="img-fluid" src="{{ asset('user/img/banks/indomaret.svg') }}" alt="img" />
                                                 </div>
                                             </div>
                                             <div class="item">
                                                 <div class="logo-manu">
-                                                    <a href="#" title="view products">
-                                                        <img class="img-fluid" src="img/home/icon-logo6.jpg" alt="img" />
-                                                    </a>
+                                                    <img class="img-fluid" src="{{ asset('user/img/banks/alfamart2.svg') }}" alt="img" />
                                                 </div>
                                             </div>
                                         </div>

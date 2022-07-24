@@ -16,6 +16,9 @@ if (! function_exists('member_auth')) {
 
 if (! function_exists('format_currency')) {
     function format_currency($amount) {
-        return number_format($amount ?: 0, 0, ',', '.');
+        if (!$amount) {
+            return 'Rp. 0';
+        }
+        return 'Rp. ' . number_format($amount ?: 0, 0, ',', '.');
     }
 }

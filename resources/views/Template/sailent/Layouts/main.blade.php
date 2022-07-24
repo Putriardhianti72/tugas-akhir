@@ -90,15 +90,17 @@
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navigation-nav">
+          @php($isHomeUrl = 'template.carts.index' === 'template.home' ? '' : route('template.home', ['domain' => request('domain')]))
+
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a class="section-scroll" href="#wrapper">Home</a></li>
-            <li><a href="#landing-offer">About</a></li>
-            <li><a href="#features-section">Services</a></li>
-            <li><a href="#price-section-1">Price</a></li>
-            <li><a href="#testimonials-section">Testimoni</a></li>
-            <li><a href="#contact-section">Contact</a></li>
-       {{--      <li><a href="#screenshots-section">Works</a></li>
-            <li><a href="#prices-section">Prices</a></li> --}}
+            <li class="active"><a class="section-scroll" href="{{ $isHomeUrl }}#wrapper">Home</a></li>
+            <li><a href="{{ $isHomeUrl }}#landing-offer">About</a></li>
+            <li><a href="{{ $isHomeUrl }}#features-section">Services</a></li>
+            <li><a href="{{ $isHomeUrl }}#price-section-1">Price</a></li>
+            <li><a href="{{ $isHomeUrl }}#testimonials-section">Testimoni</a></li>
+            <li><a href="{{ $isHomeUrl }}#contact-section">Contact</a></li>
+       {{--      <li><a href="{{ $isHomeUrl }}#screenshots-section">Works</a></li>
+            <li><a href="{{ $isHomeUrl }}#prices-section">Prices</a></li> --}}
 
 
             {{-- <li class="dropdown dropdown-navbar-cart active">

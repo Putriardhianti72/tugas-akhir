@@ -60,7 +60,7 @@
                                             <td><img src="{{ $product->pict_url  }}" class="rounded" style="width: 150px"></td>
                                             <td>{{ $product->product_name }}</td>
                                             {{--                                    <td>{{ $product->product_name }}</td>--}}
-                                            <td>{{ $product->price}}</td>
+                                            <td>{{ format_currency($product->price) }}</td>
                                             <td>
                                                 <div class="form-button-action">
                                                     <a href="{{ route('admin.products.show', $product->id) }}" button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"  data-original-title="View detail">

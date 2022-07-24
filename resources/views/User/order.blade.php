@@ -96,7 +96,7 @@
                                   {{ $product->product_name }}
                                 </td>
                                 <td>{{ $product->domain }}</td>
-                                <td>{{ $product->price }}</td>
+                                <td>{{ format_currency($product->price) }}</td>
                               </tr>
                               @endforeach
                             </tbody>
@@ -148,7 +148,7 @@
                                   Jumlah Pembayaran
                                 </div>
                                 <div class="col-12 col-md-8">
-                                  {{ $order->payment->total_price }}
+                                  {{ format_currency($order->payment->total_price) }}
                                 </div>
                               </div>
                             </div>
@@ -161,56 +161,7 @@
 
                   <hr class="my-4">
               </div>
-              <div class="cart-grid-right col-xs-12 col-lg-3">
-                <div class="cart-summary">
-                  <div class="cart-detailed-totals">
-                    <div class="cart-summary-products">
-                      <div class="summary-label">There are {{ 0 }} item in your cart</div>
-                    </div>
-                    <div class="cart-summary-line" id="cart-subtotal-products">
-                      <span class="label js-subtotal">
-                        Total products:
-                      </span>
-                      <span class="value">{{ 0 }}</span>
-                    </div>
-                    <div class="cart-summary-line" id="cart-subtotal-shipping">
-                      <span class="label">
-                        Total Shipping:
-                      </span>
-                      <span class="value">Free</span>
-                      <div>
-                        <small class="value"></small>
-                      </div>
-                    </div>
-                    <div class="cart-summary-line cart-total">
-                      <span class="label">Total:</span>
-                      <span class="value">{{ 0 }} (tax incl.)</span>
-                    </div>
-                  </div>
-                </div>
-                <div id="block-reassurance">
-                  <ul>
-                    <li>
-                      <div class="block-reassurance-item">
-                        <img src="{{ asset('/user/img/product/check1.png') }}" alt="Security policy (edit with Customer reassurance module)">
-                        <span>Security policy (edit with Customer reassurance module)</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="block-reassurance-item">
-                        <img src="{{ asset('/user/img/product/check2.png') }}" alt="Delivery policy (edit with Customer reassurance module)">
-                        <span>Delivery policy (edit with Customer reassurance module)</span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="block-reassurance-item">
-                        <img src="{{ asset('/user/img/product/check3.png' ) }}" alt="Return policy (edit with Customer reassurance module)">
-                        <span>Return policy (edit with Customer reassurance module)</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+
             </div>
           </section>
         </div>

@@ -106,8 +106,8 @@
                             {{ $order->customer->name ?? '-' }}
                           </td>
                           <td>{{ $order->product->qty ?? 1 }}</td>
-                          <td>{{ $order->total_price }}</td>
-                          <td>{{ $order->commission }}</td>
+                          <td>{{ format_currency($order->total_price) }}</td>
+                          <td>{{ format_currency($order->commission) }}</td>
                           <td>{{ $order->status_text }}</td>
                           <td>{{ $order->created_at->format('d-m-Y H:i') }}</td>
                           <td>

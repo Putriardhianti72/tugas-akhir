@@ -106,7 +106,7 @@
                                                                     </div>
                                                                     <div class="product-group-price">
                                                                         <div class="product-price-and-shipping">
-                                                                            <span class="price">{{$product->price}}</span>
+                                                                            <span class="price">{{format_currency($product->price)}}</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -166,7 +166,7 @@
                                                                             </div>
                                                                             <div class="product-group-price">
                                                                                 <div class="product-price-and-shipping">
-                                                                                    <span class="price">{{$product->price}}</span>
+                                                                                    <span class="price">{{format_currency($product->price)}}</span>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="discription">

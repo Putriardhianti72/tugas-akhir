@@ -101,10 +101,10 @@
                                           <td>{{++$i}}</td>
                                           <td>{{$order->date}}</td>
                                           <td>
-                                            {{ $order->total_order }}
+                                            {{ format_currency($order->total_order) }}
                                           </td>
                                           <td>
-                                              {{ $order->total_price }}
+                                              {{ format_currency($order->total_price) }}
                                           </td>
                                           <td>
                                               <div class="form-button-action">

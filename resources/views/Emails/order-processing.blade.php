@@ -9,7 +9,7 @@ Domain Anda sedang kami proses.
 | Produk         | Harga    |
 | :------------- | --------:|
 @foreach($order->products as $product)
-| {{ $product->product_name }}  | {{ $product->price }}   |
+| {{ $product->product_name }}  | {{ format_currency($product->price) }}   |
 @endforeach
 @endcomponent
 
@@ -23,7 +23,7 @@ Domain Anda sedang kami proses.
 @if ($order->payment->va_number)
 | No Virtual Account | {{ $order->payment->va_number }}           |
 @endif
-| Order Total        | **{{ $order->total_price }}**              |
+| Order Total        | **{{ format_currency($order->total_price) }}**              |
 @endcomponent
 
 @component('mail::button', ['url' => $url])

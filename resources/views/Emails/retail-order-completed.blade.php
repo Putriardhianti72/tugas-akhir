@@ -15,7 +15,7 @@ Terima kasih, pembelian Anda telah selesai.
 @component('mail::table')
 | Produk         |               | Harga    |
 | :------------- |:-------------:| --------:|
-| {{ $order->product->product_name }}  | {{ $order->product->qty }} x {{ $order->product->price }} | {{ $order->product->total_price }}   |
+| {{ $order->product->product_name }}  | {{ $order->product->qty }} x {{ format_currency($order->product->price) }} | {{ format_currency($order->product->total_price) }}   |
 @endcomponent
 
 @component('mail::table', ['class' => 'table-stretch'])
@@ -28,9 +28,9 @@ Terima kasih, pembelian Anda telah selesai.
 @if ($order->payment->va_number)
 | No Virtual Account | {{ $order->payment->va_number }}           |
 @endif
-| Order Total        | {{ $order->product->total_price }}         |
-| Shipping Total     | {{ $order->shipping->price }}              |
-| Grand Total        | **{{ $order->total_price }}**              |
+| Order Total        | {{ format_currency($order->product->total_price) }}         |
+| Shipping Total     | {{ format_currency($order->shipping->price) }}              |
+| Grand Total        | **{{ format_currency($order->total_price) }}**              |
 @endcomponent
 
 @component('mail::button', ['url' => $url])

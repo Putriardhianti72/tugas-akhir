@@ -23,15 +23,15 @@ Terima kasih sudah melakukan pembelian di situs kami.
 @component('mail::table')
 | Produk         |               | Harga    |
 | :------------- |:-------------:| --------:|
-| {{ $order->product->product_name }}  | {{ $order->product->qty }} x {{ $order->product->price }} | {{ $order->product->total_price }}   |
+| {{ $order->product->product_name }}  | {{ $order->product->qty }} x {{ format_currency($order->product->price) }} | {{ format_currency($order->product->total_price) }}   |
 @endcomponent
 
 @component('mail::subcopy')
 <p class="text-right">
-  Shipping {{ $order->shipping->price }}
+  Shipping {{ format_currency($order->shipping->price) }}
 </p>
 <p class="text-right">
-  Grand Total <b>{{ $order->total_price }}</b>
+  Grand Total <b>{{ format_currency($order->total_price) }}</b>
 </p>
 @endcomponent
 

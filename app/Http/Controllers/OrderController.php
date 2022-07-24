@@ -102,7 +102,6 @@ class OrderController extends Controller
                 'item_details' => [],
             ];
 
-            //bawah ni buat apa?
             foreach ($orderProducts as $orderProduct) {
                 $transactionData['item_details'][] = [
                     'id' => $orderProduct->id,

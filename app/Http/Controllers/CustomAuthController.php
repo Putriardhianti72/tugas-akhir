@@ -25,10 +25,6 @@ class CustomAuthController extends Controller
         }
 
         return view('User.auth.login');
-
-//        return view('Account.login');
-
-
     }
 
     /**

@@ -85,9 +85,9 @@
                 <div class="row cart-row" data-product="{{ json_encode($cart['product']) }}" data-qty="{{ $cart['qty'] }}">
                   <div class="col-xs-2">
                     @if(isset($cart['product']['pict_url']))
-                    <img class="img-responsive" src="{{ $cart['product']['pict_url'] }}">
+                    <img class="img-responsive" src="{{ asset('assets/sailent/images/hero-bg/1.png') }}">
                     @else
-                    <img class="img-responsive" src="https://via.placeholder.com/200x200">
+                    <img class="img-responsive" src="{{ asset('assets/sailent/images/hero-bg/1.png') }}">
                     @endif
                   </div>
                   <div class="col-xs-6">

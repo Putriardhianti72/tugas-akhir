@@ -38,7 +38,7 @@ class SendRetailOrderCreated extends Mailable
             'domain' => $order->domain,
             'url' => route('template.orders.show', [
                 'domain' => $order->domain,
-                'id' => $order->id,
+                'id' => encrypt($order->id),
             ])
         ];
 
