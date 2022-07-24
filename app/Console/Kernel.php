@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('order:flush')->everyMinute();
+        // $schedule->command('retail-order:flush')->everyMinute();
         // $schedule->command('order:flush')->everyTwoMinutes();
     }
 

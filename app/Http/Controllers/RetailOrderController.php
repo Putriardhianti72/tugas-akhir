@@ -123,7 +123,7 @@ class RetailOrderController extends Controller
         $order = RetailOrder::create([
             'invoice_no' => RetailOrder::generateInvoiceNo(),
             'domain' => $request->domain,
-            'expired_at' => Carbon::now(),
+            // 'expired_at' => Carbon::now(),
         ]);
 
         $carts = $this->getCarts($request);
