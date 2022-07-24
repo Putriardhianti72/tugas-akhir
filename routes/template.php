@@ -27,6 +27,8 @@ Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
     Route::get('/{id}', [RetailOrderController::class,'show'])->name('show');
     Route::post('/', [RetailOrderController::class,'store'])->name('store');
     // Route::post('/pay/{id}', [RetailOrderController::class,'pay'])->name('pay');
+
+    Route::post('/pay/{id}', [RetailOrderController::class,'pay'])->name('pay');
 });
 
 Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function () {

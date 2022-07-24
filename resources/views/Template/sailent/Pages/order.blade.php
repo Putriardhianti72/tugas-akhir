@@ -18,11 +18,38 @@
 
       <hr>
 
-      <div class="row">
+      {{-- <div class="row">
         <div class="col-xs-12">
           <button type="button" class="btn btn-primary">Buy Again</button>
         </div>
       </div>
+
+      <hr> --}}
+
+
+
+      @if($order->status == \App\Models\RetailOrder::STATUS_PENDING)
+        <div class="row mb-4">
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-xs-12 col-md-12">
+                <div class="card bg-warning text-white" style="padding: 1rem 1.5rem 1.5rem;">
+                  <div class="card-body d-flex align-items-center justify-content-between" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                      <h5 class="subtitle-page">Pembayaran</h5>
+                      <label>Lanjutkan pembayaran untuk menyelesaikan order.</label>
+                    </div>
+                    <form action="{{ route('template.orders.pay', ['domain' => $domain, 'id' => $order->id]) }}" method="post">
+                      @csrf
+                      <button type="submit" class="btn btn-primary btn-sm">Bayar Sekarang</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      @endif
 
       <hr>
 

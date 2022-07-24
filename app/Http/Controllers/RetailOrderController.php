@@ -81,6 +81,7 @@ class RetailOrderController extends Controller
         }
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -122,6 +123,7 @@ class RetailOrderController extends Controller
         $order = RetailOrder::create([
             'invoice_no' => RetailOrder::generateInvoiceNo(),
             'domain' => $request->domain,
+            'expired_at' => Carbon::now(),
         ]);
 
         $carts = $this->getCarts($request);
@@ -211,6 +213,77 @@ class RetailOrderController extends Controller
         //     'domain' => $request->domain,
         //     'id' => encrypt($order->id),
         // ]);
+    }
+
+
+    public function pay(Request $request, $domain, $id)
+    {
+        $order = RetailOrder::where('status', RetailOrder::STATUS_PENDING)->findOrFail($id);
+        $orderCustomer = $order->customer;
+        $orderProduct = $order->product;
+
+        $totalOrderPrice = $orderProduct->total_price;
+
+        $midtrans = new MidtransService();
+
+        try {
+            $transactionData = [
+                'transaction_details' => [
+                    'order_id' => $order->invoice_no,
+                    'gross_amount' => $totalOrderPrice,
+                ],
+                'customer_details' => [
+                    'first_name' => $orderCustomer->name,
+                    'email' => $orderCustomer->email,
+                    'phone' => $orderCustomer->no_hp,
+                    'shipping_address' => [
+                        'first_name' => $orderCustomer->name,
+                        'email' => $orderCustomer->email,
+                        'phone' => $orderCustomer->no_hp,
+                        'address' => $orderCustomer->alamat,
+                        'city' => $orderCustomer->city_name,
+                    ],
+                ],
+                'item_details' => [
+                    [
+                        'id' => $orderProduct->code,
+                        'price' => $orderProduct->price,
+                        'quantity' => $orderProduct->qty,
+                        'name' => $orderProduct->product_name,
+                    ]
+                ],
+            ];
+
+            $paymentUrl = $midtrans->createTransaction($transactionData);
+
+            if ($paymentUrl) {
+                $order->payment()->update([
+                    'payment_url' => $paymentUrl,
+                ]);
+            }
+
+            return redirect($paymentUrl);
+        } catch (\Throwable $e) {
+            $response = $midtrans->getStatus($order->payment->code ?? $order->invoice_no);
+            $transactionStatus = $response['transaction_status'] ?? null;
+
+            if ($transactionStatus === 'expire') {
+                $order->status = RetailOrder::STATUS_CANCELLED;
+                $order->save();
+
+                return redirect()->back()->with([
+                    'alert_error' => 'Order dibatalkan. Status pembayaran Anda telah kedaluwarsa.'
+                ]);
+            }
+
+            if ($order->payment->payment_url ?? false) {
+                return redirect($order->payment->payment_url);
+            }
+
+            return redirect()->back()->with([
+                'alert_error' => 'Gagal membuat transaksi pembayaran. Mohon ulangi setelah beberapa saat.',
+            ]);
+        }
     }
 
     /**
