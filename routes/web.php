@@ -19,13 +19,13 @@ use App\Http\Controllers\MemberAreaHomeController;
 |
 */
 
-Route::group([
-    'domain' => '{domain}.tugasakhir.loc',
-    'where' => ['domain' => 'sailent|templatlain|templatelain2'],
-    'as' => 'template.',
-], function () {
-    include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
-});
+// Route::group([
+//     'domain' => '{domain}.tugasakhir.loc',
+//     'where' => ['domain' => 'sailent|templatlain|templatelain2'],
+//     'as' => 'template.',
+// ], function () {
+//     include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
+// });
 
 //Route::get('/', function () {
 ////    return view('Layouts.index','$products');
@@ -122,10 +122,10 @@ Route::get('/mailable', function () {
 
 Route::get('/get-data-log', [\App\Http\Controllers\LandingController::class, 'dataLog']);
 
-// Route::group([
-//     'prefix' => '{domain}',
-//     'where' => ['domain' => 'sailent|templatlain|templatelain2'],
-//     'as' => 'template.',
-// ], function () {
-//     include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
-// });
+Route::group([
+    'prefix' => '{domain}',
+    'where' => ['domain' => 'sailent|templatlain|templatelain2'],
+    'as' => 'template.',
+], function () {
+    include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
+});
