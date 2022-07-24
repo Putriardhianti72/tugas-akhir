@@ -43,7 +43,7 @@ class Api
 
             return [
                 'status' => 'kosong',
-                'message' => 'Gagal memuat data user. Mohon ulangi setelah beberapa saat.',
+                'message' => 'Username atau password tidak sesuai.',
                 'result' => null
             ];
         } catch (Exception $e) {
