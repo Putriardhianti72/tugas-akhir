@@ -188,6 +188,7 @@ class AdminRetailOrdersController extends Controller
         if ($shipping->tracking_no && $order->status == RetailOrder::STATUS_PAID) {
             $order->status = RetailOrder::STATUS_DELIVERY;
             $order->save();
+            Mail::to($order->customer->email)->send(new SendRetailOrderDelivered($order));
         }
 
         return redirect()->back()->with([
