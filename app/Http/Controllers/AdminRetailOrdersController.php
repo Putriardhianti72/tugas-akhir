@@ -110,7 +110,7 @@ class AdminRetailOrdersController extends Controller
             // 'authorize' => 'Authorize',
         ];
 
-        return view('admin.retail-order.detail', compact('order', 'orderStatuses', 'paymentStatuses'));
+        return view('Admin.retail-order.detail', compact('order', 'orderStatuses', 'paymentStatuses'));
     }
 
     /**

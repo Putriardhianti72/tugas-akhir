@@ -80,7 +80,7 @@ class AdminOrdersController extends Controller
         ];
 
 
-        return view('admin.order.detail', compact('order', 'orderStatuses','paymentStatuses'));
+        return view('Admin.order.detail', compact('order', 'orderStatuses','paymentStatuses'));
     }
 
     /**
@@ -96,7 +96,7 @@ class AdminOrdersController extends Controller
 //            ->where ('id', $id)
 //            ->first();
         $order = Order::findOrFail($id);
-        return view('admin.order.edit',compact('order'));
+        return view('Admin.order.edit',compact('order'));
     }
 
     /**

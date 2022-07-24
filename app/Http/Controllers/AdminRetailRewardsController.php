@@ -70,7 +70,7 @@ class AdminRetailRewardsController extends Controller
     public function show($id)
     {
         $retailReward = RetailReward::findOrFail($id);
-        return view('admin.retail-reward.detail', compact('retailReward'));
+        return view('Admin.retail-reward.detail', compact('retailReward'));
     }
 
     /**

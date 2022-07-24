@@ -160,7 +160,7 @@ class AdminSalesRecapController extends Controller
             // 'authorize' => 'Authorize',
         ];
 
-        return view('admin.sales-recap.detail', compact('order', 'orderStatuses', 'paymentStatuses'));
+        return view('Admin.sales-recap.detail', compact('order', 'orderStatuses', 'paymentStatuses'));
     }
 
     /**
