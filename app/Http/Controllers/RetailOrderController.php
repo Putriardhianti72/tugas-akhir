@@ -130,7 +130,7 @@ class RetailOrderController extends Controller
         $totalOrderPrice = 0;
         $orderProduct = null;
 
-        if ($carts) {
+        if (! $carts) {
             return redirect()->route('template.home', ['domain' => $request->domain]);
         }
         foreach ($carts as $cart) {
