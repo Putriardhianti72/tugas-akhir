@@ -152,6 +152,7 @@ class RetailOrderController extends Controller
         $midtrans = new MidtransService();
         $paymentUrl = null;
 
+        // buat transaksi ke midtrans
         try {
             $paymentUrl = $midtrans->createTransaction([
                 'transaction_details' => [
@@ -184,12 +185,14 @@ class RetailOrderController extends Controller
             return redirect()->back();
         }
 
+        // simpan data transaksi ke payment
         $order->payment()->create([
             'payment_url' => $paymentUrl,
             'total_price' => $totalOrderPrice,
         ]);
 
         $order->commission = RetailReward::where('code', $orderProduct->code)->first()->reward ?? 0;
+        $order->total_price = $totalOrderPrice + $orderShipping->price;
         $order->save();
 
         $order->load('customer', 'shipping', 'product', 'owner');

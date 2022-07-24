@@ -101,7 +101,7 @@
                                           <td>{{++$i}}</td>
                                           <td>{{$order->date}}</td>
                                           <td>
-                                            {{ format_currency($order->total_order) }}
+                                            {{ $order->total_order }}
                                           </td>
                                           <td>
                                               {{ format_currency($order->total_price) }}
