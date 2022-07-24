@@ -52,6 +52,7 @@ class AdminSalesRecapController extends Controller
             $totalOrder += $order->total_order;
             $totalSales += $order->total_price;
         }
+
         return view('Admin.sales-recap.index', compact('orders', 'from', 'to', 'totalOrder', 'totalSales'));
     }
 

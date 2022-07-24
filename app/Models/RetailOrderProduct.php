@@ -19,6 +19,7 @@ class RetailOrderProduct extends Model
         'price',
         'pict',
         'weight',
+        'total_price',
     ];
 
     public function order()
@@ -33,10 +34,10 @@ class RetailOrderProduct extends Model
         }
     }
 
-    public function getTotalPriceAttribute()
-    {
-        return $this->qty * $this->price;
-    }
+    // public function getTotalPriceAttribute()
+    // {
+    //     return $this->qty * $this->price;
+    // }
 
     public function getTotalWeightAttribute()
     {

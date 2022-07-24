@@ -141,6 +141,7 @@ class RetailOrderController extends Controller
                 'price' => $cart['product']['harga'],
                 'qty' => $cart['qty'],
                 'weight' => $cart['product']['berat'],
+                'total_price' => $cart['product']['harga'] * $cart['qty'],
             ]);
 
             $totalOrderPrice += $orderProduct->total_price;
