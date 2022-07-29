@@ -1,4 +1,16 @@
 @extends('Layouts.admin.main')
+
+@push('css')
+<style type="text/css">
+#gambar > .row:first-child [data-pict="remove"] {
+    /*display: none;*/
+}
+#gambar > .row {
+    margin-bottom: 0.5rem;
+}
+</style>
+@endpush
+
 @section('content')
     <div class="content">
         <div class="page-inner">
@@ -99,7 +111,7 @@
                         @enderror
                         <br>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label class="font-weight-bold">Gambar</label>
                             @if($product->exists)
                                 <div class="row">
@@ -115,13 +127,95 @@
                             @else
                                 <input type="file" class="form-control @error('pict') is-invalid @enderror" name="pict">
                             @endif
-
-                            <!-- error message untuk title -->
                             @error('pict')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
                             @enderror
+                        </div> --}}
+
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="font-weight-bold">Gambar</label>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div id="gambar" class="col col-12">
+                                        @if(isset($oldPict) && count($oldPict))
+                                            @foreach($oldPict as $image)
+                                            <div class="row">
+                                                <div class="col col-md-9">
+                                                  <div class="input-group">
+                                                    <div class="custom-file">
+                                                      <label class="custom-file-label">{{ $image['name'] }}</label>
+                                                      <input type="file" name="pict[]" class="custom-file-input {{ is_numeric($image['value']) ? 'saved' : '' }}">
+                                                      @if(is_numeric($image['value']))
+                                                      <input type="hidden" name="pict[]" class="input-hidden" value="{{ $image['value'] }}">
+                                                      @endif
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                      <button class="btn btn-outline-secondary btn-sm" data-pict="remove" type="button"><i class="fa fa-minus"></i></button>
+                                                      <button class="btn btn-outline-secondary btn-sm" data-pict="add" type="button"><i class="fa fa-plus"></i></button>
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                                <div class="col col-md-2 img">
+                                                    <img src="{{ $image['image'] }}" class="img-fluid">
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        @else
+                                            @foreach($product->images as $image)
+                                            <div class="row">
+                                                <div class="col col-md-9">
+                                                  <div class="input-group">
+                                                    <div class="custom-file">
+                                                      <label class="custom-file-label">{{ $image->pict }}</label>
+                                                      <input type="file" name="pict[]" class="custom-file-input saved">
+                                                      <input type="hidden" name="pict[]" class="input-hidden" value="{{ $image->id }}">
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                      <button class="btn btn-outline-secondary btn-sm" data-pict="remove" type="button"><i class="fa fa-minus"></i></button>
+                                                      <button class="btn btn-outline-secondary btn-sm" data-pict="add" type="button"><i class="fa fa-plus"></i></button>
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                                <div class="col col-md-2 img">
+                                                    <img src="{{ $image->pict_url }}" class="img-fluid">
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        @endif
+
+                                        <div class="row">
+                                            <div class="col col-md-9">
+                                              <div class="input-group">
+                                                <div class="custom-file">
+                                                  <label class="custom-file-label">Pilih gambar</label>
+                                                  <input type="file" name="pict[]" class="custom-file-input">
+                                                </div>
+                                                <div class="input-group-append">
+                                                  <button class="btn btn-outline-secondary btn-sm" data-pict="remove" type="button"><i class="fa fa-minus"></i></button>
+                                                  <button class="btn btn-outline-secondary btn-sm" data-pict="add" type="button"><i class="fa fa-plus"></i></button>
+                                                </div>
+                                              </div>
+                                          </div>
+                                            <div class="col col-md-2 img">
+                                                {{-- <img src="" class="img-fluid"> --}}
+                                            </div>
+                                        </div>
+
+
+                                        @error('pict')
+                                        <div class="alert alert-danger mt-2">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <br>
@@ -140,9 +234,57 @@
 </div>
 @endsection
 
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}}
-{{--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>--}}
-{{--<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>--}}
+@push('js')
+<script type="text/javascript">
+$(function () {
+    function toggleRemoveVisibility() {
+        var display = '';
 
-    <!--   Core JS Files   -->
+        if ($('#gambar > .row').length <= 1) {
+            display = 'none';
+        }
 
+        $('#gambar > .row:first-child').find('[data-pict="remove"]').css('display', display);
+    }
+
+    toggleRemoveVisibility();
+
+    $(document).on('click', '[data-pict="add"]', function () {
+        var html = $(this).closest('.row').html();
+        html = $('<div class="row">'+html+'</div>');
+        html.find('.img').html('');
+        html.find('.custom-file-input').attr('value', '').removeClass('saved');
+        html.find('.custom-file-label').text('Pilih gambar');
+        html.find('[data-pict="remove"]').css('display', '');
+        $(html).insertAfter($(this).closest('.row'));
+        toggleRemoveVisibility();
+    });
+    $(document).on('click', '[data-pict="remove"]', function () {
+        $(this).closest('.row').remove();
+        toggleRemoveVisibility();
+    });
+    $(document).on('change', '#gambar .custom-file-input', function (e) {
+        var $this = $(this);
+        var filename = 'Pilih gambar';
+        var file = null;
+        if (e && e.target && e.target.files && e.target.files[0]) {
+            file = e.target.files[0];
+            filename = file.name;
+            if ($this.hasClass('saved')) {
+                $this.closest('.row').find('.input-hidden').remove();
+                $this.closest('.row').find('.saved').removeClass('saved');
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                $this.closest('.row').find('.img').html('<img src="'+evt.target.result+'" class="img-fluid">');
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        $(this).closest('.row').find('.custom-file-label').text(filename);
+    })
+});
+</script>
+@endpush

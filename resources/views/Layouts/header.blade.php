@@ -21,6 +21,7 @@
             </div>
         </div>
 
+        @if(member_auth()->check())
         <!-- search -->
         <div id="mobile_search" class="d-flex">
             {{-- <div id="mobile_search_content">
@@ -84,6 +85,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 
     <!-- header desktop -->
@@ -203,6 +205,7 @@
                             </div>
                         </div>
                     </div>
+                    @if(member_auth()->check())
                     <div class="desktop_cart">
                         <div class="blockcart block-cart cart-preview tiva-toggle">
                             <div class="header-cart tiva-toggle-btn">
@@ -255,6 +258,7 @@
 
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

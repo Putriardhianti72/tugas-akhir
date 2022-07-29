@@ -17,7 +17,6 @@ class Product extends Model
         'category_id',
         'desc',
         'price',
-        'pict'
     ];
 
     public function category()
@@ -25,10 +24,17 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id', 'id');
+    }
+
     public function getPictUrlAttribute()
     {
-        if ($this->pict) {
-            return Storage::disk('local')->url('public/pict/'. $this->pict);
+        $image = $this->images->first();
+
+        if ($image) {
+            return $image->pict_url;
         }
     }
 }

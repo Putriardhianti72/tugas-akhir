@@ -58,7 +58,7 @@
                         <div class="form-group form-group-default">
                             <label>Kategori db</label>
                             <select class="form-control" id="category_id" name="category_id">
-            0                   @foreach($categories as $id => $category)
+                               @foreach($categories as $id => $category)
                                 <option value="{{ $id }}">
                                     {{ old('category_id') == $id ? 'selected' : '' }}
                                     {{ $category }}
@@ -95,6 +95,26 @@
                             <input type="file" class="form-control @error('pict') is-invalid @enderror" name="pict">
 
                             <!-- error message untuk title -->
+                            @error('pict')
+                            <div class="alert alert-danger mt-2">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div id="gambar">
+                          <div class="input-group">
+                            <div class="custom-file">
+                              <label class="custom-file-label">Pilih gambar</label>
+                              <input type="file" class="custom-file-input">
+                            </div>
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button"><i class="fa fa-minus"></i></button>
+                              <button class="btn btn-outline-secondary" type="button"><i class="fa fa-plus"></i></button>
+                            </div>
+                          </div>
+
+
                             @error('pict')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}

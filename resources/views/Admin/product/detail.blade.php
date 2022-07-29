@@ -86,7 +86,13 @@
                             <b>Gambar </b>
                           </div>
                           <div class="col-12 col-md-8">
-                            <img src="{{ $product->pict_url  }}" class="rounded" style="width: 300px">
+                            <div class="row">
+                              @foreach($product->images as $image)
+                              <div class="col-12 col-md-4">
+                                <img src="{{ $image->pict_url }}" class="rounded img-fluid">
+                              </div>
+                              @endforeach
+                            </div>
                           </div>
                         </div>
 
