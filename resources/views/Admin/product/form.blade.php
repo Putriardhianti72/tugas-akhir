@@ -151,9 +151,7 @@
                                                     <div class="custom-file">
                                                       <label class="custom-file-label">{{ $image['name'] }}</label>
                                                       <input type="file" name="pict[]" class="custom-file-input {{ is_numeric($image['value']) ? 'saved' : '' }}">
-                                                      @if(is_numeric($image['value']))
-                                                      <input type="hidden" name="pict[]" class="input-hidden" value="{{ $image['value'] }}">
-                                                      @endif
+                                                      <input type="hidden" name="pict_id[]" class="input-hidden" value="{{ $image['value'] ?? '' }}">
                                                     </div>
                                                     <div class="input-group-append">
                                                       <button class="btn btn-outline-secondary btn-sm" data-pict="remove" type="button"><i class="fa fa-minus"></i></button>
@@ -166,7 +164,7 @@
                                                 </div>
                                             </div>
                                             @endforeach
-                                        @else
+                                        @elseif(count($product->images))
                                             @foreach($product->images as $image)
                                             <div class="row">
                                                 <div class="col col-md-9">
@@ -174,7 +172,7 @@
                                                     <div class="custom-file">
                                                       <label class="custom-file-label">{{ $image->pict }}</label>
                                                       <input type="file" name="pict[]" class="custom-file-input saved">
-                                                      <input type="hidden" name="pict[]" class="input-hidden" value="{{ $image->id }}">
+                                                      <input type="hidden" name="pict_id[]" class="input-hidden" value="{{ $image->id }}">
                                                     </div>
                                                     <div class="input-group-append">
                                                       <button class="btn btn-outline-secondary btn-sm" data-pict="remove" type="button"><i class="fa fa-minus"></i></button>
@@ -187,25 +185,26 @@
                                                 </div>
                                             </div>
                                             @endforeach
-                                        @endif
-
-                                        <div class="row">
-                                            <div class="col col-md-9">
-                                              <div class="input-group">
-                                                <div class="custom-file">
-                                                  <label class="custom-file-label">Pilih gambar</label>
-                                                  <input type="file" name="pict[]" class="custom-file-input">
-                                                </div>
-                                                <div class="input-group-append">
-                                                  <button class="btn btn-outline-secondary btn-sm" data-pict="remove" type="button"><i class="fa fa-minus"></i></button>
-                                                  <button class="btn btn-outline-secondary btn-sm" data-pict="add" type="button"><i class="fa fa-plus"></i></button>
-                                                </div>
+                                        @else
+                                            <div class="row">
+                                                <div class="col col-md-9">
+                                                  <div class="input-group">
+                                                    <div class="custom-file">
+                                                      <label class="custom-file-label">Pilih gambar</label>
+                                                      <input type="file" name="pict[]" class="custom-file-input">
+                                                      <input type="hidden" class="input-hidden" name="pict_id[]">
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                      <button class="btn btn-outline-secondary btn-sm" data-pict="remove" type="button"><i class="fa fa-minus"></i></button>
+                                                      <button class="btn btn-outline-secondary btn-sm" data-pict="add" type="button"><i class="fa fa-plus"></i></button>
+                                                    </div>
+                                                  </div>
                                               </div>
-                                          </div>
-                                            <div class="col col-md-2 img">
-                                                {{-- <img src="" class="img-fluid"> --}}
+                                                <div class="col col-md-2 img">
+                                                    {{-- <img src="" class="img-fluid"> --}}
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
 
 
                                         @error('pict')
@@ -247,7 +246,19 @@ $(function () {
         $('#gambar > .row:first-child').find('[data-pict="remove"]').css('display', display);
     }
 
+    function toggleAddVisibility() {
+        if ($('#gambar > .row').length <= 1) {
+            $('#gambar [data-pict="add"]').css('display', '');
+        } else {
+            $('#gambar > .row:not(:last-child) [data-pict="add"]').each(function () {
+                $(this).css('display', 'none');
+            })
+            $('#gambar > .row:last-child [data-pict="add"]').css('display', '');
+        }
+    }
+
     toggleRemoveVisibility();
+    toggleAddVisibility();
 
     $(document).on('click', '[data-pict="add"]', function () {
         var html = $(this).closest('.row').html();
@@ -256,12 +267,15 @@ $(function () {
         html.find('.custom-file-input').attr('value', '').removeClass('saved');
         html.find('.custom-file-label').text('Pilih gambar');
         html.find('[data-pict="remove"]').css('display', '');
+        html.find('.input-hidden').val('');
         $(html).insertAfter($(this).closest('.row'));
         toggleRemoveVisibility();
+        toggleAddVisibility();
     });
     $(document).on('click', '[data-pict="remove"]', function () {
         $(this).closest('.row').remove();
         toggleRemoveVisibility();
+        toggleAddVisibility();
     });
     $(document).on('change', '#gambar .custom-file-input', function (e) {
         var $this = $(this);
@@ -271,7 +285,7 @@ $(function () {
             file = e.target.files[0];
             filename = file.name;
             if ($this.hasClass('saved')) {
-                $this.closest('.row').find('.input-hidden').remove();
+                $this.closest('.row').find('.input-hidden').val('');
                 $this.closest('.row').find('.saved').removeClass('saved');
             }
 

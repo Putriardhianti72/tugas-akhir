@@ -128,14 +128,15 @@ class AdminProductsController extends Controller
         ]);
         $oldPict = [];
 
-        if ($request->pict) {
+        if ($request->pict || $request->pict_id) {
             // $this->validate($request, [
             //     'pict'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             // ]);
             $pictIdToKeep = [];
+            $pictInputs = $request->pict;
 
-            foreach ($request->pict as $pict) {
-                if (is_numeric($pict)) {
+            foreach ($request->pict_id as $pict) {
+                if ($pict) {
                     $img = $product->images()->where('id', $pict)->first();
                     $oldPict[] = [
                         'value' => $pict,
@@ -144,34 +145,44 @@ class AdminProductsController extends Controller
                     ];
                     $pictIdToKeep[] = $pict;
                 } else {
-                    $oldPict[] = [
-                        'value' => null,
-                        'image' => 'data:' . $pict->getClientMimeType() . ';base64,' . base64_encode(file_get_contents($pict)),
-                        'name' => $pict->getClientOriginalName(),
-                    ];
+                    $pict = array_shift($pictInputs);
+                    if ($pict) {
+                        $oldPict[] = [
+                            'value' => null,
+                            'image' => 'data:' . $pict->getClientMimeType() . ';base64,' . base64_encode(file_get_contents($pict)),
+                            'name' => $pict->getClientOriginalName(),
+                            'file' => $pict,
+                        ];
+                    }
                 }
             }
 
-            foreach ($product->images as $image) {
-                if (in_array($image->id, $pictIdToKeep)) {
-                    Storage::delete('public/pict/'. $image->pict);
+            $productImages = $product->images()->get();
+
+            // if (count($productImages) !== $pictIdToKeep) {
+                foreach ($productImages as $image) {
+                    if (!in_array($image->id, $pictIdToKeep)) {
+                        Storage::delete('public/pict/'. $image->pict);
+                    }
                 }
-            }
 
-            $product->images()->delete();
+                $product->images()->delete();
 
-            foreach ($request->pict as $i => $pict) {
-                if (is_numeric($pict)) {
-                    $product->images()->create([
-                        'pict' => $oldPict[$i]['name'],
-                    ]);
-                } else {
-                    $pictHashName = $pict->hashName();
-                    $pict->storeAs('public/pict', $pictHashName);
+                foreach ($oldPict as $i => $pict) {
+                    if (isset($pict['file'])) {
+                        $pict = $pict['file'];
+                        unset($oldPict[$i]['file']);
+                        $pictHashName = $pict->hashName();
+                        $pict->storeAs('public/pict', $pictHashName);
 
-                    $product->images()->create(['pict' => $pictHashName]);
+                        $product->images()->create(['pict' => $pictHashName]);
+                    } else {
+                        $product->images()->create([
+                            'pict' => $pict['name'],
+                        ]);
+                    }
                 }
-            }
+            // }
         }
 
         $product->fill($request->except(['pict']));

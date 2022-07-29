@@ -44,11 +44,39 @@
                       <div class="product-detail col-xs-12 col-md-5 col-sm-5">
                         <div class="page-content" id="content">
                           <div class="images-container">
-                            <div class="js-qv-mask mask tab-content border">
+                            <!--div class="js-qv-mask mask tab-content border">
                               <div id="item1" class="tab-pane fade active in show">
                                 <img src="{{ $product->pict_url }}" alt="img">
                               </div>
+                            </div-->
+
+                            <div class="js-qv-mask mask tab-content border">
+                              @foreach($product->images as $image)
+                                <div id="item{{$image->id}}" class="tab-pane fade {{ $loop->iteration == 1 ? 'active in show' : '' }}">
+                                    <img src="{{ $image->pict_url }}" alt="img">
+                                </div>
+                              @endforeach
+                                <div class="layer hidden-sm-down" data-toggle="modal" data-target="#product-modal">
+                                    <i class="fa fa-expand"></i>
+                                </div>
                             </div>
+
+
+
+
+
+
+                            <ul class="product-tab nav nav-tabs d-flex">
+                              @foreach($product->images as $image)
+                              <li class="col {{ $loop->iteration == 1 ? 'active' : '' }}">
+                                  <a href="#item{{ $image->id }}" data-toggle="tab" aria-expanded="true" class="{{ $loop->iteration == 1 ? 'active show' : '' }}">
+                                      <img src="{{ $image->pict_url }}" alt="img">
+                                  </a>
+                              </li>
+                              @endforeach
+                            </ul>
+
+
                           </div>
                         </div>
                       </div>
