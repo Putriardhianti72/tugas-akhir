@@ -17,6 +17,8 @@ use Rajaongkir;
 
 class RetailHomeController extends Controller
 {
+    use RetailTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -40,32 +42,6 @@ class RetailHomeController extends Controller
             'provinces' => $provinces,
             'product' => $product,
         ]);
-    }
-
-    protected function getApiProduct(Request $request, $code)
-    {
-        $api = new Api();
-
-        return $api->getProduct($this->getTemplateToken($request), $code) ?: [];
-    }
-
-    protected function getTemplateName(Request $request)
-    {
-        if ($request->domain === env('SAILENT_DOMAIN')) {
-            return 'sailent';
-        }
-    }
-
-    protected function getTemplateToken(Request $request)
-    {
-        $domain = $request->domain;
-
-        if ($domain) {
-            $product = OrderProduct::where('domain', $domain)->whereHas('order', function ($q) {
-                $q->where('orders.status', Order::STATUS_COMPLETED);
-            })->first();
-            return $product->token;
-        }
     }
 
     /**

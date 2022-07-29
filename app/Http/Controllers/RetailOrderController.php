@@ -11,7 +11,6 @@ use App\Models\RetailOrderProduct;
 use App\Models\RetailReward;
 use App\Services\Midtrans\MidtransService;
 use Carbon\Carbon;
-use App\Services\Partner\Api;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
@@ -20,6 +19,8 @@ use App\Mail\SendRetailOrderCompleted;
 
 class RetailOrderController extends Controller
 {
+    use RetailTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -34,51 +35,6 @@ class RetailOrderController extends Controller
             'domain' => $request->domain,
             'order' => $order,
         ]);
-    }
-
-
-    protected function getApiProduct(Request $request, $code)
-    {
-        $api = new Api();
-
-        return $api->getProduct($this->getTemplateToken($request), $code) ?: [];
-    }
-
-    protected function getTemplateName(Request $request)
-    {
-        if ($request->domain === env('SAILENT_DOMAIN')) {
-            return 'sailent';
-        }
-    }
-
-    protected function getTemplateToken(Request $request)
-    {
-        $domain = $request->domain;
-
-        if ($domain) {
-            $product = OrderProduct::where('domain', $domain)->whereHas('order', function ($q) {
-                $q->where('orders.status', Order::STATUS_COMPLETED);
-            })->first();
-            return $product->token;
-        }
-    }
-
-    protected function getCarts(Request $request)
-    {
-        $carts = session('retail_cart.' . $request->domain);
-
-        if (is_array($carts)) {
-            foreach ($carts as $i => $cart) {
-                if (! $cart['codeProduct']) {
-                    unset($carts[$i]);
-                }
-
-                $cart['product'] = $this->getApiProduct($request, $cart['codeProduct']);
-                $cart['qty'] = $cart['qty'] ?? 1;
-                $carts[$i] = $cart;
-            }
-            return $carts;
-        }
     }
 
 

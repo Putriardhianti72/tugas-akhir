@@ -21,7 +21,7 @@ use App\Http\Controllers\MemberAreaHomeController;
 
 // Route::group([
 //     'domain' => '{domain}.tugasakhir.loc',
-//     'where' => ['domain' => 'sailent|templatlain|templatelain2'],
+//     'where' => ['domain' => 'sailent|koppee|templatelain2'],
 //     'as' => 'template.',
 // ], function () {
 //     include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
@@ -124,7 +124,7 @@ Route::get('/get-data-log', [\App\Http\Controllers\LandingController::class, 'da
 
 Route::group([
     'prefix' => '{domain}',
-    'where' => ['domain' => 'sailent|templatlain|templatelain2'],
+    'where' => ['domain' => 'sailent|koppee'],
     'as' => 'template.',
 ], function () {
     include __DIR__ . DIRECTORY_SEPARATOR . 'template.php';
