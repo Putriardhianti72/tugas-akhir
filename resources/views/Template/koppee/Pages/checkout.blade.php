@@ -107,17 +107,17 @@
           <div id="alert"></div>
       </div>
       <div class="col col-12 col-md-5">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <div class="panel-title">
+        <div class="card card-info" style="font-size: 0.8em;">
+          <div class="card-header bg-transparent">
+            <div class="card-title">
               <div class="row">
                 <div class="col col-6">
-                  <h5><span class="fa fa-shopping-cart"></span> Shopping Cart</h5>
+                  <h6><span class="fa fa-shopping-cart"></span> Shopping Cart</h6>
                 </div>
               </div>
             </div>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             @foreach($carts as $cart)
             <div class="row cart-row" data-product="{{ json_encode($cart['product']) }}" data-qty="{{ $cart['qty'] }}">
               <div class="col col-2">
@@ -128,40 +128,36 @@
                 @endif
               </div>
               <div class="col col-6">
-                <h4 class="product-name"><strong>{{ $cart['product']['nama'] }}</strong></h4><h4 class="truncate-text"><small>{{ $cart['product']['deskripsi'] }}</small></h4>
+                <div class="product-name"><strong>{{ $cart['product']['nama'] }}</strong></div><div class="truncate-text"><small>{{ $cart['product']['deskripsi'] }}</small></div>
               </div>
-              <div class="col col-4">
-                <div class="col col-12 text-right">
-                  <h6><strong>{{ format_currency($cart['product']['harga']) }} <span class="text-muted">x</span></strong> <strong>{{ $cart['qty'] }}</strong></h6>
+              <div class="col col-4 py-0">
+                <div class="text-right">
+                  <div><strong>{{ format_currency($cart['product']['harga']) }} <span class="text-muted">x</span></strong> <strong>{{ $cart['qty'] }}</strong></div>
                 </div>
               </div>
             </div>
             <hr>
             @endforeach
 
-            <div class="row">
-              <div class="text-center">
-                <div class="col col-9">
-                  <h5 class="text-right">Shipping</h5>
-                </div>
-                <div class="col col-3">
-                  <h5 class="text-right" data-cart="total_shipping">-</h5>
-                </div>
+            <div class="row text-right">
+              <div class="col col-9">
+                <div class="text-right">Shipping</div>
+              </div>
+              <div class="col col-3">
+                <strong class="text-right" data-cart="total_shipping">-</strong>
               </div>
             </div>
-            <div class="row">
-              <div class="text-center">
-                <div class="col col-9">
-                  <h5 class="text-right">Total</h5>
-                </div>
-                <div class="col col-3">
-                  <h5 class="text-right" data-cart="total_harga" data-total="{{ $totalCartPrice }}">{{ format_currency($totalCartPrice) }}</h5>
-                </div>
+            <div class="row text-right">
+              <div class="col col-9">
+                <strong class="text-right">Total</strong>
+              </div>
+              <div class="col col-3">
+                <strong class="text-right" data-cart="total_harga" data-total="{{ $totalCartPrice }}">{{ format_currency($totalCartPrice) }}</strong>
               </div>
             </div>
 
           </div>
-          <div class="panel-footer">
+          <div class="card-footer bg-transparent">
             <div class="row text-center">
               <div class="col col-8">
                 {{--<h4 class="text-right">Total <strong data-cart="total_harga">{{ $totalCartPrice }}</strong></h4>--}}
@@ -196,7 +192,7 @@
         total += (harga * qty);
       });
 
-      $('[data-cart="total_harga"]').text(total).data('total', total);
+      $('[data-cart="total_harga"]').text($.getFormattedCurrency(total)).data('total', total);
     });
 
     var oldCityValue = '{{ old('customer[city_id]') }}'
@@ -238,7 +234,7 @@
 
     $(document).on('change', '[data-shipping="city"]', function () {
       var val = $(this).val();
-      console.log($(this).find('option:selected').data('city') || '')
+
       $('input[name="customer[city_name]"]').val($(this).find('option:selected').data('city-name') || '');
 
       if (val) {
@@ -270,7 +266,7 @@
           }
         });
       } else {
-        $('[data-shipping="subdistrict"]').val('').change()
+        $('[data-shipping="subdistrict"]').val('').change();
       }
     });
 
@@ -287,7 +283,7 @@
       $('input[name="shipping[etd]"]').val('');
       $('input[name="shipping[price]"]').val('');
       $('[data-cart="total_shipping"]').text('-');
-      $('[data-cart="total_harga"]').text($('[data-cart="total_harga"]').data('total') || '-');
+      $('[data-cart="total_harga"]').text($.getFormattedCurrency($('[data-cart="total_harga"]').data('total')));
 
       if (subdistrict) {
         var totalWeight = 0;
@@ -373,8 +369,9 @@
       var $option = $(this).find('option:selected');
       var price = parseInt($option.data('price'), 10);
 
-      $('[data-cart="total_shipping"]').text(price);
-      $('[data-cart="total_harga"]').text((parseInt($('[data-cart="total_harga"]').data('total') ,10) + price) || '-');
+
+      $('[data-cart="total_shipping"]').text(price ? $.getFormattedCurrency(price) : '-');
+      $('[data-cart="total_harga"]').text($.getFormattedCurrency(parseInt($('[data-cart="total_harga"]').data('total') ,10) + price));
       $('input[name="shipping[service]"]').val($option.data('service'));
       $('input[name="shipping[code]"]').val($option.data('code'));
       $('input[name="shipping[name]"]').val($option.data('name'));

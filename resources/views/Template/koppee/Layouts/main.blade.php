@@ -121,6 +121,7 @@
     <script src="{{ asset('assets/koppee/lib/tempusdominus/js/moment.min.js') }}"></script>
     <script src="{{ asset('assets/koppee/lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
     <script src="{{ asset('assets/koppee/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+    <script src="{{ asset('assets/koppee/lib/jquery-formatcurrency/jquery.formatCurrency.min.js') }}"></script>
 
     <!-- Contact Javascript File -->
     <script src="{{ asset('assets/koppee/mail/jqBootstrapValidation.min.js') }}"></script>

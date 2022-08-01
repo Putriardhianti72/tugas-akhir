@@ -121,7 +121,7 @@
         total += (harga * qty);
       });
 
-      $('[data-cart="total_harga"]').text(total);
+      $('[data-cart="total_harga"]').text($.getFormattedCurrency(total));
     })
   });
 </script>
