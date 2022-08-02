@@ -47,10 +47,10 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Tambah data produk</div>
+                            <div class="card-title">Edit data produk</div>
                         </div>
                         <div class="card-body">
-                    <form action="{{ $product->exists ? route('admin.products.update', ['product' => $product->id]) : route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="form-product" action="{{ $product->exists ? route('admin.products.update', ['product' => $product->id]) : route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                         @if ($product->exists)
                             @method('PATCH')
                         @endif
@@ -143,36 +143,14 @@
                             <div class="col-12">
                                 <div class="row">
                                     <div id="gambar" class="col col-12">
-                                        @if(isset($oldPict) && count($oldPict))
-                                            @foreach($oldPict as $image)
-                                            <div class="row">
-                                                <div class="col col-md-9">
-                                                  <div class="input-group">
-                                                    <div class="custom-file">
-                                                      <label class="custom-file-label">{{ $image['name'] }}</label>
-                                                      <input type="file" name="pict[]" class="custom-file-input {{ is_numeric($image['value']) ? 'saved' : '' }}">
-                                                      <input type="hidden" name="pict_id[]" class="input-hidden" value="{{ $image['value'] ?? '' }}">
-                                                    </div>
-                                                    <div class="input-group-append">
-                                                      <button class="btn btn-outline-secondary btn-sm" data-pict="remove" type="button"><i class="fa fa-minus"></i></button>
-                                                      <button class="btn btn-outline-secondary btn-sm" data-pict="add" type="button"><i class="fa fa-plus"></i></button>
-                                                    </div>
-                                                  </div>
-                                              </div>
-                                                <div class="col col-md-2 img">
-                                                    <img src="{{ $image['image'] }}" class="img-fluid">
-                                                </div>
-                                            </div>
-                                            @endforeach
-                                        @elseif(count($product->images))
+                                        @if(count($product->images))
                                             @foreach($product->images as $image)
                                             <div class="row">
                                                 <div class="col col-md-9">
                                                   <div class="input-group">
                                                     <div class="custom-file">
                                                       <label class="custom-file-label">{{ $image->pict }}</label>
-                                                      <input type="file" name="pict[]" class="custom-file-input saved">
-                                                      <input type="hidden" name="pict_id[]" class="input-hidden" value="{{ $image->id }}">
+                                                      <input type="file" name="pict[{{ $image->id }}]" class="custom-file-input saved" data-image-id="{{ $image->id }}">
                                                     </div>
                                                     <div class="input-group-append">
                                                       <button class="btn btn-outline-secondary btn-sm" data-pict="remove" type="button"><i class="fa fa-minus"></i></button>
@@ -192,7 +170,6 @@
                                                     <div class="custom-file">
                                                       <label class="custom-file-label">Pilih gambar</label>
                                                       <input type="file" name="pict[]" class="custom-file-input">
-                                                      <input type="hidden" class="input-hidden" name="pict_id[]">
                                                     </div>
                                                     <div class="input-group-append">
                                                       <button class="btn btn-outline-secondary btn-sm" data-pict="remove" type="button"><i class="fa fa-minus"></i></button>
@@ -264,10 +241,9 @@ $(function () {
         var html = $(this).closest('.row').html();
         html = $('<div class="row">'+html+'</div>');
         html.find('.img').html('');
-        html.find('.custom-file-input').attr('value', '').removeClass('saved');
+        html.find('.custom-file-input').attr('value', '').removeClass('saved').attr('name', 'pict[]');
         html.find('.custom-file-label').text('Pilih gambar');
         html.find('[data-pict="remove"]').css('display', '');
-        html.find('.input-hidden').val('');
         $(html).insertAfter($(this).closest('.row'));
         toggleRemoveVisibility();
         toggleAddVisibility();
@@ -285,9 +261,10 @@ $(function () {
             file = e.target.files[0];
             filename = file.name;
             if ($this.hasClass('saved')) {
-                $this.closest('.row').find('.input-hidden').val('');
-                $this.closest('.row').find('.saved').removeClass('saved');
+                $this.closest('.row').find('.saved').removeClass('saved').attr('name', 'pict[]');
             }
+
+            $this.addClass('to-upload').data('image-id', null);
 
             var reader = new FileReader();
             reader.onload = function(evt) {
@@ -298,7 +275,53 @@ $(function () {
         }
 
         $(this).closest('.row').find('.custom-file-label').text(filename);
+    });
+
+    @if ($product->exists)
+    $(document).on('submit', '#form-product', function (e) {
+      e.preventDefault();
+
+      var form = $(this);
+
+      var formData = new FormData();
+      formData.append('product_name', form.find('[name="product_name"]').val());
+      formData.append('_token', form.find('[name="_token"]').val());
+      formData.append('category_id', form.find('[name="category_id"]').val());
+      formData.append('price', form.find('[name="price"]').val());
+      formData.append('desc', form.find('[name="desc"]').val());
+
+      form.find('[type="file"]').each(function () {
+        if ($(this).data('image-id')) {
+          formData.append('keep_image_id[]', $(this).data('image-id'));
+          formData.append('pict[]', $(this).data('image-id'));
+        } else {
+          formData.append('pict[]', $(this)[0].files[0]);
+        }
+      });
+
+      var btnSubmit = $(this).find('[type="submit"]')
+      btnSubmit.prop('disabled', true);
+
+      $.ajax({
+        url: $(this).attr('action'),
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+          if (res.status === 'success') {
+            window.location.href='{{route('admin.products.index')}}';
+          }
+        },
+        error: function (err) {
+          console.log(err)
+        },
+        complete: function () {
+          btnSubmit.prop('disabled', false);
+        }
+      })
     })
+    @endif
 });
 </script>
 @endpush

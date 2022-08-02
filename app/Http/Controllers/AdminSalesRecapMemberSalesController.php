@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exports\SalesRecapExport;
 use App\Models\Category;
 use App\Models\RetailOrder;
+use App\Models\Order;
+use App\Models\OrderMember;
 use App\Mail\SendRetailOrderCreated;
 use App\Mail\SendRetailOrderPaid;
 use App\Mail\SendRetailOrderDelivered;
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AdminSalesRecapController extends Controller
+class AdminSalesRecapMemberSalesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +27,7 @@ class AdminSalesRecapController extends Controller
      */
     public function index(Request $request)
     {
-        $from = Carbon::now()->subWeek();
+        $from = Carbon::now()->subYear(3);
         $to = Carbon::now();
 
         $date = $request->date;
@@ -36,24 +38,40 @@ class AdminSalesRecapController extends Controller
             $to = Carbon::createFromFormat('m/d/Y', $dates[1]);
         }
 
-        $orders = RetailOrder::selectRaw('retail_orders.*, date(retail_orders.created_at) as date, count(retail_orders.id) total_order, sum(retail_order_products.total_price) total_sales, sum(retail_order_shippings.price) shipping_price')
-                                ->join('retail_order_products', 'retail_order_products.retail_order_id', '=', 'retail_orders.id')
-                                ->join('retail_order_shippings', 'retail_order_shippings.retail_order_id', '=', 'retail_orders.id')
-                                ->whereIn('retail_orders.status',[RetailOrder::STATUS_PAID, RetailOrder::STATUS_DELIVERY, RetailOrder::STATUS_COMPLETED])
-                                ->whereDate('retail_orders.created_at', '>=', $from)
-                                ->whereDate('retail_orders.created_at', '<=', $to)
-                                ->groupBy('date')
-                                ->get();
+        $orderMembers = OrderMember::with(['products' => function ($q) {
+            $q->whereHas('order', function ($q) {
+                $q->where('status', Order::STATUS_COMPLETED);
+            });
+        }])->whereHas('products.order', function ($q) {
+            $q->where('status', Order::STATUS_COMPLETED);
+        })->groupBy('user_hash')->get();
+
+        foreach ($orderMembers as $member) {
+            $data = RetailOrder::selectRaw('retail_orders.*, count(retail_orders.id) total_order, sum(retail_order_products.total_price) total_sales, sum(retail_order_shippings.price) shipping_price')
+                                    ->join('retail_order_products', 'retail_order_products.retail_order_id', '=', 'retail_orders.id')
+                                    ->join('retail_order_shippings', 'retail_order_shippings.retail_order_id', '=', 'retail_orders.id')
+                                    ->whereIn('retail_orders.status',[RetailOrder::STATUS_PAID, RetailOrder::STATUS_DELIVERY, RetailOrder::STATUS_COMPLETED])
+                                    ->whereDate('retail_orders.created_at', '>=', $from)
+                                    ->whereDate('retail_orders.created_at', '<=', $to)
+                                    ->where('retail_orders.domain', $member->products->pluck('domain')->toArray())
+                                    ->get();
+
+            $member->setAttribute('orderData', $data->first());
+        }
 
         $totalOrder = 0;
         $totalSales = 0;
 
-        foreach ($orders as $order) {
-            $totalOrder += $order->total_order;
-            $totalSales += $order->total_sales;
+        foreach ($orderMembers as $member) {
+            $totalOrder += $member->orderData ? $member->orderData->total_order : 0;
+            $totalSales += $member->orderData ? $member->orderData->total_sales : 0;
         }
 
-        return view('Admin.sales-recap.index', compact('orders', 'from', 'to', 'totalOrder', 'totalSales'));
+        if (!$date) {
+            $from = $to = null;
+        }
+
+        return view('Admin.sales-recap-member-sales.index', compact('orderMembers', 'from', 'to', 'totalOrder', 'totalSales'));
     }
 
     public function export(Request $request)
@@ -69,7 +87,7 @@ class AdminSalesRecapController extends Controller
             $to = Carbon::createFromFormat('m/d/Y', $dates[1]);
         }
 
-        $orders = RetailOrder::selectRaw('retail_orders.*, date(retail_orders.created_at) as date, count(retail_orders.id) total_order, sum(retail_order_products.total_price) total_sales, sum(retail_order_shippings.price) shipping_price')
+        $orders = RetailOrder::selectRaw('retail_orders.*, date(retail_orders.created_at) as date, count(retail_orders.id) total_order, sum(retail_order_products.total_price) total_price, sum(retail_order_shippings.price) shipping_price')
                                 ->join('retail_order_products', 'retail_order_products.retaiL_order_id', '=', 'retail_orders.id')
                                 ->join('retail_order_shippings', 'retail_order_shippings.retaiL_order_id', '=', 'retail_orders.id')
                                 ->whereDate('retail_orders.created_at', '>=', $from)

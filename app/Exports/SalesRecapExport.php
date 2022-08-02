@@ -33,7 +33,7 @@ class SalesRecapExport implements FromCollection, WithMapping, WithHeadings
             $this->i,
             $invoice->date,
             $invoice->total_order,
-            $invoice->total_price,
+            $invoice->total_sales,
         ];
     }
 
@@ -43,7 +43,7 @@ class SalesRecapExport implements FromCollection, WithMapping, WithHeadings
             '#',
             'Date',
             'Total Order',
-            'Total Price',
+            'Total Sales',
         ];
     }
 }

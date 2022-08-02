@@ -116,7 +116,7 @@ class AdminProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
+       // dd($request->all());
         $product = Product::findOrFail($id);
 
         //validate form
@@ -128,66 +128,80 @@ class AdminProductsController extends Controller
         ]);
         $oldPict = [];
 
-        if ($request->pict || $request->pict_id) {
+        if ($request->pict || $request->keep_image_id) {
             // $this->validate($request, [
             //     'pict'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             // ]);
             $pictIdToKeep = [];
-            $pictInputs = $request->pict;
+            $pictInputs = [];
 
-            foreach ($request->pict_id as $pict) {
-                if ($pict) {
+            if (is_array($request->input('pict'))) {
+                foreach ($request->input('pict') as $pict) {
+                    $pictInputs[] = $pict;
+                }
+            }
+
+            if (is_array($request->file('pict'))) {
+                foreach ($request->file('pict') as $pict) {
+                    $pictInputs[] = $pict;
+                }
+            }
+
+            foreach ($pictInputs as $pict) {
+                if (is_numeric($pict)) {
                     $img = $product->images()->where('id', $pict)->first();
+
                     $oldPict[] = [
                         'value' => $pict,
                         'image' => $img->pict_url ?? '',
-                        'name' => $img->pict ?? '',
+                        'name' => $img->pict,
                     ];
-                    $pictIdToKeep[] = $pict;
                 } else {
-                    $pict = array_shift($pictInputs);
-                    if ($pict) {
-                        $oldPict[] = [
-                            'value' => null,
-                            'image' => 'data:' . $pict->getClientMimeType() . ';base64,' . base64_encode(file_get_contents($pict)),
-                            'name' => $pict->getClientOriginalName(),
-                            'file' => $pict,
-                        ];
-                    }
+                    $oldPict[] = [
+                        'value' => null,
+                        'image' => null,
+                        'name' => $pict->getClientOriginalName(),
+                        'file' => $pict,
+                    ];
                 }
             }
 
             $productImages = $product->images()->get();
 
-            // if (count($productImages) !== $pictIdToKeep) {
-                foreach ($productImages as $image) {
-                    if (!in_array($image->id, $pictIdToKeep)) {
-                        Storage::delete('public/pict/'. $image->pict);
-                    }
+            foreach ($productImages as $image) {
+                if (!in_array($image->id, $request->keep_image_id)) {
+                    Storage::delete('public/pict/'. $image->pict);
                 }
+            }
 
-                $product->images()->delete();
+            $product->images()->delete();
 
-                foreach ($oldPict as $i => $pict) {
-                    if (isset($pict['file'])) {
-                        $pict = $pict['file'];
-                        unset($oldPict[$i]['file']);
-                        $pictHashName = $pict->hashName();
-                        $pict->storeAs('public/pict', $pictHashName);
+            foreach ($oldPict as $i => $pict) {
+                if (isset($pict['file'])) {
+                    $pict = $pict['file'];
+                    unset($oldPict[$i]['file']);
+                    $pictHashName = $pict->hashName();
+                    $pict->storeAs('public/pict', $pictHashName);
 
-                        $product->images()->create(['pict' => $pictHashName]);
-                    } else {
-                        $product->images()->create([
-                            'pict' => $pict['name'],
-                        ]);
-                    }
+                    $product->images()->create(['pict' => $pictHashName]);
+                } else {
+                    $product->images()->create([
+                        'pict' => $pict['name'],
+                    ]);
                 }
-            // }
+            }
         }
 
         $product->fill($request->except(['pict']));
         $product->save();
 
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Ok',
+                'data' => $product,
+            ]);
+        }
         //redirect to index
         return redirect()->route('admin.products.index')->with([
             'alert_success' => 'Data produk berhasil disimpan!',

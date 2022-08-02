@@ -24,7 +24,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">Rekap Penjualan</h4>
+                <h4 class="page-title">Penjualan Member</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard') }}">
@@ -37,6 +37,12 @@
                     <li class="nav-item">
                         <a href="#">Rekap Penjualan</a>
                     </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Penjualan Member</a>
+                    </li>
                 </ul>
             </div>
             <div class="row">
@@ -44,23 +50,23 @@
                     <div class="card">
                         <div class="card-header">
                           <div class="d-flex align-items-center">
-                            <h4 class="card-title">Data Rekap Penjualan</h4>
-                            <!-- Button trigger modal -->
-                            {{--                            <a type="button" href="{{ route('admin.retail-orders.create') }}"  class="btn btn-primary btn-round ml-auto" data-toggle="modal">--}}
-                            {{--                                Tambah Data Order--}}
-                            {{--                            </a>--}}
-                            <form id="form-recap-date-filter" action="{{ route('admin.sales-recap.index') }}">
+                            <h4 class="card-title">Data Penjualan Member</h4>
+                            <form id="form-recap-date-filter" action="{{ route('admin.sales-recap-member-sales.index') }}">
                               <div class="form-group p-0">
-                                <input type="text" name="date" value="{{ $from->format('m/d/Y') }} - {{ $to->format('m/d/Y') }}" class="form-control" />
+                                @if($from && $to)
+                                <input type="text" name="date" value="{{ $from->format('m/d/Y') }} - {{ $to->format('m/d/Y') }}" class="form-control" autocomplete="off" />
+                                @else
+                                <input type="text" name="date" class="form-control" autocomplete="off" />
+                                @endif
                                 <div class="input-group-append" style="display: none;">
                                   <button class="btn btn-outline-secondary" type="submit">Filter</button>
                                 </div>
                               </div>
                             </form>
-                            <a href="{{ route('admin.sales-recap.export') }}" class="btn btn-primary btn-round ml-auto">Export</a>
+                            <a href="{{ route('admin.sales-recap-member-sales.export') }}" class="btn btn-primary btn-round ml-auto">Export</a>
                           </div>
                         </div>
-                        <div class="card-body">
+                        {{-- <div class="card-body">
                           <div class="row justify-content-end">
                             <div class="col-3">
                               <div class="card">
@@ -74,12 +80,12 @@
                               <div class="card">
                                 <div class="card-body pb-2">
                                   <h6 class="card-subtitle text-muted">Total Penjualan</h6>
-                                  <h5 class="card-title mb-0">{{ format_currency($totalSales) }}</h5>
+                                  <h5 class="card-title mb-0">{{ $totalSales }}</h5>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> --}}
                         <!-- list -->
                         <div class="card-body">
                             <!-- Tabel -->
@@ -88,7 +94,7 @@
                                     <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Tanggal</th>
+                                        <th>Member</th>
                                         <th>Total Order</th>
                                         <th>Total Penjualan</th>
                                         <th style="width: 10%">Action</th>
@@ -96,19 +102,25 @@
                                     </thead>
                                     <tbody>
                                     @php($i=1)
-                                    @foreach($orders as $i => $order)
+                                    @foreach($orderProducts as $i => $member)
                                       <tr>
                                           <td>{{++$i}}</td>
-                                          <td>{{$order->date}}</td>
                                           <td>
-                                            {{ $order->total_order }}
+                                            <div>{{$member->nama}}</div>
+                                            <div>
+                                              <small>{{$member->email}}</small>
+                                              <small class="ml-2">{{$member->hp}}</small>
+                                            </div>
                                           </td>
                                           <td>
-                                              {{ format_currency($order->total_sales) }}
+                                            {{ $member->orderData ? $member->orderData->total_order : '' }}
+                                          </td>
+                                          <td>
+                                              {{ $member->orderData ? format_currency($member->orderData->total_sales) : '' }}
                                           </td>
                                           <td>
                                               <div class="form-button-action">
-                                                  <a href="{{ route('admin.retail-orders.show', $order->id) }}" button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"  data-original-title="View detail">
+                                                  <a href="{{ route('admin.sales-recap-member-sales.show', $member->user_hash) }}" button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"  data-original-title="View detail">
                                                       <i class="fa fa-eye"></i>
                                                   </a>
                                               </div>
@@ -145,6 +157,7 @@
             $('input[name="date"]').daterangepicker({
               opens: 'left',
               maxDate: new Date(),
+              autoUpdateInput: false,
               ranges: {
                  'Today': [moment(), moment()],
                  'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],

@@ -94,11 +94,31 @@
                         <p>Reward</p>
                     </a>
                 </li>
-                 <li class="nav-item {{\Route::currentRouteName() == 'admin.sales-recap.index' ? 'active' : '' }}">
-                    <a href="{{route('admin.sales-recap.index')}}">
+                <li class="nav-item {{\Route::currentRouteName() == 'admin.sales-recap.index' || \Route::currentRouteName() == 'admin.sales-recap-member-sales.index' ? 'active' : '' }}">
+                    <a data-toggle="collapse" href="#sidebarSalesRecapLayouts">
                         <i class="fas fa-chart-bar"></i>
                         <p>Rekap Penjualan</p>
+                        <span class="caret"></span>
                     </a>
+                    <div class="collapse{{\Route::currentRouteName() == 'admin.sales-recap.index' || \Route::currentRouteName() == 'admin.sales-recap-member-sales.index' || \Route::currentRouteName() == 'admin.sales-recap-most-sales.index' ? 'active' : '' }} " id="sidebarSalesRecapLayouts">
+                        <ul class="nav nav-collapse">
+                            <li  class="{{\Route::currentRouteName() == 'admin.sales-recap.index' ? 'active' : '' }}">
+                                <a href="{{route('admin.sales-recap.index')}}">
+                                    <span class="sub-item">Rekap Penjualan</span>
+                                </a>
+                            </li>
+                            <li  class="{{\Route::currentRouteName() == 'admin.sales-recap-most-sales.index' ? 'active' : '' }}">
+                                <a href="{{route('admin.sales-recap-most-sales.index')}}">
+                                    <span class="sub-item">Penjualan Terlaris</span>
+                                </a>
+                            </li>
+                            <li  class="{{\Route::currentRouteName() == 'admin.sales-recap-member-sales.index' ? 'active' : '' }}">
+                                <a href="{{route('admin.sales-recap-member-sales.index')}}">
+                                    <span class="sub-item">Penjualan Member</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
            {{--      <li class="nav-item">
                     <a data-toggle="collapse" href="#forms">

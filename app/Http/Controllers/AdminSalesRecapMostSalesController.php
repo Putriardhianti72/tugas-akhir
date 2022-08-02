@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\SalesRecapExport;
 use App\Models\Category;
 use App\Models\RetailOrder;
+use App\Models\RetailOrderProduct;
 use App\Mail\SendRetailOrderCreated;
 use App\Mail\SendRetailOrderPaid;
 use App\Mail\SendRetailOrderDelivered;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AdminSalesRecapController extends Controller
+class AdminSalesRecapMostSalesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +26,7 @@ class AdminSalesRecapController extends Controller
      */
     public function index(Request $request)
     {
-        $from = Carbon::now()->subWeek();
+        $from = Carbon::now()->subYear(3);
         $to = Carbon::now();
 
         $date = $request->date;
@@ -36,24 +37,48 @@ class AdminSalesRecapController extends Controller
             $to = Carbon::createFromFormat('m/d/Y', $dates[1]);
         }
 
-        $orders = RetailOrder::selectRaw('retail_orders.*, date(retail_orders.created_at) as date, count(retail_orders.id) total_order, sum(retail_order_products.total_price) total_sales, sum(retail_order_shippings.price) shipping_price')
-                                ->join('retail_order_products', 'retail_order_products.retail_order_id', '=', 'retail_orders.id')
-                                ->join('retail_order_shippings', 'retail_order_shippings.retail_order_id', '=', 'retail_orders.id')
-                                ->whereIn('retail_orders.status',[RetailOrder::STATUS_PAID, RetailOrder::STATUS_DELIVERY, RetailOrder::STATUS_COMPLETED])
-                                ->whereDate('retail_orders.created_at', '>=', $from)
-                                ->whereDate('retail_orders.created_at', '<=', $to)
-                                ->groupBy('date')
-                                ->get();
+        $orderProducts = RetailOrderProduct::selectRaw('retail_order_products.*, sum(retail_order_products.qty) total_qty')
+                                    ->join('retail_orders', 'retail_orders.id', '=', 'retail_order_products.retail_order_id')
+                                    ->whereIn('retail_orders.status',[RetailOrder::STATUS_PAID, RetailOrder::STATUS_DELIVERY, RetailOrder::STATUS_COMPLETED])
+                                    ->whereDate('retail_orders.created_at', '>=', $from)
+                                    ->whereDate('retail_orders.created_at', '<=', $to)
+                                    ->whereNull('retail_orders.deleted_at')
+                                    ->groupBy('retail_order_products.code')
+                                    ->get();
+
+        $products = [];
+
+        foreach ($this->getProducts() as $product) {
+            $data = $orderProducts->first(function ($item) use ($product) {
+                return $item->code == $product['code'];
+            });
+
+            $product['total_qty'] = $data ? $data->total_qty : 0;
+            $products[] = $product;
+        }
 
         $totalOrder = 0;
         $totalSales = 0;
 
-        foreach ($orders as $order) {
-            $totalOrder += $order->total_order;
-            $totalSales += $order->total_sales;
+        if (!$date) {
+            $from = $to = null;
         }
 
-        return view('Admin.sales-recap.index', compact('orders', 'from', 'to', 'totalOrder', 'totalSales'));
+        return view('Admin.sales-recap-most-sales.index', compact('products', 'from', 'to', 'totalOrder', 'totalSales'));
+    }
+
+    protected function getProducts()
+    {
+        return [
+            [
+                'code' => 'PFLAVO',
+                'product_name' => 'PROFLAVO',
+            ],
+            [
+                'code' => 'TEST',
+                'product_name' => 'TEST PRODUCT',
+            ],
+        ];
     }
 
     public function export(Request $request)
