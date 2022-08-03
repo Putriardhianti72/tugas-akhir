@@ -6,7 +6,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class SalesRecapExport implements FromCollection, WithMapping, WithHeadings
+class SalesRecapMostSalesExport implements FromCollection, WithMapping, WithHeadings
 {
     protected $data;
 
@@ -31,9 +31,9 @@ class SalesRecapExport implements FromCollection, WithMapping, WithHeadings
 
         return [
             $this->i,
-            $invoice->date,
-            $invoice->total_order ?? '0',
-            $invoice->total_sales ?? '0',
+            $invoice['product_name'],
+            $invoice['code'],
+            $invoice['total_qty'] ?? '0',
         ];
     }
 
@@ -41,9 +41,9 @@ class SalesRecapExport implements FromCollection, WithMapping, WithHeadings
     {
         return [
             '#',
-            'Date',
-            'Total Order',
-            'Total Sales',
+            'Nama Produk',
+            'Kode Produk',
+            'Jumlah Terjual',
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\SalesRecapExport;
+use App\Exports\SalesRecapMostSalesExport;
 use App\Models\Category;
 use App\Models\RetailOrder;
 use App\Models\RetailOrderProduct;
@@ -76,14 +76,14 @@ class AdminSalesRecapMostSalesController extends Controller
             ],
             [
                 'code' => 'TEST',
-                'product_name' => 'TEST PRODUCT',
+                'product_name' => 'TEST PRODUCT PUTRI MAHAL',
             ],
         ];
     }
 
     public function export(Request $request)
     {
-        $from = Carbon::now()->subWeek();
+        $from = Carbon::now()->subYear(3);
         $to = Carbon::now();
 
         $date = $request->date;
@@ -94,16 +94,34 @@ class AdminSalesRecapMostSalesController extends Controller
             $to = Carbon::createFromFormat('m/d/Y', $dates[1]);
         }
 
-        $orders = RetailOrder::selectRaw('retail_orders.*, date(retail_orders.created_at) as date, count(retail_orders.id) total_order, sum(retail_order_products.total_price) total_sales, sum(retail_order_shippings.price) shipping_price')
-                                ->join('retail_order_products', 'retail_order_products.retaiL_order_id', '=', 'retail_orders.id')
-                                ->join('retail_order_shippings', 'retail_order_shippings.retaiL_order_id', '=', 'retail_orders.id')
-                                ->whereDate('retail_orders.created_at', '>=', $from)
-                                ->whereDate('retail_orders.created_at', '<=', $to)
-                                ->groupBy('date')
-                                ->get();
+        $orderProducts = RetailOrderProduct::selectRaw('retail_order_products.*, sum(retail_order_products.qty) total_qty')
+                                    ->join('retail_orders', 'retail_orders.id', '=', 'retail_order_products.retail_order_id')
+                                    ->whereIn('retail_orders.status',[RetailOrder::STATUS_PAID, RetailOrder::STATUS_DELIVERY, RetailOrder::STATUS_COMPLETED])
+                                    ->whereDate('retail_orders.created_at', '>=', $from)
+                                    ->whereDate('retail_orders.created_at', '<=', $to)
+                                    ->whereNull('retail_orders.deleted_at')
+                                    ->groupBy('retail_order_products.code')
+                                    ->get();
 
-        return Excel::download(new SalesRecapExport($orders), 'sales-recap'.date('U').'.xlsx');
-        return (new SalesRecapExport($orders))->download('sales-recap'.date('U').'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        $products = collect([]);
+
+        foreach ($this->getProducts() as $product) {
+            $data = $orderProducts->first(function ($item) use ($product) {
+                return $item->code == $product['code'];
+            });
+
+            $product['total_qty'] = $data ? $data->total_qty : 0;
+            $products[] = $product;
+        }
+
+        $totalOrder = 0;
+        $totalSales = 0;
+
+        if (!$date) {
+            $from = $to = null;
+        }
+
+        return Excel::download(new SalesRecapMostSalesExport($products), 'sales-recap-most-sales-'.date('Y-m-d-H-i-s').'.xlsx');
     }
     /**
      * Show the form for creating a new resource.

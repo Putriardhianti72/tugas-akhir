@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\SalesRecapExport;
+use App\Exports\SalesRecapMemberSalesExport;
 use App\Models\Category;
 use App\Models\RetailOrder;
 use App\Models\Order;
@@ -76,7 +76,7 @@ class AdminSalesRecapMemberSalesController extends Controller
 
     public function export(Request $request)
     {
-        $from = Carbon::now()->subWeek();
+        $from = Carbon::now()->subYear(3);
         $to = Carbon::now();
 
         $date = $request->date;
@@ -87,16 +87,40 @@ class AdminSalesRecapMemberSalesController extends Controller
             $to = Carbon::createFromFormat('m/d/Y', $dates[1]);
         }
 
-        $orders = RetailOrder::selectRaw('retail_orders.*, date(retail_orders.created_at) as date, count(retail_orders.id) total_order, sum(retail_order_products.total_price) total_price, sum(retail_order_shippings.price) shipping_price')
-                                ->join('retail_order_products', 'retail_order_products.retaiL_order_id', '=', 'retail_orders.id')
-                                ->join('retail_order_shippings', 'retail_order_shippings.retaiL_order_id', '=', 'retail_orders.id')
-                                ->whereDate('retail_orders.created_at', '>=', $from)
-                                ->whereDate('retail_orders.created_at', '<=', $to)
-                                ->groupBy('date')
-                                ->get();
+        $orderMembers = OrderMember::with(['products' => function ($q) {
+            $q->whereHas('order', function ($q) {
+                $q->where('status', Order::STATUS_COMPLETED);
+            });
+        }])->whereHas('products.order', function ($q) {
+            $q->where('status', Order::STATUS_COMPLETED);
+        })->groupBy('user_hash')->get();
 
-        return Excel::download(new SalesRecapExport($orders), 'sales-recap'.date('U').'.xlsx');
-        return (new SalesRecapExport($orders))->download('sales-recap'.date('U').'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        foreach ($orderMembers as $member) {
+            $data = RetailOrder::selectRaw('retail_orders.*, count(retail_orders.id) total_order, sum(retail_order_products.total_price) total_sales, sum(retail_order_shippings.price) shipping_price')
+                                    ->join('retail_order_products', 'retail_order_products.retail_order_id', '=', 'retail_orders.id')
+                                    ->join('retail_order_shippings', 'retail_order_shippings.retail_order_id', '=', 'retail_orders.id')
+                                    ->whereIn('retail_orders.status',[RetailOrder::STATUS_PAID, RetailOrder::STATUS_DELIVERY, RetailOrder::STATUS_COMPLETED])
+                                    ->whereDate('retail_orders.created_at', '>=', $from)
+                                    ->whereDate('retail_orders.created_at', '<=', $to)
+                                    ->where('retail_orders.domain', $member->products->pluck('domain')->toArray())
+                                    ->get();
+
+            $member->setAttribute('orderData', $data->first());
+        }
+
+        $totalOrder = 0;
+        $totalSales = 0;
+
+        foreach ($orderMembers as $member) {
+            $totalOrder += $member->orderData ? $member->orderData->total_order : 0;
+            $totalSales += $member->orderData ? $member->orderData->total_sales : 0;
+        }
+
+        if (!$date) {
+            $from = $to = null;
+        }
+
+        return Excel::download(new SalesRecapMemberSalesExport($orderMembers), 'sales-recap-member-sales-'.date('Y-m-d-H-i-s').'.xlsx');
     }
     /**
      * Show the form for creating a new resource.

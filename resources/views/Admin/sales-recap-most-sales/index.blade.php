@@ -63,7 +63,11 @@
                                 </div>
                               </div>
                             </form>
+                            @if($from && $to)
+                            <a href="{{ route('admin.sales-recap-most-sales.export', ['date' => $from->format('m/d/Y') . ' - ' . $to->format('m/d/Y')]) }}" class="btn btn-primary btn-round ml-auto">Export</a>
+                            @else
                             <a href="{{ route('admin.sales-recap-most-sales.export') }}" class="btn btn-primary btn-round ml-auto">Export</a>
+                            @endif
                           </div>
                         </div>
                         {{-- <div class="card-body">
@@ -97,7 +101,7 @@
                                         <th>Nama Produk</th>
                                         <th>Kode Produk</th>
                                         <th>Jumlah Terjual</th>
-                                        <th style="width: 10%">Action</th>
+                                        {{-- <th style="width: 10%">Action</th> --}}
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -114,13 +118,13 @@
                                           <td>
                                               {{$product['total_qty']}}
                                           </td>
-                                          <td>
+                                         {{--  <td>
                                               <div class="form-button-action">
                                                   <a href="{{ route('admin.sales-recap-most-sales.show', $product['code']) }}" button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"  data-original-title="View detail">
                                                       <i class="fa fa-eye"></i>
                                                   </a>
                                               </div>
-                                          </td>
+                                          </td> --}}
                                       </tr>
                                     @endforeach
                                     </tbody>

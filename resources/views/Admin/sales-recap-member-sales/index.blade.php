@@ -63,7 +63,11 @@
                                 </div>
                               </div>
                             </form>
+                            @if($from && $to)
+                            <a href="{{ route('admin.sales-recap-member-sales.export', ['date' => $from->format('m/d/Y') . ' - ' . $to->format('m/d/Y')]) }}" class="btn btn-primary btn-round ml-auto">Export</a>
+                            @else
                             <a href="{{ route('admin.sales-recap-member-sales.export') }}" class="btn btn-primary btn-round ml-auto">Export</a>
+                            @endif
                           </div>
                         </div>
                         {{-- <div class="card-body">
@@ -97,12 +101,12 @@
                                         <th>Member</th>
                                         <th>Total Order</th>
                                         <th>Total Penjualan</th>
-                                        <th style="width: 10%">Action</th>
+                                        {{-- <th style="width: 10%">Action</th> --}}
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @php($i=1)
-                                    @foreach($orderProducts as $i => $member)
+                                    @foreach($orderMembers as $i => $member)
                                       <tr>
                                           <td>{{++$i}}</td>
                                           <td>
@@ -118,13 +122,13 @@
                                           <td>
                                               {{ $member->orderData ? format_currency($member->orderData->total_sales) : '' }}
                                           </td>
-                                          <td>
+                                         {{--  <td>
                                               <div class="form-button-action">
                                                   <a href="{{ route('admin.sales-recap-member-sales.show', $member->user_hash) }}" button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"  data-original-title="View detail">
                                                       <i class="fa fa-eye"></i>
                                                   </a>
                                               </div>
-                                          </td>
+                                          </td> --}}
                                       </tr>
                                     @endforeach
                                     </tbody>

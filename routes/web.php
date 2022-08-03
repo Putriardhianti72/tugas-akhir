@@ -60,7 +60,7 @@ Route::group(['prefix' => 'admin-area', 'as' => 'admin.'], function () {
         Route::get('sales-recap-member-sales/export', [\App\Http\Controllers\AdminSalesRecapController::class,'export'])->name('sales-recap-member-sales.export');
         Route::resource('sales-recap-member-sales', \App\Http\Controllers\AdminSalesRecapMemberSalesController::class);
 
-        Route::get('sales-recap-most-sales/export', [\App\Http\Controllers\AdminSalesRecapMostController::class,'export'])->name('sales-recap-most-sales.export');
+        Route::get('sales-recap-most-sales/export', [\App\Http\Controllers\AdminSalesRecapMostSalesController::class,'export'])->name('sales-recap-most-sales.export');
         Route::resource('sales-recap-most-sales', \App\Http\Controllers\AdminSalesRecapMostSalesController::class);
 
         Route::patch('/retail-order/{retail_order}/shipping', [\App\Http\Controllers\AdminRetailOrdersController::class, 'updateShipping'])->name('retail-orders.update.shipping');
