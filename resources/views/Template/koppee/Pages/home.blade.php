@@ -6,19 +6,19 @@
     <div id="blog-carousel" class="carousel slide overlay-bottom" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="w-100" src="{{ asset('assets/koppee/img/carousel-1.jpg') }}" alt="Image">
+                <img class="w-100" src="{{ asset('assets/koppee/img/bg-landing.jpg') }}" alt="Image">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <h2 class="text-primary font-weight-medium m-0">We Have Been Serving</h2>
-                    <h1 class="display-1 text-white m-0">COFFEE</h1>
-                    <h2 class="text-white m-0">* SINCE 1950 *</h2>
+                    <h2 class="text-primary font-weight-medium m-0">Propolis</h2>
+                    <h1 class="display-1 text-white m-0">PROFLAVO</h1>
+                    <h2 class="text-white m-0">NANO PROPOLIS</h2>
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="w-100" src="{{ asset('assets/koppee/img/carousel-2.jpg') }}" alt="Image">
+                <img class="w-100" src="{{ asset('assets/koppee/img/bg-landing.jpg') }}" alt="Image">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                    <h2 class="text-primary font-weight-medium m-0">We Have Been Serving</h2>
-                    <h1 class="display-1 text-white m-0">COFFEE</h1>
-                    <h2 class="text-white m-0">* SINCE 1950 *</h2>
+                    <h2 class="text-primary font-weight-medium m-0">Propolis</h2>
+                    <h1 class="display-1 text-white m-0">PROFLAVO</h1>
+                    <h2 class="text-white m-0">* Membantu Menjaga Imun Anda *</h2>
                 </div>
             </div>
         </div>
@@ -37,27 +37,27 @@
 <div class="container-fluid py-5">
     <div class="container">
         <div class="section-title">
-            <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">About Us</h4>
-            <h1 class="display-4">Serving Since 1950</h1>
+            <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">About</h4>
+            <h1 class="display-4">Proflavo Nano Propolis</h1>
         </div>
         <div class="row">
             <div class="col-lg-4 py-0 py-lg-5">
-                <h1 class="mb-3">Our Story</h1>
-                <h5 class="mb-3">Eos kasd eos dolor vero vero, lorem stet diam rebum. Ipsum amet sed vero dolor sea</h5>
-                <p>Takimata sed vero vero no sit sed, justo clita duo no duo amet et, nonumy kasd sed dolor eos diam lorem eirmod. Amet sit amet amet no. Est nonumy sed labore eirmod sit magna. Erat at est justo sit ut. Labor diam sed ipsum et eirmod</p>
+                <h1 class="mb-3">Tentang Proflavo</h1>
+                <h5 class="mb-3">Cairan Suplemen dari Lebah Madu Tropis Pilihan</h5>
+                <p>Sejak 300 SM, propolis telah digunakan sebagai makanan dan sebagai obat yang bermanfaat untuk kesehatan secara keseluruhan. Proflavo diolah menggunakan technology terbaru yaitu Nano sehingga dalam satu tetes Proflavo setara dengan dua tetes propolis biasa. Proflavo merupakan propolis yang tidak mengandung alcohol sehingga halal untuk dikonsumsi.</p>
                 <a href="" class="btn btn-secondary font-weight-bold py-2 px-4 mt-2">Learn More</a>
             </div>
             <div class="col-lg-4 py-5 py-lg-0" style="min-height: 500px;">
                 <div class="position-relative h-100">
-                    <img class="position-absolute w-100 h-100" src="{{ asset('assets/koppee/img/about.png') }}" style="object-fit: cover;">
+                    <img class="position-absolute w-100 h-100" src="{{ asset('assets/koppee/img/1.png') }}" style="object-fit: cover;">
                 </div>
             </div>
             <div class="col-lg-4 py-0 py-lg-5">
-                <h1 class="mb-3">Our Vision</h1>
-                <p>Invidunt lorem justo sanctus clita. Erat lorem labore ea, justo dolor lorem ipsum ut sed eos, ipsum et dolor kasd sit ea justo. Erat justo sed sed diam. Ea et erat ut sed diam sea ipsum est dolor</p>
-                <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>Lorem ipsum dolor sit amet</h5>
-                <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>Lorem ipsum dolor sit amet</h5>
-                <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>Lorem ipsum dolor sit amet</h5>
+                <h1 class="mb-3">Our Price</h1>
+                <p>Harga dan manfaat produk kami yang berbanding lurus</p>
+                <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>Propolis dengan nano teknologi</h5>
+                <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>Membantu menjaga imun Anda</h5><br>
+                <h5 class="mb-3"> Rp. {{ $product['harga'] ?? '' }}</h5>
                 <a href="" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">Learn More</a>
             </div>
         </div>
@@ -66,66 +66,6 @@
 <!-- About End -->
 
 
-<!-- Service Start -->
-<div class="container-fluid pt-5">
-    <div class="container">
-        <div class="section-title">
-            <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Our Services</h4>
-            <h1 class="display-4">Fresh & Organic Beans</h1>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 mb-5">
-                <div class="row align-items-center">
-                    <div class="col-sm-5">
-                        <img class="img-fluid mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/service-1.jpg') }}" alt="">
-                    </div>
-                    <div class="col-sm-7">
-                        <h4><i class="fa fa-truck service-icon"></i>Fastest Door Delivery</h4>
-                        <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo. Guberg sea et et lorem dolor sed est sit
-                            invidunt, dolore tempor diam ipsum takima erat tempor</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 mb-5">
-                <div class="row align-items-center">
-                    <div class="col-sm-5">
-                        <img class="img-fluid mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/service-2.jpg') }}" alt="">
-                    </div>
-                    <div class="col-sm-7">
-                        <h4><i class="fa fa-coffee service-icon"></i>Fresh Coffee Beans</h4>
-                        <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo. Guberg sea et et lorem dolor sed est sit
-                            invidunt, dolore tempor diam ipsum takima erat tempor</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 mb-5">
-                <div class="row align-items-center">
-                    <div class="col-sm-5">
-                        <img class="img-fluid mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/service-3.jpg') }}" alt="">
-                    </div>
-                    <div class="col-sm-7">
-                        <h4><i class="fa fa-award service-icon"></i>Best Quality Coffee</h4>
-                        <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo. Guberg sea et et lorem dolor sed est sit
-                            invidunt, dolore tempor diam ipsum takima erat tempor</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 mb-5">
-                <div class="row align-items-center">
-                    <div class="col-sm-5">
-                        <img class="img-fluid mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/service-4.jpg') }}" alt="">
-                    </div>
-                    <div class="col-sm-7">
-                        <h4><i class="fa fa-table service-icon"></i>Online Table Booking</h4>
-                        <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo. Guberg sea et et lorem dolor sed est sit
-                            invidunt, dolore tempor diam ipsum takima erat tempor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Service End -->
 
 
 <!-- Offer Start -->
@@ -150,73 +90,114 @@
 <div class="container-fluid pt-5">
     <div class="container">
         <div class="section-title">
-            <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Menu & Pricing</h4>
-            <h1 class="display-4">Competitive Pricing</h1>
+            <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Services</h4>
+            <h1 class="display-4">Manfaat Proflavo Nano Propolis</h1>
         </div>
         <div class="row">
             <div class="col-lg-6">
-                <h1 class="mb-5">Hot Coffee</h1>
+                <h1 class="mb-5">Manfaat</h1>
                 <div class="row align-items-center mb-5">
                     <div class="col-4 col-sm-3">
-                        <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt="">
-                        <h5 class="menu-price">$5</h5>
+                        {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
+                        <h5 class="menu-price">1</h5>
                     </div>
                     <div class="col-8 col-sm-9">
-                        <h4>Black Coffee</h4>
-                        <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p>
+                        <h4>Sebagai stimulator sistem kekebalan tubuh (imuno stimulator)</h4>
+                        {{-- <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p> --}}
                     </div>
                 </div>
                 <div class="row align-items-center mb-5">
                     <div class="col-4 col-sm-3">
-                        <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-2.jpg') }}" alt="">
-                        <h5 class="menu-price">$7</h5>
+                        {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
+                        <h5 class="menu-price">2</h5>
                     </div>
                     <div class="col-8 col-sm-9">
-                        <h4>Chocolete Coffee</h4>
-                        <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p>
+                        <h4>Sebagai antijamur, antibakteri, dan antivirus</h4>
+                        {{-- <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p> --}}
                     </div>
                 </div>
                 <div class="row align-items-center mb-5">
                     <div class="col-4 col-sm-3">
-                        <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-3.jpg') }}" alt="">
-                        <h5 class="menu-price">$9</h5>
+                        {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
+                        <h5 class="menu-price">3</h5>
                     </div>
                     <div class="col-8 col-sm-9">
-                        <h4>Coffee With Milk</h4>
-                        <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p>
+                        <h4>Antioksidan, melawan radikal bebas</h4>
+                        {{-- <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p> --}}
                     </div>
                 </div>
+                <div class="row align-items-center mb-5">
+                    <div class="col-4 col-sm-3">
+                        {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
+                        <h5 class="menu-price">4</h5>
+                    </div>
+                    <div class="col-8 col-sm-9">
+                        <h4>Antitumor, menekan pertumbuhan sel tak terkendali</h4>
+                        {{-- <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p> --}}
+                    </div>
+                </div>
+                <div class="row align-items-center mb-5">
+                    <div class="col-4 col-sm-3">
+                        {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
+                        <h5 class="menu-price">5</h5>
+                    </div>
+                    <div class="col-8 col-sm-9">
+                        <h4>Membantu proses regenerasi sel hati</h4>
+                        {{-- <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p> --}}
+                    </div>
+                </div>
+
             </div>
             <div class="col-lg-6">
-                <h1 class="mb-5">Cold Coffee</h1>
-                <div class="row align-items-center mb-5">
+                <h1 class="mb-5"></h1>
+              <div class="row align-items-center mb-5">
                     <div class="col-4 col-sm-3">
-                        <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt="">
-                        <h5 class="menu-price">$5</h5>
+                        {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
+                        <h5 class="menu-price">1</h5>
                     </div>
                     <div class="col-8 col-sm-9">
-                        <h4>Black Coffee</h4>
-                        <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p>
+                        <h4>Sebagai stimulator sistem kekebalan tubuh (imuno stimulator)</h4>
+                        {{-- <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p> --}}
                     </div>
                 </div>
                 <div class="row align-items-center mb-5">
                     <div class="col-4 col-sm-3">
-                        <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-2.jpg') }}" alt="">
-                        <h5 class="menu-price">$7</h5>
+                        {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
+                        <h5 class="menu-price">2</h5>
                     </div>
                     <div class="col-8 col-sm-9">
-                        <h4>Chocolete Coffee</h4>
-                        <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p>
+                        <h4>Sebagai antijamur, antibakteri, dan antivirus</h4>
+                        {{-- <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p> --}}
                     </div>
                 </div>
                 <div class="row align-items-center mb-5">
                     <div class="col-4 col-sm-3">
-                        <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-3.jpg') }}" alt="">
-                        <h5 class="menu-price">$9</h5>
+                        {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
+                        <h5 class="menu-price">3</h5>
                     </div>
                     <div class="col-8 col-sm-9">
-                        <h4>Coffee With Milk</h4>
-                        <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p>
+                        <h4>Antioksidan, melawan radikal bebas</h4>
+                        {{-- <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p> --}}
+                    </div>
+                </div>
+                <div class="row align-items-center mb-5">
+                    <div class="col-4 col-sm-3">
+                        {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
+                        <h5 class="menu-price">4</h5>
+                    </div>
+                    <div class="col-8 col-sm-9">
+                        <h4>Antitumor, menekan pertumbuhan sel tak terkendali</h4>
+                        {{-- <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p> --}}
+                    </div>
+                </div>
+                <div class="row align-items-center mb-5">
+                    <div class="col-4 col-sm-3">
+                        {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
+                        <h5 class="menu-price">5</h5>
+                    </div>
+                    <div class="col-8 col-sm-9">
+                        <h4>Membantu proses regenerasi sel hati</h4>
+                        {{-- <p class="m-0">Sit lorem ipsum et diam elitr est dolor sed duo guberg sea et et lorem dolor</p> --}}
                     </div>
                 </div>
             </div>
@@ -296,48 +277,38 @@
     <div class="container">
         <div class="section-title">
             <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Testimonial</h4>
-            <h1 class="display-4">Our Clients Say</h1>
+            <h1 class="display-4">Our Customer Say</h1>
         </div>
         <div class="owl-carousel testimonial-carousel">
             <div class="testimonial-item">
                 <div class="d-flex align-items-center mb-3">
                     <img class="img-fluid" src="{{ asset('assets/koppee/img/testimonial-1.jpg') }}" alt="">
                     <div class="ml-3">
-                        <h4>Client Name</h4>
-                        <i>Profession</i>
+                        <h4>Mariska</h4>
+                        <i>Jogja</i>
                     </div>
                 </div>
-                <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolor tempor ipsum sanct clita</p>
+                <p class="m-0">Saya mau berbagi pengalaman saya pak. Anak saya kena amandel saya kasih proflavo 3 tetes dilarutkan dalam air sepertinya tidak begitu ngefek… besoknya saya teteskan langsung ke amandelnya katanya panas terus langsung adem dan berangsur membaik. Alhamdulillah.</p>
             </div>
             <div class="testimonial-item">
                 <div class="d-flex align-items-center mb-3">
                     <img class="img-fluid" src="{{ asset('assets/koppee/img/testimonial-2.jpg') }}" alt="">
                     <div class="ml-3">
-                        <h4>Client Name</h4>
-                        <i>Profession</i>
+                        <h4>Suwarno</h4>
+                        <i>Karanganyar</i>
                     </div>
                 </div>
-                <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolor tempor ipsum sanct clita</p>
+                <p class="m-0">Saya sebelumnya pegel kaki, ngantuk tidak bisa dihindari. Lalu saya dikenalkan Proflavo dan mulai mengonsumsinya. Setelah minum Proflavo alhamdulillah sampai sekarang tidak ada keluhan dan rasa pegel di kaki sudah tidak ada..</p>
             </div>
             <div class="testimonial-item">
                 <div class="d-flex align-items-center mb-3">
                     <img class="img-fluid" src="{{ asset('assets/koppee/img/testimonial-3.jpg') }}" alt="">
                     <div class="ml-3">
-                        <h4>Client Name</h4>
-                        <i>Profession</i>
+                        <h4>Mbah Magi</h4>
+                        <i>Semarang</i>
                     </div>
                 </div>
-                <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolor tempor ipsum sanct clita</p>
-            </div>
-            <div class="testimonial-item">
-                <div class="d-flex align-items-center mb-3">
-                    <img class="img-fluid" src="{{ asset('assets/koppee/img/testimonial-4.jpg') }}" alt="">
-                    <div class="ml-3">
-                        <h4>Client Name</h4>
-                        <i>Profession</i>
-                    </div>
-                </div>
-                <p class="m-0">Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolor tempor ipsum sanct clita</p>
+                <p class="m-0">Sebelumnya saya setelah bangun tidur kepala pusing ngliyeng dan kaki sering kesemutan. Alhamdulillah setelah 3 hari konsumsi Proflavo ngliyeng dan kesemutan kaki saya sudah hilang. Sekarang rutin konsumsi Proflavo Propolis</p>
             </div>
         </div>
     </div>
