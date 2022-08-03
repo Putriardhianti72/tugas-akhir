@@ -17,16 +17,18 @@ $(function () {
                     var el = template.clone();
                     var productUrl = BASE_URL + '/products/' + cart.product_id;
                     var productImage = cart.product.pict_url;
-                    el.find('.product-image img').attr('src', productImage);
-                    el.find('.product-image a').attr('href', productUrl);
+                    // el.find('.product-image img').attr('src', productImage);
+                    // el.find('.product-image a').attr('href', productUrl);
                     el.find('.product-name a').attr('href', productUrl).text(cart.product.product_name);
-                    el.find('.product-price').text(cart.product.price);
+                    el.find('.product-price a').attr('href', productUrl).text($.getFormattedCurrency(cart.product.price));
                     el.find('.action .remove').attr('href', BASE_URL + '/cart/hapus/' + cart.id);
                     list.push(el);
                 });
 
-                $('[data-template-content="cart-list"]').html(list);
-                $('.blockcart .total > td:last').text(totalPrice)
+                $('[data-template-content="cart-list"]').each(function () {
+                    $(this).html(list);
+                });
+                $('.blockcart .total > td:last').text($.getFormattedCurrency(totalPrice))
             }
         });
     }

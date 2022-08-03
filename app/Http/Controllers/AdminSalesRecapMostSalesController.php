@@ -48,7 +48,7 @@ class AdminSalesRecapMostSalesController extends Controller
 
         $products = [];
 
-        foreach ($this->getProducts() as $product) {
+        foreach (get_all_retail_products() as $product) {
             $data = $orderProducts->first(function ($item) use ($product) {
                 return $item->code == $product['code'];
             });
@@ -64,21 +64,9 @@ class AdminSalesRecapMostSalesController extends Controller
             $from = $to = null;
         }
 
-        return view('Admin.sales-recap-most-sales.index', compact('products', 'from', 'to', 'totalOrder', 'totalSales'));
-    }
+         // dd($from,$to);
 
-    protected function getProducts()
-    {
-        return [
-            [
-                'code' => 'PFLAVO',
-                'product_name' => 'PROFLAVO',
-            ],
-            [
-                'code' => 'TEST',
-                'product_name' => 'TEST PRODUCT PUTRI MAHAL',
-            ],
-        ];
+        return view('Admin.sales-recap-most-sales.index', compact('products', 'from', 'to', 'totalOrder', 'totalSales'));
     }
 
     public function export(Request $request)
@@ -105,7 +93,7 @@ class AdminSalesRecapMostSalesController extends Controller
 
         $products = collect([]);
 
-        foreach ($this->getProducts() as $product) {
+        foreach (get_all_retail_products() as $product) {
             $data = $orderProducts->first(function ($item) use ($product) {
                 return $item->code == $product['code'];
             });
@@ -113,6 +101,7 @@ class AdminSalesRecapMostSalesController extends Controller
             $product['total_qty'] = $data ? $data->total_qty : 0;
             $products[] = $product;
         }
+
 
         $totalOrder = 0;
         $totalSales = 0;

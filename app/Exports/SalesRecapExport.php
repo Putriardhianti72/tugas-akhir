@@ -32,8 +32,8 @@ class SalesRecapExport implements FromCollection, WithMapping, WithHeadings
         return [
             $this->i,
             $invoice->date,
-            $invoice->total_order ?? '0',
-            $invoice->total_sales ?? '0',
+            (string) ($invoice->total_order ?? '0'),
+            (string) ($invoice->total_sales ?? '0'),
         ];
     }
 

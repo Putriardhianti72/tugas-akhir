@@ -5,8 +5,10 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class SalesRecapMemberSalesExport implements FromCollection, WithMapping, WithHeadings
+class SalesRecapMemberSalesExport implements FromCollection, WithMapping, WithHeadings, WithColumnFormatting
 {
     protected $data;
 
@@ -33,9 +35,9 @@ class SalesRecapMemberSalesExport implements FromCollection, WithMapping, WithHe
             $this->i,
             $invoice->nama,
             $invoice->email,
-            $invoice->hp,
-            $invoice->orderData->total_order ?? '0',
-            $invoice->orderData->total_sales ?? '0',
+            $invoice->hp . ' ',
+            (string) ($invoice->orderData->total_order ?? '0'),
+            (string ($invoice->orderData->total_sales ?? '0'),
         ];
     }
 
@@ -48,6 +50,13 @@ class SalesRecapMemberSalesExport implements FromCollection, WithMapping, WithHe
             'HP',
             'Total Order',
             'Total Penjualan',
+        ];
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'D' => NumberFormat::FORMAT_TEXT,
         ];
     }
 }

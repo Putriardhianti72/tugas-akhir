@@ -22,3 +22,22 @@ if (! function_exists('format_currency')) {
         return 'Rp. ' . number_format($amount ?: 0, 0, ',', '.');
     }
 }
+
+if (! function_exists('get_all_retail_products')) {
+    function get_all_retail_products() {
+        return [
+            [
+                'code' => 'PFLAVO',
+                'product_name' => 'PROFLAVO',
+            ],
+            [
+                'code' => 'SAVERION',
+                'product_name' => 'SAVERION',
+            ],
+            [
+                'code' => 'XFACE',
+                'product_name' => 'XFACE',
+            ],
+        ];
+    }
+}

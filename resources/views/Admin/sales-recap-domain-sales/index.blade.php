@@ -168,7 +168,6 @@
               }
 
             }, function(start, end, label) {
-              $('#form-recap-date-filter [name="date"]').val(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
               console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
               setTimeout(function () {
                 $('#form-recap-date-filter').submit();

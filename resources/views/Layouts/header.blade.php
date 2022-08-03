@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        @if(member_auth()->check())
+
         <!-- search -->
         <div id="mobile_search" class="d-flex">
             {{-- <div id="mobile_search_content">
@@ -43,18 +43,16 @@
                             <table>
                                 <tbody data-template-content="cart-list">
                                     <tr>
-                                        <td class="product-image">
-                                            <a href="product-detail.html">
+                                        {{-- <td class="product-image">
+                                            <a href="#">
                                                 <img src="" alt="Product">
                                             </a>
+                                        </td> --}}
+                                        <td class="product-name">
+                                          <a href="#"></a>
                                         </td>
-                                        <td>
-                                            <div class="product-name">
-                                                <a href="#"></a>
-                                            </div>
-                                            <div>
-                                                <span class="product-price"></span>
-                                            </div>
+                                        <td class="product-price">
+                                          <a href="#"></a>
                                         </td>
                                         <td class="action">
                                             <a class="remove" href="#">
@@ -85,7 +83,7 @@
                 </div>
             </div>
         </div>
-        @endif
+
     </div>
 
     <!-- header desktop -->
@@ -205,7 +203,7 @@
                             </div>
                         </div>
                     </div>
-                    @if(member_auth()->check())
+                    {{-- @if(member_auth()->check()) --}}
                     <div class="desktop_cart">
                         <div class="blockcart block-cart cart-preview tiva-toggle">
                             <div class="header-cart tiva-toggle-btn">
@@ -216,49 +214,50 @@
                                 <div class="cart-content">
                                     <table>
                                         <tbody data-template-content="cart-list">
-                                            <tr>
-                                                <td class="product-image">
-                                                    <a href="product-detail.html">
-                                                        <img src="" alt="Product">
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <div class="product-name">
-                                                        <a href="#"></a>
-                                                    </div>
-                                                    <div>
-                                                        <span class="product-price"></span>
-                                                    </div>
-                                                </td>
-                                                <td class="action">
-                                                    <a class="remove" href="#">
-                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                          <tr>
+                                              {{-- <td class="product-image">
+                                                  <a href="product-detail.html">
+                                                      <img src="" alt="Product">
+                                                  </a>
+                                              </td> --}}
+                                              <td class="product-name">
+                                                <a href="#"></a>
+                                              </td>
+                                              <td class="product-price">
+                                                <small><a href="#"></a></small>
+                                              </td>
+                                              <td class="action">
+                                                  <a class="remove" href="#">
+                                                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                  </a>
+                                              </td>
+                                          </tr>
                                         </tbody>
-                                        <tbody>
-                                            <tr class="total">
-                                                <td colspan="2">Total:</td>
-                                                <td>0</td>
-                                            </tr>
+                                        <tfoot>
+                                          <tr class="separator">
+                                              <td colspan="3" style="margin-top: 1.5rem"></td>
+                                          </tr>
+                                          <tr class="total">
+                                              <td colspan="2">Total:</td>
+                                              <td>0</td>
+                                          </tr>
 
-                                            <tr>
-                                                <td colspan="3" class="d-flex justify-content-center">
-                                                    <div class="cart-button">
-                                                        <a href="{{ member_auth()->check() ? url('/carts') : url('login') }}" title="View Cart">View Cart</a>
-                                                        <a href="{{ member_auth()->check() ? url('/carts') : url('login') }}" title="Checkout">Checkout</a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
+                                          <tr>
+                                              <td colspan="3" class="d-flex justify-content-center">
+                                                  <div class="cart-button">
+                                                      <a href="{{ member_auth()->check() ? url('/carts') : url('login') }}" title="View Cart">View Cart</a>
+                                                      <a href="{{ member_auth()->check() ? url('/carts') : url('login') }}" title="Checkout">Checkout</a>
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                      </tfoot>
                                     </table>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    @endif
+                {{--     @endif --}}
                 </div>
             </div>
         </div>
@@ -267,20 +266,18 @@
 
 <script type="text/template" data-template="cart-list">
     <tr>
-        <td class="product-image">
+        {{-- <td class="product-image">
             <a href="#">
                 <img alt="Product">
             </a>
+        </td> --}}
+        <td class="product-name" width="55%">
+           <a href="#"></a>
         </td>
-        <td>
-            <div class="product-name">
-                <a href="#"></a>
-            </div>
-            <div>
-                <span class="product-price"></span>
-            </div>
+        <td class="product-price" width="35%">
+          <small><a href="#"></a></small>
         </td>
-        <td class="action">
+        <td class="action text-right" width="10%">
             <a class="remove" href="#">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
             </a>

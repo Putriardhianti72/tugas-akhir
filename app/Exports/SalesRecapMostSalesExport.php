@@ -33,7 +33,7 @@ class SalesRecapMostSalesExport implements FromCollection, WithMapping, WithHead
             $this->i,
             $invoice['product_name'],
             $invoice['code'],
-            $invoice['total_qty'] ?? '0',
+            (string) ($invoice['total_qty'] ?? '0'),
         ];
     }
 

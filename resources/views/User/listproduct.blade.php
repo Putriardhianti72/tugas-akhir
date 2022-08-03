@@ -169,7 +169,7 @@
                                                                                     <span class="price">{{format_currency($product->price)}}</span>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="discription">
+                                                                            <div class="discription text-truncate-multiline">
                                                                                 {{$product->desc}}
                                                                             </div>
                                                                         </div>

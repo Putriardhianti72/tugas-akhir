@@ -34,7 +34,7 @@
 
 
 <!-- About Start -->
-<div class="container-fluid py-5">
+<div id="about" class="container-fluid py-5">
     <div class="container">
         <div class="section-title">
             <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">About</h4>
@@ -69,7 +69,7 @@
 
 
 <!-- Offer Start -->
-<div class="offer container-fluid my-5 py-5 text-center position-relative overlay-top overlay-bottom">
+<div id="product" class="offer container-fluid my-5 py-5 text-center position-relative overlay-top overlay-bottom">
     <div class="container py-5">
         <h1 class="display-3 text-primary mt-3">50% OFF</h1>
         <h1 class="text-white mb-3">Sunday Special Offer</h1>
@@ -87,7 +87,7 @@
 
 
 <!-- Menu Start -->
-<div class="container-fluid pt-5">
+<div id="benefit" class="container-fluid pt-5">
     <div class="container">
         <div class="section-title">
             <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Services</h4>
@@ -149,7 +149,7 @@
 
             </div>
             <div class="col-lg-6">
-                <h1 class="mb-5"></h1>
+                <h1 class="mb-5">&nbsp;</h1>
               <div class="row align-items-center mb-5">
                     <div class="col-4 col-sm-3">
                         {{-- <img class="w-100 rounded-circle mb-3 mb-sm-0" src="{{ asset('assets/koppee/img/menu-1.jpg') }}" alt=""> --}}
@@ -208,7 +208,7 @@
 
 
 <!-- Reservation Start -->
-<div class="container-fluid my-5">
+<div id="order" class="container-fluid my-5">
     <div class="container">
         <div class="reservation position-relative overlay-top overlay-bottom">
             <div class="row align-items-center">
@@ -273,7 +273,7 @@
 
 
 <!-- Testimonial Start -->
-<div class="container-fluid py-5">
+<div id="testimonial" class="container-fluid py-5">
     <div class="container">
         <div class="section-title">
             <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Testimonial</h4>

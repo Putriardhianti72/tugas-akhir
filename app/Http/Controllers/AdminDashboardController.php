@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Session;
 use App\Services\Partner\Auth;
-
-
 use Illuminate\Support\Facades\Http;
 
 class AdminDashboardController extends Controller
@@ -29,10 +27,24 @@ class AdminDashboardController extends Controller
         $totalRetailOrderComplete = RetailOrder::where('status', RetailOrder::STATUS_COMPLETED)->count();
         $totalRetailOrderPaid = RetailOrder::where('status', RetailOrder::STATUS_PAID)->count();
         $totalRetailOrderDelivery = RetailOrder::where('status', RetailOrder::STATUS_DELIVERY)->count();
-        $totalProductSales = RetailOrderProduct::selectRaw("SUM(qty) total_qty, retail_order_products.*")->whereHas('order', function ($q) {
-            $q->where('status', RetailOrder::STATUS_COMPLETED);
-        })->groupBy('code')->get();
+        $orderProducts = RetailOrderProduct::selectRaw('retail_order_products.*, sum(retail_order_products.qty) total_qty')
+                                    ->join('retail_orders', 'retail_orders.id', '=', 'retail_order_products.retail_order_id')
+                                    ->whereIn('retail_orders.status',[RetailOrder::STATUS_PAID, RetailOrder::STATUS_DELIVERY, RetailOrder::STATUS_COMPLETED])
+                                    ->whereNull('retail_orders.deleted_at')
+                                    ->groupBy('retail_order_products.code')
+                                    ->get();
 
-        return view('Admin.dashboard.index', compact('totalOrderComplete','totalOrderProcessing','totalOrderPaid', 'totalRetailOrderComplete','totalRetailOrderDelivery','totalRetailOrderPaid', 'totalProductSales'));
+        $productSales = [];
+        foreach (get_all_retail_products() as $product) {
+            $data = $orderProducts->first(function ($item) use ($product) {
+                return $item->code == $product['code'];
+            });
+
+            $product['total_qty'] = $data ? $data->total_qty : 0;
+            $productSales[] = $product;
+        }
+
+
+        return view('Admin.dashboard.index', compact('totalOrderComplete','totalOrderProcessing','totalOrderPaid', 'totalRetailOrderComplete','totalRetailOrderDelivery','totalRetailOrderPaid', 'productSales'));
     }
 }

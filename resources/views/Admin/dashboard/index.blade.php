@@ -86,16 +86,16 @@
                               <thead>
                                 <tr>
                                   <th scope="col">Nama Produk</th>
-                                  <th scope="col">Kode</th>
+                                  <th scope="col">Kode Produk</th>
                                   <th scope="col">Total Penjualan</th>
                                 </tr>
                               </thead>
                               <tbody>
-                                @foreach($totalProductSales as $product)
+                                @foreach($productSales as $product)
                                 <tr>
-                                  <td scope="row">{{ $product->product_name }}</td>
-                                  <td>{{ $product->code }}</td>
-                                  <td>{{ $product->total_qty }}</td>
+                                  <td scope="row">{{ $product['product_name'] }}</td>
+                                  <td>{{ $product['code'] }}</td>
+                                  <td>{{ $product['total_qty'] }}</td>
                                 </tr>
                                 @endforeach
                               </tbody>
@@ -244,7 +244,7 @@ for (var i = 0; i < legendItems.length; i += 1) {
       Circles.create({
       id:'circles-1',
       radius:45,
-      value:{{ ($totalOrderPaid ?: '0') * 10 }},
+      value:100,
       maxValue:100,
       width:7,
       text: '{{ $totalOrderPaid ?: '0' }}',
@@ -259,7 +259,7 @@ for (var i = 0; i < legendItems.length; i += 1) {
     Circles.create({
       id:'circles-2',
       radius:45,
-      value:{{ ($totalOrderProcessing ?: '0') * 10 }},
+      value:100,
       maxValue:100,
       width:7,
       text: '{{ $totalOrderProcessing ?: '0' }}',
@@ -274,7 +274,7 @@ for (var i = 0; i < legendItems.length; i += 1) {
     Circles.create({
       id:'circles-3',
       radius:45,
-      value:{{ ($totalOrderComplete ?: '0') * 10 }},
+      value:100,
       maxValue:100,
       width:7,
       text: '{{ $totalOrderComplete ?: '0' }}',
@@ -289,7 +289,7 @@ for (var i = 0; i < legendItems.length; i += 1) {
     Circles.create({
       id:'circles-4',
       radius:45,
-      value:{{ ($totalRetailOrderPaid ?: '0') * 10 }},
+      value:100,
       maxValue:100,
       width:7,
       text: '{{ $totalRetailOrderPaid ?: '0' }}',
@@ -304,7 +304,7 @@ for (var i = 0; i < legendItems.length; i += 1) {
     Circles.create({
       id:'circles-5',
       radius:45,
-      value:{{ ($totalRetailOrderDelivery ?: '0') * 10 }},
+      value:100,
       maxValue:100,
       width:7,
       text: '{{ $totalRetailOrderDelivery ?: '0' }}',
@@ -319,7 +319,7 @@ for (var i = 0; i < legendItems.length; i += 1) {
     Circles.create({
       id:'circles-6',
       radius:45,
-      value:{{ ($totalRetailOrderComplete ?: '0') * 10 }},
+      value:100,
       maxValue:100,
       width:7,
       text: '{{ $totalRetailOrderComplete ?: '0' }}',

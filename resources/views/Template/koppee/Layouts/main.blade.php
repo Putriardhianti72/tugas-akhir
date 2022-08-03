@@ -39,19 +39,23 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                @php($isHomeUrl = 'template.carts.index' === 'template.home' ? '' : route('template.home', ['domain' => request('domain')]))
+
                 <div class="navbar-nav ml-auto p-4">
-                    <a href="{{ route('template.home', request('domain')) }}" class="nav-item nav-link active">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="service.html" class="nav-item nav-link">Service</a>
-                    <a href="menu.html" class="nav-item nav-link">Menu</a>
+                    <a href="{{ $isHomeUrl }}" class="nav-item nav-link active">Home</a>
+                    <a href="{{ $isHomeUrl }}#about" class="nav-item nav-link">About</a>
+                    <a href="{{ $isHomeUrl }}#benefit" class="nav-item nav-link">Service</a>
+                    <a href="{{ $isHomeUrl }}#order" class="nav-item nav-link">Reservation</a>
+                    <a href="{{ $isHomeUrl }}#testimonial" class="nav-item nav-link">Testimonial</a>
+                    {{-- <a href="menu.html" class="nav-item nav-link">Menu</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu text-capitalize">
-                            <a href="reservation.html" class="dropdown-item">Reservation</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a href="{{ $isHomeUrl }}#order" class="dropdown-item">Reservation</a>
+                            <a href="{{ $isHomeUrl }}#testimonial" class="dropdown-item">Testimonial</a>
                         </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    </div> --}}
+                    <a href="{{ $isHomeUrl }}#contact" class="nav-item nav-link">Contact</a>
                 </div>
             </div>
         </nav>
@@ -61,7 +65,7 @@
     @yield('content')
 
     <!-- Footer Start -->
-    <div class="container-fluid footer text-white mt-5 pt-5 px-0 position-relative overlay-top">
+    <div id="contact" class="container-fluid footer text-white mt-5 pt-5 px-0 position-relative overlay-top">
         <div class="row mx-0 pt-5 px-sm-3 px-lg-5 mt-4">
             <div class="col-lg-3 col-md-6 mb-5">
                 <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Get In Touch</h4>

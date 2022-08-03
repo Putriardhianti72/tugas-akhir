@@ -701,6 +701,7 @@
     <script src="{{URL::asset('user/libs/slider-range/js/jquery.slider.js')}}"></script>
     <script src="{{URL::asset('user/libs/slick-slider/js/slick.min.js')}}"></script>
     <script src="{{URL::asset('user/libs/toastr/toastr.min.js')}}"></script>
+    <script src="{{URL::asset('user/libs/jquery-formatcurrency/jquery.formatCurrency.min.js')}}"></script>
 
     <!-- Template JS -->
     <script src="{{URL::asset('user/js/theme.js')}}"></script>

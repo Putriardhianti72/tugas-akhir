@@ -12,13 +12,13 @@
 <body class="user-login blog">
     @include('Layouts.header')
     <!-- main content -->
-    
+
         <!-- main -->
         @yield('isi')
-    
+
     < <!-- footer -->
     @include('Layouts.Footer')
-    
+
     <!-- back top top -->
     <div class="back-to-top">
         <a href="#">
@@ -698,6 +698,7 @@
     <script src="{{URL::asset('user/libs/slider-range/js/draggable-0.1.js')}}"></script>
     <script src="{{URL::asset('user/libs/slider-range/js/jquery.slider.js')}}"></script>
     <script src="{{URL::asset('user/libs/slick-slider/js/slick.min.js')}}"></script>
+    <script src="{{URL::asset('user/libs/jquery-formatcurrency/jquery.formatCurrency.min.js')}}"></script>
 
     <!-- Template JS -->
     <script src="{{URL::asset('user/js/theme.js')}}"></script>

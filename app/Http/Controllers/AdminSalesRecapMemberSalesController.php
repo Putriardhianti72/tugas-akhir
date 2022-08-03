@@ -27,7 +27,7 @@ class AdminSalesRecapMemberSalesController extends Controller
      */
     public function index(Request $request)
     {
-        $from = Carbon::now()->subYear(3);
+        $from = Carbon::now()->subWeek();
         $to = Carbon::now();
 
         $date = $request->date;
@@ -70,6 +70,7 @@ class AdminSalesRecapMemberSalesController extends Controller
         if (!$date) {
             $from = $to = null;
         }
+         // dd($from,$to);
 
         return view('Admin.sales-recap-member-sales.index', compact('orderMembers', 'from', 'to', 'totalOrder', 'totalSales'));
     }

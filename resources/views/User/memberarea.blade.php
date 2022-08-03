@@ -34,7 +34,7 @@
                 <div class="card">
                   <div class="card-body pb-3">
                     <h6 class="card-subtitle text-muted">Total Reward</h6>
-                    <h5 class="card-title mb-0">{{ $totalCommission }}</h5>
+                    <h5 class="card-title mb-0">{{ format_currency($totalCommission) }}</h5>
                   </div>
                 </div>
               </div>

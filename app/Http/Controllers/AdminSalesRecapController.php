@@ -27,6 +27,7 @@ class AdminSalesRecapController extends Controller
     {
         $from = Carbon::now()->subWeek();
         $to = Carbon::now();
+        // dd($from,$to);
 
         $date = $request->date;
 

@@ -731,6 +731,7 @@
     <script src="{{URL::asset('user/libs/nivo-slider/js/jquery.nivo.slider.js')}} "></script>
     <script src="{{URL::asset('user/libs/owl-carousel/owl.carousel.min.js')}}"></script>
     <script src="{{URL::asset('user/libs/toastr/toastr.min.js')}}"></script>
+    <script src="{{URL::asset('user/libs/jquery-formatcurrency/jquery.formatCurrency.min.js')}}"></script>
 
     <!-- Template JS -->
     <script src="{{URL::asset('user/js/theme.js')  }}"></script>

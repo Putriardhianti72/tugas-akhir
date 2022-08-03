@@ -67,3 +67,10 @@
 .user-wishlist #wrapper-site #block-history thead th {
   border-color: rgba(255, 255, 255, 0.1);
 }
+.text-truncate-multiline {
+  overflow: hidden;
+  white-space: normal;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
