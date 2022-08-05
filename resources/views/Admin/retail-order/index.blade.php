@@ -50,7 +50,11 @@
                                         <th>Invoice</th>
                                         <th>Customer</th>
                                         <th>Produk</th>
-                                        <th style="width: 10%">Action</th>
+                                        <th style="width: 15%;">Total Harga</th>
+                                        <th>Domain</th>
+                                        <th>Member</th>
+                                        <th style="width: 15%;">Reward</th>
+                                        <th style="width: 6%;">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -69,6 +73,20 @@
                                             </td>
                                             <td>
                                                 {{ $order->product->product_name ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ format_currency($order->total_price) }}
+                                            </td>
+                                            <td>
+                                                {{ $order->owner->domain ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $order->owner->member->nama ?? '' }}
+                                            </td>
+                                            <td>
+                                              @if($order->status == \App\Models\RetailOrder::STATUS_COMPLETED)
+                                                {{ $order->commission ? format_currency($order->commission): 'N/A' }}
+                                              @endif
                                             </td>
                                             <td>
                                                 <div class="form-button-action">
