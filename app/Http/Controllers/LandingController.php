@@ -14,6 +14,12 @@ class LandingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function profile()
+    {
+        return view('Layouts.profile');
+    }
+
     public function index()
     {
         $products = Product::where('in_stock', 1)->limit(3)->orderBy('created_at','desc')->get();

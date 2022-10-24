@@ -49,7 +49,7 @@
                 <li class="nav-item {{\Route::currentRouteName() == 'admin.categories.index' || \Route::currentRouteName() == 'admin.products.index' ? 'active' : '' }}" >
                     <a data-toggle="collapse" href="#base">
                         <i class="fas fa-layer-group"></i>
-                        <p>Setting Katalog</p>
+                        <p>Catalogue Settings</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse {{\Route::currentRouteName() == 'admin.categories.index' || \Route::currentRouteName() == 'admin.products.index' ? 'show' : '' }}" id="base">
@@ -70,7 +70,7 @@
                 <li class="nav-item {{\Route::currentRouteName() == 'admin.orders.index' || \Route::currentRouteName() == 'admin.retail-orders.index' ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#sidebarLayouts">
                         <i class="fas fa-desktop"></i>
-                        <p>Penjualan</p>
+                        <p>Sales</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse{{\Route::currentRouteName() == 'admin.orders.index' || \Route::currentRouteName() == 'admin.retail-orders.index' ? 'active' : '' }} " id="sidebarLayouts">
@@ -97,7 +97,7 @@
                 <li class="nav-item {{\Route::currentRouteName() == 'admin.sales-recap.index' || \Route::currentRouteName() == 'admin.sales-recap-member-sales.index' ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#sidebarSalesRecapLayouts">
                         <i class="fas fa-chart-bar"></i>
-                        <p>Rekap Penjualan</p>
+                        <p>Sales Recap</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse{{\Route::currentRouteName() == 'admin.sales-recap.index' || \Route::currentRouteName() == 'admin.sales-recap-member-sales.index' || \Route::currentRouteName() == 'admin.sales-recap-most-sales.index' ? 'active' : '' }} " id="sidebarSalesRecapLayouts">

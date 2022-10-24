@@ -26,7 +26,7 @@
               <div class="col-md-6">
                 <div class="card full-height">
                   <div class="card-body">
-                    <div class="card-title">Statistik Order Member</div>
+                    <div class="card-title">Statistics Order Member</div>
                     <div class="card-category">Daily information about statistics in system</div>
                     <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                       <div class="px-2 pb-2 pb-md-0 text-center">
@@ -48,7 +48,7 @@
               <div class="col-md-6">
                 <div class="card full-height">
                   <div class="card-body">
-                    <div class="card-title">Statistik Order Retail Customer</div>
+                    <div class="card-title">Statistics Order Retail Customer</div>
                     <div class="card-category">Daily information about statistics in system</div>
                     <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                       <div class="px-2 pb-2 pb-md-0 text-center">
@@ -85,9 +85,9 @@
                             <table class="table">
                               <thead>
                                 <tr>
-                                  <th scope="col">Nama Produk</th>
-                                  <th scope="col">Kode Produk</th>
-                                  <th scope="col">Total Penjualan</th>
+                                  <th scope="col">Product Name</th>
+                                  <th scope="col">Product Code</th>
+                                  <th scope="col">Total Sales</th>
                                 </tr>
                               </thead>
                               <tbody>

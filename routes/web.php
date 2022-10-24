@@ -34,7 +34,8 @@ use App\Http\Controllers\MemberAreaHomeController;
 // Route::get('/', function () {
 //    return view('User.listproduct');
 // });
-Route::get('/',[\App\Http\Controllers\LandingController::class,'index']);
+Route::get('/',[\App\Http\Controllers\LandingController::class,'profile']);
+Route::get('/home',[\App\Http\Controllers\LandingController::class,'index']);
 Route::get('/products',[\App\Http\Controllers\ProductsController::class,'index'])->name('products.index');
 Route::get('/products/{id}',[\App\Http\Controllers\ProductsController::class,'show'])->name('products.show');
 Route::get('/services',[\App\Http\Controllers\LandingController::class,'services']);
